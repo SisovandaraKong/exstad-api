@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
+
 @Entity
 @Setter
 @Getter
@@ -16,4 +19,16 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Scholar scholar;
+
+    @OneToMany(mappedBy = "verifiedBy")
+    private List<ScholarBadge> scholarsBadges;
+
+    @OneToMany(mappedBy = "instructor")
+    private List<InstructorClass> instructorClasses;
+
+    @OneToMany(mappedBy = "admin")
+    private List<Achievement> achievements;
 }
