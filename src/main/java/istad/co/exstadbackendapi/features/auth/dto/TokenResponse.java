@@ -1,5 +1,6 @@
 package istad.co.exstadbackendapi.features.auth.dto;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public record TokenResponse(

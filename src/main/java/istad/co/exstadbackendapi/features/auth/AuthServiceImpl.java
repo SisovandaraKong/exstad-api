@@ -35,7 +35,6 @@ public class AuthServiceImpl implements AuthService {
     private final Keycloak keycloak;
     private final AuthMapper authMapper;
     private final WebClient webClient;
-    private final JwtDecoder jwtDecoder;
 
     @Value("${keycloak.realm}")
     private String realm;
@@ -79,18 +78,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public TokenResponse login(LoginRequest loginRequest) {
         try {
-            TokenResponse tokenResponse = getTokenFromKeycloak(loginRequest);
-
-            KeycloakUserResponse userInfo = extractUserInfoFromToken(tokenResponse.accessToken());
-
-            return new TokenResponse(
-                    tokenResponse.accessToken(),
-                    tokenResponse.refreshToken(),
-                    tokenResponse.tokenType(),
-                    tokenResponse.expiresIn(),
-                    tokenResponse.scope(),
-                    userInfo
-            );
+            return getTokenFromKeycloak(loginRequest);
 
         } catch (WebClientResponseException e) {
             log.error("Login failed: {}", e.getResponseBodyAsString());
@@ -131,28 +119,10 @@ public class AuthServiceImpl implements AuthService {
         }
     }
 
-    private KeycloakUserResponse extractUserInfoFromToken(String accessToken) {
-        try {
-            Jwt jwt = jwtDecoder.decode(accessToken);
-
-            String uuid = jwt.getClaimAsString("sub");
-            String username = jwt.getClaimAsString("preferred_username");
-            String email = jwt.getClaimAsString("email");
-            String englishName = jwt.getClaimAsString("given_name");
-            String khmerName = jwt.getClaimAsString("family_name");
-            return new KeycloakUserResponse(uuid, username, email, englishName, khmerName);
-
-        } catch (Exception e) {
-            log.error("Failed to extract user info from token", e);
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
-                    "Failed to process authentication token");
-        }
-    }
-
     @Override
     public TokenResponse refreshToken(String refreshToken) {
         try {
-            String tokenUrl = String.format("%s/realms/%s/protocol/openid_connect/token",
+            String tokenUrl = String.format("%s/realms/%s/protocol/openid-connect/token",
                     authServerUrl, realm);
 
             MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
@@ -169,15 +139,12 @@ public class AuthServiceImpl implements AuthService {
                     .bodyToMono(TokenResponse.class)
                     .block();
 
-            KeycloakUserResponse userInfo = extractUserInfoFromToken(tokenResponse.accessToken());
-
             return new TokenResponse(
                     tokenResponse.accessToken(),
                     tokenResponse.refreshToken(),
                     tokenResponse.tokenType(),
                     tokenResponse.expiresIn(),
-                    tokenResponse.scope(),
-                    userInfo
+                    tokenResponse.scope()
             );
 
         } catch (WebClientResponseException e) {
