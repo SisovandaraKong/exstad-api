@@ -63,6 +63,9 @@ public class Scholar {
     @Column(nullable = false)
     private Boolean isPublic;
 
+    @Column(columnDefinition = "TEXT")
+    private String quote;
+
     @OneToMany(mappedBy = "scholar")
     private List<ScholarBadge> scholarsBadges;
 

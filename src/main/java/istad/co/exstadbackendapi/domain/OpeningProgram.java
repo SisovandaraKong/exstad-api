@@ -1,6 +1,7 @@
 package istad.co.exstadbackendapi.domain;
 
 import istad.co.exstadbackendapi.enums.ProgramLevel;
+import istad.co.exstadbackendapi.enums.Status;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -63,8 +64,7 @@ public class OpeningProgram {
     @Column(nullable = false)
     private Boolean isDeleted;
 
-    @Column(nullable = false)
-    private Boolean status;
+    private Status status;
 
     @Column(length = 60, nullable = false)
     private String title;
@@ -97,11 +97,14 @@ public class OpeningProgram {
 
     private String duration;
 
-    private ProgramLevel programLevel;
-
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(columnDefinition = "jsonb")
     private Activity activity;
+
+    private String curriculumPdfUri;
+
+    @Column(nullable = false)
+    private Boolean isActive;
 
     @OneToMany(mappedBy = "openingProgram")
     private List<Class> classes;

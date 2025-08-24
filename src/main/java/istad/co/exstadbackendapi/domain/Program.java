@@ -1,5 +1,6 @@
 package istad.co.exstadbackendapi.domain;
 
+import istad.co.exstadbackendapi.enums.ProgramLevel;
 import istad.co.exstadbackendapi.enums.ProgramType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -69,6 +70,15 @@ public class Program {
 
     @Enumerated(EnumType.STRING)
     private ProgramType programType;
+
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(columnDefinition = "jsonb")
+    private Curriculum curriculum;
+
+    private ProgramLevel programLevel;
+
+    @Column(nullable = false)
+    private Boolean isDeleted;
 
     @OneToMany(mappedBy = "program")
     private List<OpeningProgram> openingPrograms;
