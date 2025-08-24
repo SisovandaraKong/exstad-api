@@ -1,5 +1,6 @@
 package istad.co.exstadbackendapi.domain;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,15 +10,13 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SocialLink {
+public class Detail {
 
-    private int id;
-
-    private String link;
-
-    private String type;
+    private Integer id;
 
     private String title;
+
+    private String description;
 
     private Boolean isActive;
 }

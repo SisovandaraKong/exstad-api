@@ -20,6 +20,9 @@ public class Province {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(nullable = false, unique = true)
+    private String uuid;
+
     @Column(unique = true, nullable = false, length = 150)
     private String englishName;
 

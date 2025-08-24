@@ -71,5 +71,11 @@ public class Scholar {
 
     @OneToMany(mappedBy = "scholar")
     private List<ScholarAchievement> scholarAchievements;
+
+    @OneToMany(mappedBy = "scholar")
+    private List<Transcript> transcripts;
+
+    @OneToMany(mappedBy = "scholar")
+    private List<Certificate> certificates;
 }
 

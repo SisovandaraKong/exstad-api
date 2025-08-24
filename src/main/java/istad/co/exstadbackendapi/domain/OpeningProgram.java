@@ -1,10 +1,14 @@
 package istad.co.exstadbackendapi.domain;
 
+import istad.co.exstadbackendapi.enums.ProgramLevel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.JdbcType;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -67,6 +71,37 @@ public class OpeningProgram {
 
     private String qrCodeUrl;
 
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(columnDefinition = "jsonb")
+    private Detail detail;
+
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(columnDefinition = "jsonb")
+    private Timeline timeline;
+
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(columnDefinition = "jsonb")
+    private Curriculum curriculum;
+
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(columnDefinition = "jsonb")
+    private Roadmap roadmap;
+
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(columnDefinition = "jsonb")
+    private LearningOutcome learningOutcome;
+
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(columnDefinition = "jsonb")
+    private Requirement requirement;
+
+    private String duration;
+
+    private ProgramLevel programLevel;
+
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(columnDefinition = "jsonb")
+    private Activity activity;
 
     @OneToMany(mappedBy = "openingProgram")
     private List<Class> classes;
@@ -75,5 +110,11 @@ public class OpeningProgram {
     private List<Achievement> achievements;
 
     @OneToMany(mappedBy = "openingProgram")
-    protected List<Enrollment> enrollments;
+    private List<Enrollment> enrollments;
+
+    @OneToMany(mappedBy = "openingProgram")
+    private List<Transcript> transcripts;
+
+    @OneToMany(mappedBy = "openingProgram")
+    private List<Certificate> certificates;
 }
