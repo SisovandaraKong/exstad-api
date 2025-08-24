@@ -29,6 +29,21 @@ public class User {
     @OneToMany(mappedBy = "instructor")
     private List<InstructorClass> instructorClasses;
 
-    @OneToMany(mappedBy = "admin")
+    @OneToMany(mappedBy = "createdBy")
     private List<Achievement> achievements;
+
+    @OneToMany(mappedBy = "createdBy")
+    private List<Program> createdPrograms;
+
+    @OneToMany(mappedBy = "updatedBy")
+    private List<Program> updatedPrograms;
+
+    @OneToMany(mappedBy = "createdBy")
+    private List<AdmissionLetter> admissionLetters;
+
+    @OneToMany(mappedBy = "createdBy")
+    private List<OpeningProgram> createdOpeningPrograms;
+
+    @OneToMany(mappedBy = "updatedBy")
+    private List<OpeningProgram> updatedOpeningPrograms;
 }

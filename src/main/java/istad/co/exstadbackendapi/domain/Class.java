@@ -33,6 +33,7 @@ public class Class {
     private String className;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private Shift shift;
 
     @Column(nullable = false)

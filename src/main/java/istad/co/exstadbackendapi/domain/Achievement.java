@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Setter
@@ -25,8 +26,8 @@ public class Achievement {
     private String uuid;
 
     @ManyToOne
-    @JoinColumn(name = "admin_id")
-    private User admin;
+    @JoinColumn(name = "created_by")
+    private User createdBy;
 
     @Column(length = 100)
     private String title;
@@ -43,15 +44,23 @@ public class Achievement {
     @Column(nullable = false)
     private LocalDate createdAt;
 
-    @Column(nullable = false)
     private LocalDate updatedAt;
 
     @Column(nullable = false)
     private Boolean isDeleted;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private AchievementType achievementType;
 
     @Column(length = 100)
     private String tag;
+
+    @Column(columnDefinition = "TEXT")
+    private String video;
+
+    private String link;
+
+    @OneToMany(mappedBy = "achievement")
+    private List<ScholarAchievement> scholarAchievements;
 }

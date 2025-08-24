@@ -68,5 +68,8 @@ public class Scholar {
 
     @OneToMany(mappedBy = "scholar")
     private List<ScholarEnrollment> scholarEnrollments;
+
+    @OneToMany(mappedBy = "scholar")
+    private List<ScholarAchievement> scholarAchievements;
 }
 

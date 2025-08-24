@@ -1,0 +1,21 @@
+package istad.co.exstadbackendapi.domain;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+public class LearningOutcome {
+
+    private Integer id;
+
+    private String title;
+
+    private String description;
+
+    private Boolean isActive;
+}
