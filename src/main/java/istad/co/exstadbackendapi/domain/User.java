@@ -53,12 +53,4 @@ public class User extends Auditable {
     @OneToMany(mappedBy = "instructor")
     private List<InstructorClass> instructorClasses;
 
-    @OneToMany(mappedBy = "createdBy")
-    private List<Transcript> createdTranscripts;
-
-    @OneToMany(mappedBy = "updatedBy")
-    private List<Transcript> updatedTranscripts;
-
-    @OneToMany(mappedBy = "createdBy")
-    private List<Certificate> createdCertificates;
 }

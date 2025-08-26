@@ -1,5 +1,6 @@
 package istad.co.exstadbackendapi.domain;
 
+import istad.co.exstadbackendapi.audit.Auditable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,7 +18,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "transcripts")
-public class Transcript {
+public class Transcript extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,10 +26,6 @@ public class Transcript {
 
     @Column(nullable = false, unique = true)
     private String uuid;
-
-    @ManyToOne
-    @JoinColumn(name = "created_by")
-    private User createdBy;
 
     @ManyToOne
     @JoinColumn(name = "opening_program_id")
@@ -47,15 +44,6 @@ public class Transcript {
     private String tempTranscriptUrl;
 
     private String transcriptUrl;
-
-    @Column(nullable = false)
-    private LocalDate createdAt;
-
-    @ManyToOne
-    @JoinColumn(name = "updated_by")
-    private User updatedBy;
-
-    private LocalDate updatedAt;
 
     @Column(nullable = false)
     private Boolean isVerified;
