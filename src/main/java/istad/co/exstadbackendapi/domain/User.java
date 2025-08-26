@@ -31,6 +31,9 @@ public class User extends Auditable {
     private String username;
 
     @Column(nullable = false)
+    private Role role;
+
+    @Column(nullable = false)
     private String email;
 
     @Column(length = 50, nullable = false)

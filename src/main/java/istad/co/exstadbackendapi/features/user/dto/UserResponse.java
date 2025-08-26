@@ -1,5 +1,7 @@
 package istad.co.exstadbackendapi.features.user.dto;
 
+import istad.co.exstadbackendapi.enums.Role;
+
 import java.time.LocalDate;
 
 public record UserResponse(
@@ -9,7 +11,8 @@ public record UserResponse(
         String englishName,
         String khmerName,
         String gender,
-        LocalDate dob
+        LocalDate dob,
+        Role role
 
 ) {
 }

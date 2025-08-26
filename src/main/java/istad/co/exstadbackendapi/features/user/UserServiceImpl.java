@@ -34,7 +34,8 @@ public class UserServiceImpl implements UserService {
                 userRequest.password(),
                 userRequest.cfPassword(),
                 userRequest.englishName(),
-                userRequest.khmerName()
+                userRequest.khmerName(),
+                userRequest.role()
         );
 
         KeycloakUserResponse response = authService.register(register);
