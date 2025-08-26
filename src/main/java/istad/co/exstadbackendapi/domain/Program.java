@@ -36,6 +36,9 @@ public class Program {
 
     private String thumbnailUrl;
 
+    @Column(length = 100)
+    private String bgColor;
+
     @ManyToOne
     @JoinColumn(name = "created_by")
     private User createdBy;
