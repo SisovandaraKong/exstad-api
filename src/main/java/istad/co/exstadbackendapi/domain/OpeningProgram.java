@@ -1,5 +1,6 @@
 package istad.co.exstadbackendapi.domain;
 
+import istad.co.exstadbackendapi.audit.Auditable;
 import istad.co.exstadbackendapi.enums.ProgramLevel;
 import istad.co.exstadbackendapi.enums.Status;
 import jakarta.persistence.*;
@@ -20,7 +21,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "opening_programs")
-public class OpeningProgram {
+public class OpeningProgram extends Auditable {
 
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
@@ -37,18 +38,6 @@ public class OpeningProgram {
 
     @Column(nullable = false)
     private Integer totalSlot;
-
-    @ManyToOne
-    @JoinColumn(name = "created_by")
-    private User createdBy;
-
-    @ManyToOne
-    @JoinColumn(name = "updated_by")
-    private User updatedBy;
-
-    private LocalDate updatedAt;
-
-    private LocalDate createdAt;
 
     @Column(nullable = false)
     private LocalDate startTime;

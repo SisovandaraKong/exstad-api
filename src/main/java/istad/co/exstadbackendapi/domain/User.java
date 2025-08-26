@@ -1,5 +1,6 @@
 package istad.co.exstadbackendapi.domain;
 
+import istad.co.exstadbackendapi.audit.Auditable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,7 +17,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "users")
-public class User {
+public class User extends Auditable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -50,24 +52,6 @@ public class User {
 
     @OneToMany(mappedBy = "instructor")
     private List<InstructorClass> instructorClasses;
-
-    @OneToMany(mappedBy = "createdBy")
-    private List<Achievement> achievements;
-
-    @OneToMany(mappedBy = "createdBy")
-    private List<Program> createdPrograms;
-
-    @OneToMany(mappedBy = "updatedBy")
-    private List<Program> updatedPrograms;
-
-    @OneToMany(mappedBy = "createdBy")
-    private List<AdmissionLetter> admissionLetters;
-
-    @OneToMany(mappedBy = "createdBy")
-    private List<OpeningProgram> createdOpeningPrograms;
-
-    @OneToMany(mappedBy = "updatedBy")
-    private List<OpeningProgram> updatedOpeningPrograms;
 
     @OneToMany(mappedBy = "createdBy")
     private List<Transcript> createdTranscripts;

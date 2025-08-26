@@ -1,5 +1,6 @@
 package istad.co.exstadbackendapi.domain;
 
+import istad.co.exstadbackendapi.audit.Auditable;
 import istad.co.exstadbackendapi.enums.ProgramLevel;
 import istad.co.exstadbackendapi.enums.ProgramType;
 import jakarta.persistence.*;
@@ -19,7 +20,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "programs")
-public class Program {
+public class Program extends Auditable {
 
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
@@ -38,16 +39,6 @@ public class Program {
 
     @Column(length = 100)
     private String bgColor;
-
-    @ManyToOne
-    @JoinColumn(name = "created_by")
-    private User createdBy;
-
-    @ManyToOne
-    @JoinColumn(name = "updated_by")
-    private User updatedBy;
-
-    private LocalDate updatedAt;
 
     private String curriculumPdfUrl;
 

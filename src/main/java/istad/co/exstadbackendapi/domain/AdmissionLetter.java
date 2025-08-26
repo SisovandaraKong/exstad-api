@@ -1,5 +1,6 @@
 package istad.co.exstadbackendapi.domain;
 
+import istad.co.exstadbackendapi.audit.Auditable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,7 +15,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "admission_letters")
-public class AdmissionLetter {
+public class AdmissionLetter extends Auditable {
 
     @Id
     private Integer id;
@@ -26,13 +27,6 @@ public class AdmissionLetter {
     @MapsId
     @JoinColumn(name = "enrollment_id")
     private Enrollment enrollment;
-
-    @ManyToOne
-    @JoinColumn(name = "created_by")
-    private User createdBy;
-
-    @Column(nullable = false)
-    private LocalDate createdAt;
 
     @Column(nullable = false)
     private Boolean isDeleted;

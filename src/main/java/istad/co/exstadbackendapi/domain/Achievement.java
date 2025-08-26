@@ -1,5 +1,6 @@
 package istad.co.exstadbackendapi.domain;
 
+import istad.co.exstadbackendapi.audit.Auditable;
 import istad.co.exstadbackendapi.enums.AchievementType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -16,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "achievements")
-public class Achievement {
+public class Achievement extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,9 +26,6 @@ public class Achievement {
     @Column(nullable = false, unique = true)
     private String uuid;
 
-    @ManyToOne
-    @JoinColumn(name = "created_by")
-    private User createdBy;
 
     @Column(length = 100)
     private String title;
@@ -40,11 +38,6 @@ public class Achievement {
     private OpeningProgram openingProgram;
 
     private String icon;
-
-    @Column(nullable = false)
-    private LocalDate createdAt;
-
-    private LocalDate updatedAt;
 
     @Column(nullable = false)
     private Boolean isDeleted;
