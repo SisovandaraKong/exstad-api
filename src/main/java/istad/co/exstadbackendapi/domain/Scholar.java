@@ -1,5 +1,6 @@
 package istad.co.exstadbackendapi.domain;
 
+import istad.co.exstadbackendapi.domain.vo.SocialLink;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -63,10 +64,22 @@ public class Scholar {
     @Column(nullable = false)
     private Boolean isPublic;
 
+    @Column(columnDefinition = "TEXT")
+    private String quote;
+
     @OneToMany(mappedBy = "scholar")
     private List<ScholarBadge> scholarsBadges;
 
     @OneToMany(mappedBy = "scholar")
     private List<ScholarEnrollment> scholarEnrollments;
+
+    @OneToMany(mappedBy = "scholar")
+    private List<ScholarAchievement> scholarAchievements;
+
+    @OneToMany(mappedBy = "scholar")
+    private List<Transcript> transcripts;
+
+    @OneToMany(mappedBy = "scholar")
+    private List<Certificate> certificates;
 }
 

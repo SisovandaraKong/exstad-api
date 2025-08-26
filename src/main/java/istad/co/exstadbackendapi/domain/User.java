@@ -57,6 +57,4 @@ public class User extends Auditable {
     @OneToMany(mappedBy = "instructor")
     private List<InstructorClass> instructorClasses;
 
-    @OneToMany(mappedBy = "admin")
-    private List<Achievement> achievements;
 }
