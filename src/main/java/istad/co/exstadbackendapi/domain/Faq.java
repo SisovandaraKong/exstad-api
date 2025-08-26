@@ -9,15 +9,13 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SocialLink {
+public class Faq {
 
-    private int id;
+    private Integer id;
 
-    private String link;
+    private String question;
 
-    private String type;
-
-    private String title;
+    private String answer;
 
     private Boolean isActive;
 }

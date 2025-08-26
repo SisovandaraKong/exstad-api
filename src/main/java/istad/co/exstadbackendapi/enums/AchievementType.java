@@ -1,8 +1,6 @@
 package istad.co.exstadbackendapi.enums;
 
 public enum AchievementType {
-
-    COURSE,
-    SCHOLARSHIP,
-    PROJECT
+    MINI_PROJECT,
+    FINAL_PROJECT,
 }

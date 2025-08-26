@@ -17,4 +17,15 @@ public class ScholarAchievement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column(nullable = false, unique = true)
+    private String uuid;
+
+    @ManyToOne
+    @JoinColumn(name = "scholar_id")
+    private Scholar scholar;
+
+    @ManyToOne
+    @JoinColumn(name = "achievement_id")
+    private Achievement achievement;
 }

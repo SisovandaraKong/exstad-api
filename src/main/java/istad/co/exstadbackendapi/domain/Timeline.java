@@ -7,17 +7,15 @@ import lombok.Setter;
 
 @Setter
 @Getter
-@NoArgsConstructor
 @AllArgsConstructor
-public class SocialLink {
+@NoArgsConstructor
+public class Timeline {
 
-    private int id;
-
-    private String link;
-
-    private String type;
+    private Integer id;
 
     private String title;
+
+    private String description;
 
     private Boolean isActive;
 }
