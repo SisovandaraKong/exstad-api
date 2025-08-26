@@ -1,14 +1,13 @@
 package istad.co.exstadbackendapi.domain;
 
 import istad.co.exstadbackendapi.audit.Auditable;
-import istad.co.exstadbackendapi.enums.ProgramLevel;
+import istad.co.exstadbackendapi.domain.vo.*;
 import istad.co.exstadbackendapi.enums.Status;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.JdbcType;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
