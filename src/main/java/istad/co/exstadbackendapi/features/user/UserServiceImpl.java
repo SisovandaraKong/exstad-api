@@ -2,8 +2,8 @@ package istad.co.exstadbackendapi.features.user;
 
 import istad.co.exstadbackendapi.domain.User;
 import istad.co.exstadbackendapi.features.auth.AuthService;
-import istad.co.exstadbackendapi.features.auth.dto.RegisterRequest;
 import istad.co.exstadbackendapi.features.auth.dto.KeycloakUserResponse;
+import istad.co.exstadbackendapi.features.auth.dto.RegisterRequest;
 import istad.co.exstadbackendapi.features.user.dto.UserRequest;
 import istad.co.exstadbackendapi.features.user.dto.UserResponse;
 import istad.co.exstadbackendapi.mapper.UserMapper;
@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -20,6 +22,13 @@ public class UserServiceImpl implements UserService {
     private final AuthService authService;
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+
+    @Override
+    public List<UserResponse> getAllUsers() {
+        return userRepository.findAll().stream().map(
+                userMapper::fromUser
+        ).toList();
+    }
 
     @Transactional
     @Override
