@@ -1,6 +1,7 @@
 package istad.co.exstadbackendapi.domain;
 
 import istad.co.exstadbackendapi.audit.Auditable;
+import istad.co.exstadbackendapi.domain.vo.*;
 import istad.co.exstadbackendapi.enums.ProgramLevel;
 import istad.co.exstadbackendapi.enums.ProgramType;
 import jakarta.persistence.*;
@@ -11,7 +12,6 @@ import lombok.Setter;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Entity

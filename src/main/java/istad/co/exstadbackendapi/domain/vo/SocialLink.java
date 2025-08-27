@@ -1,4 +1,4 @@
-package istad.co.exstadbackendapi.domain;
+package istad.co.exstadbackendapi.domain.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,13 +9,15 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TranscriptData {
+public class SocialLink {
 
-    private Integer id;
+    private int id;
+
+    private String link;
+
+    private String type;
 
     private String title;
-
-    private String description;
 
     private Boolean isActive;
 }

@@ -1,23 +1,21 @@
-package istad.co.exstadbackendapi.domain;
+package istad.co.exstadbackendapi.domain.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Map;
+
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SocialLink {
+public class Requirement {
 
-    private int id;
+    private Integer id;
 
-    private String link;
-
-    private String type;
-
-    private String title;
+    private Map<String, String> requirements;
 
     private Boolean isActive;
 }

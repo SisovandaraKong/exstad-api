@@ -1,4 +1,4 @@
-package istad.co.exstadbackendapi.domain;
+package istad.co.exstadbackendapi.domain.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,13 +9,12 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Faq {
-
+public class Curriculum {
     private Integer id;
 
-    private String question;
+    private String title;
 
-    private String answer;
+    private String description;
 
     private Boolean isActive;
 }
