@@ -40,6 +40,10 @@ public class Program extends Auditable {
     @Column(length = 100)
     private String bgColor;
 
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(columnDefinition = "jsonb")
+    private Highlight highlight;
+
     private String curriculumPdfUrl;
 
     @JdbcTypeCode(SqlTypes.JSON)

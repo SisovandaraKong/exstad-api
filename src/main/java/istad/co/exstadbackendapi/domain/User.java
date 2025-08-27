@@ -1,6 +1,7 @@
 package istad.co.exstadbackendapi.domain;
 
 import istad.co.exstadbackendapi.audit.Auditable;
+import istad.co.exstadbackendapi.enums.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,6 +31,9 @@ public class User extends Auditable {
     private String username;
 
     @Column(nullable = false)
+    private Role role;
+
+    @Column(nullable = false)
     private String email;
 
     @Column(length = 50, nullable = false)
@@ -52,5 +56,4 @@ public class User extends Auditable {
 
     @OneToMany(mappedBy = "instructor")
     private List<InstructorClass> instructorClasses;
-
 }

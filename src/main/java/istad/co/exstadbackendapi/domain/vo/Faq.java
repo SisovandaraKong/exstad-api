@@ -5,17 +5,27 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Faq {
 
-    private Integer id;
+    private List<FaqSection> faq;
 
+}
+
+class FaqSection {
+    private String title;
+    private List<FaqItem> faqs;
+
+}
+
+class FaqItem {
+    private int id;
     private String question;
-
     private String answer;
 
-    private Boolean isActive;
 }

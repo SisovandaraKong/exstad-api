@@ -1,5 +1,6 @@
 package istad.co.exstadbackendapi.features.auth;
 
+import istad.co.exstadbackendapi.enums.Role;
 import istad.co.exstadbackendapi.features.auth.dto.KeycloakUserResponse;
 import istad.co.exstadbackendapi.features.auth.dto.LoginRequest;
 import istad.co.exstadbackendapi.features.auth.dto.RegisterRequest;
@@ -9,13 +10,13 @@ import jakarta.ws.rs.core.Response;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.keycloak.admin.client.Keycloak;
+import org.keycloak.admin.client.resource.UserResource;
 import org.keycloak.representations.idm.CredentialRepresentation;
+import org.keycloak.representations.idm.RoleRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -42,14 +43,15 @@ public class AuthServiceImpl implements AuthService {
     @Value("${keycloak.server-url}")
     private String authServerUrl;
 
-    @Value("${keycloak.client-id}")
+    @Value("${keycloak.frontend-client-id}")
     private String clientId;
 
-    @Value("${keycloak.secret-id}")
+    @Value("${keycloak.frontend-secret-id}")
     private String clientSecret;
 
     @Override
     public KeycloakUserResponse register(RegisterRequest registerRequest) {
+        log.info("Register request: {}", registerRequest);
         if (!registerRequest.password().equals(registerRequest.cfPassword())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Passwords do not match");
         }
@@ -61,7 +63,6 @@ public class AuthServiceImpl implements AuthService {
                 .create(user)){
 
             if(response.getStatus() == HttpStatus.CREATED.value()){
-
                 UserRepresentation createdUser = keycloak.realm(realm)
                         .users()
                         .search(user.getUsername())
@@ -69,6 +70,10 @@ public class AuthServiceImpl implements AuthService {
                         .findFirst()
                         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found after creation"));
 
+                if(!assignRole(createdUser.getId(), registerRequest.role() )){
+                    log.error("Cannot assign role {}", createdUser.getUsername());
+                    throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Cannot assign role " + createdUser.getUsername());
+                }
                 return authMapper.toKeycloakUserResponse(createdUser);
             }
             throw new ResponseStatusException(HttpStatus.valueOf(response.getStatus()), "Failed to create user");
@@ -92,10 +97,6 @@ public class AuthServiceImpl implements AuthService {
     private TokenResponse getTokenFromKeycloak(LoginRequest loginRequest) {
         String tokenUrl = String.format("%s/realms/%s/protocol/openid-connect/token",
                 authServerUrl, realm);
-
-        log.info("Attempting to connect to Keycloak URL: {}", tokenUrl);
-        log.info("Client ID: {}", clientId);
-        log.info("Realm: {}", realm);
 
         MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
         formData.add("grant_type", "password");
@@ -185,6 +186,21 @@ public class AuthServiceImpl implements AuthService {
             }
             throw new ResponseStatusException(HttpStatus.valueOf(response.getStatus()), response.getEntity().toString());
         }
+    }
+
+    public boolean assignRole(String uuid, Role role){
+        UserResource user = keycloak.realm(realm).users().get(uuid);
+        if(user == null){
+            log.error("User not found: {}", uuid);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+        }
+        RoleRepresentation roleRepresentation = keycloak.realm(realm).roles().get(role.name()).toRepresentation();
+        if(roleRepresentation == null){
+            log.error("Cannot find role: {}", role.name());
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Role not found");
+        }
+        user.roles().realmLevel().add(List.of(roleRepresentation));
+        return true;
     }
 
     @Override
