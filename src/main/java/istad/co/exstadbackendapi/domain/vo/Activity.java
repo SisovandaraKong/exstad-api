@@ -10,12 +10,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Activity {
-
-    private Integer id;
-
+    private Long id;
     private String title;
-
+    private String subtitle;
     private String description;
-
-    private Boolean isActive;
+    private String image;
 }

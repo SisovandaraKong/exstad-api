@@ -1,10 +1,7 @@
 package istad.co.exstadbackendapi.domain;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
@@ -13,6 +10,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Table(name = "universities")
 public class University {
 
@@ -31,6 +29,9 @@ public class University {
 
     @Column(length = 150)
     private String shortName;
+
+    @Column(nullable = false)
+    private Boolean isDeleted;
 
     @OneToMany(mappedBy = "university")
     private List<Scholar> scholars;

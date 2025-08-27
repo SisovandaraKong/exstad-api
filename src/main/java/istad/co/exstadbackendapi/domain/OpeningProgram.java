@@ -61,33 +61,33 @@ public class OpeningProgram extends Auditable {
 
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(columnDefinition = "jsonb")
-    private Detail detail;
+    private List<Detail> details;
 
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(columnDefinition = "jsonb")
-    private Timeline timeline;
+    private List<Timeline> timelines;
 
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(columnDefinition = "jsonb")
-    private Curriculum curriculum;
+    private List<Curriculum> curricula;
 
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(columnDefinition = "jsonb")
-    private Roadmap roadmap;
+    private List<Roadmap> roadmaps;
 
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(columnDefinition = "jsonb")
-    private LearningOutcome learningOutcome;
+    private List<LearningOutcome> learningOutcomes;
 
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(columnDefinition = "jsonb")
-    private Requirement requirement;
+    private List<Requirement> requirements;
 
     private String duration;
 
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(columnDefinition = "jsonb")
-    private Activity activity;
+    private List<Activity> activities;
 
     private String curriculumPdfUri;
 
