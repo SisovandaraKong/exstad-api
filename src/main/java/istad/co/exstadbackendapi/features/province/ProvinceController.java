@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/provinces")
@@ -16,6 +18,7 @@ public class ProvinceController {
     @GetMapping
     public ResponseEntity<?> getAllProvinces() {
         return new ResponseEntity<>(
-                provinceService.getAllProvinces(), HttpStatus.OK);
+                Map.of("provinces",provinceService.getAllProvinces()),
+                HttpStatus.OK);
     }
 }

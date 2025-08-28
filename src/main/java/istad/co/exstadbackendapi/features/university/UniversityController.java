@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/universities")
@@ -18,7 +20,8 @@ public class UniversityController {
     @GetMapping
     public ResponseEntity<?> getUniversities() {
         return new ResponseEntity<>(
-                universityService.getAllUniversities(), HttpStatus.OK);
+                Map.of("universities",universityService.getAllUniversities()),
+                HttpStatus.OK);
     }
 
     @GetMapping("/{uuid}")
