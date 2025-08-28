@@ -9,7 +9,8 @@ import org.mapstruct.Mappings;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {
-
+    @Mapping(target = "audit", source = "user")
     UserResponse fromUser(User user);
+
     User toUser(UserRequest userRequest);
 }

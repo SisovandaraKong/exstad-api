@@ -1,5 +1,6 @@
 package istad.co.exstadbackendapi.domain;
 
+import istad.co.exstadbackendapi.audit.Auditable;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Table(name = "provinces")
-public class Province {
+public class Province extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
