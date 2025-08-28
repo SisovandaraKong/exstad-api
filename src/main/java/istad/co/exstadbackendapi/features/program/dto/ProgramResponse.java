@@ -1,9 +1,11 @@
 package istad.co.exstadbackendapi.features.program.dto;
 
+import istad.co.exstadbackendapi.audit.Auditable;
 import istad.co.exstadbackendapi.domain.vo.*;
 import istad.co.exstadbackendapi.enums.ProgramLevel;
 import istad.co.exstadbackendapi.enums.ProgramType;
 
+import java.time.Instant;
 import java.util.List;
 
 public record ProgramResponse(
@@ -23,6 +25,10 @@ public record ProgramResponse(
         ProgramType programType,
         List<Curriculum> curricula,
         ProgramLevel programLevel,
-        Boolean isDeleted
+        Boolean isDeleted,
+        String createdBy,
+        Instant createdAt,
+        String updatedBy,
+        Instant updatedAt
 ) {
 }

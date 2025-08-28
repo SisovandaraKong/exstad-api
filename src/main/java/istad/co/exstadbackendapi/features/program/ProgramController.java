@@ -1,12 +1,13 @@
 package istad.co.exstadbackendapi.features.program;
 
+import istad.co.exstadbackendapi.features.program.dto.ProgramRequest;
+import istad.co.exstadbackendapi.features.program.dto.ProgramUpdate;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -27,5 +28,35 @@ public class ProgramController {
     public ResponseEntity<?> getProgramByUuid(@PathVariable String uuid) {
         return new ResponseEntity<>(
                 programService.getProgramByUuid(uuid), HttpStatus.OK);
+    }
+
+    @GetMapping("/title/{title}")
+    public ResponseEntity<?> getProgramByTitle(@PathVariable String title) {
+        return new ResponseEntity<>(
+                programService.getProgramByTitle(title), HttpStatus.OK);
+    }
+
+    @PostMapping
+    public ResponseEntity<?> createProgram(@RequestBody @Valid ProgramRequest programRequest){
+        return new ResponseEntity<>(
+                programService.createProgram(programRequest), HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{uuid}")
+    public ResponseEntity<?> updateProgram(@PathVariable String uuid, @RequestBody @Valid ProgramUpdate programUpdate){
+        return new ResponseEntity<>(
+                programService.updateProgram(uuid, programUpdate), HttpStatus.OK);
+    }
+
+    @PutMapping("/{uuid}/delete")
+    public ResponseEntity<?> deleteProgram(@PathVariable String uuid) {
+        return new ResponseEntity<>(
+                programService.deleteProgram(uuid), HttpStatus.OK);
+    }
+
+    @PutMapping("/{uuid}/restore")
+    public ResponseEntity<?> restoreProgram(@PathVariable String uuid) {
+        return new ResponseEntity<>(
+                programService.restoreProgram(uuid), HttpStatus.OK);
     }
 }
