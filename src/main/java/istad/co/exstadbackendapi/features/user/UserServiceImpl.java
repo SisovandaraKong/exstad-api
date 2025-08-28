@@ -8,7 +8,10 @@ import istad.co.exstadbackendapi.features.user.dto.UserRequest;
 import istad.co.exstadbackendapi.features.user.dto.UserResponse;
 import istad.co.exstadbackendapi.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
@@ -17,6 +20,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserServiceImpl implements UserService {
 
     private final AuthService authService;
@@ -55,5 +59,37 @@ public class UserServiceImpl implements UserService {
         user = userRepository.save(user);
 
         return userMapper.fromUser(user);
+    }
+
+    @Override
+    public UserResponse getUserByUsername(String username) {
+        return userMapper.fromUser(userRepository.findByUsername(username).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found")
+        ));
+    }
+
+    @Override
+    public UserResponse getCurrentUser() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username;
+        if (principal instanceof org.springframework.security.oauth2.jwt.Jwt jwt) {
+            username = jwt.getClaimAsString("preferred_username");
+            if (username == null) {
+                username = jwt.getClaimAsString("email");
+            }
+        } else if (principal instanceof UserDetails userDetails) {
+            username = userDetails.getUsername();
+        } else {
+            username = principal.toString();
+        }
+
+
+        return getUserByUsername(username);
+    }
+
+    @Override
+    public String getUsernameByUuid(String uuid) {
+        return userRepository.findByUuid(uuid).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found")).getUsername();
+
     }
 }

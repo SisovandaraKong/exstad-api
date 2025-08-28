@@ -19,6 +19,11 @@ public class UserController {
         return userService.getAllUsers();
     }
 
+    @GetMapping("/me")
+    public UserResponse getCurrentUser() {
+        return userService.getCurrentUser();
+    }
+
     @PostMapping
     public UserResponse createUser(@RequestBody UserRequest userRequest) {
         return userService.createUser(userRequest);
