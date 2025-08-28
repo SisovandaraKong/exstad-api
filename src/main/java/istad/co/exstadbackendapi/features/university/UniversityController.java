@@ -11,6 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "/api/v1/universities")
 @RequiredArgsConstructor
+@CrossOrigin("http://localhost:3000")
 public class UniversityController {
 
     private final UniversityService universityService;
