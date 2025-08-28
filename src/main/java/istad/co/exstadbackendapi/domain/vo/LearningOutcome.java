@@ -5,17 +5,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class LearningOutcome {
 
-    private Integer id;
-
+    private int id;
     private String title;
-
-    private String description;
-
-    private Boolean isActive;
+    private String subtitle;
+    private List<String> description;
 }

@@ -1,10 +1,8 @@
 package istad.co.exstadbackendapi.domain;
 
+import istad.co.exstadbackendapi.audit.Auditable;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
@@ -13,8 +11,9 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Table(name = "provinces")
-public class Province {
+public class Province extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,9 +28,13 @@ public class Province {
     @Column(unique = true, nullable = false, length = 150)
     private String khmerName;
 
+    @Column(nullable = false)
+    private Boolean isDeleted;
+
     @OneToMany(mappedBy = "province")
     private List<CurrentAddress> currentAddresses;
 
     @OneToMany(mappedBy = "province")
     private List<Scholar> scholars;
+
 }

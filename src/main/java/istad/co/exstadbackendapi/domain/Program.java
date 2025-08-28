@@ -42,37 +42,42 @@ public class Program extends Auditable {
 
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(columnDefinition = "jsonb")
-    private Highlight highlight;
+    private List<Highlight> highlights;
+
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(columnDefinition = "jsonb")
+    private List<ProgramOverview> programOverviews;
 
     private String curriculumPdfUrl;
 
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(columnDefinition = "jsonb")
-    private Roadmap roadmap;
+    private List<Roadmap> roadmaps;
 
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(columnDefinition = "jsonb")
-    private Faq faq;
+    private List<Faq> faqs;
 
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(columnDefinition = "jsonb")
-    private Requirement requirement;
+    private List<Requirement> requirements;
 
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(columnDefinition = "jsonb")
-    private LearningOutcome learningOutcome;
+    private List<LearningOutcome> learningOutcomes;
 
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(columnDefinition = "jsonb")
-    private Timeline timeline;
+    private List<Timeline> timelines;
 
     @Enumerated(EnumType.STRING)
     private ProgramType programType;
 
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(columnDefinition = "jsonb")
-    private Curriculum curriculum;
+    private List<Curriculum> curricula;
 
+    @Enumerated(EnumType.STRING)
     private ProgramLevel programLevel;
 
     @Column(nullable = false)
