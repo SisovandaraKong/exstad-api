@@ -33,9 +33,9 @@ public class UniversityController {
                 universityService.createUniversity(universityRequest), HttpStatus.CREATED);
     }
 
-    @PatchMapping("{uuid}")
-    public UniversityResponse updateUniversity(@PathVariable String uuid, @RequestBody UniversityRequestUpdate universityRequest) {
-        return universityService.updateUniversity(uuid, universityRequest);
+    @PutMapping("/{uuid}/delete")
+    public BasedMessage deleteUniversityByUuid(@PathVariable String uuid) {
+        return universityService.deleteUniversityByUuid(uuid);
     }
 
 
