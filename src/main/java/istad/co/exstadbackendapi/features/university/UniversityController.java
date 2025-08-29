@@ -16,8 +16,15 @@ public class UniversityController {
 
     private final UniversityService universityService;
     @GetMapping
-    public List<UniversityResponse> getUniversities() {
-        return universityService.getAllUniversities();
+    public ResponseEntity<?> getUniversities() {
+        return new ResponseEntity<>(
+                universityService.getAllUniversities(), HttpStatus.OK);
+    }
+
+    @GetMapping("/{uuid}")
+    public ResponseEntity<?> getUniversityByUuid(@PathVariable String uuid) {
+        return new ResponseEntity<>(
+                universityService.getUniversityByUuid(uuid), HttpStatus.OK);
     }
 
     @PostMapping
