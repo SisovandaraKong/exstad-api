@@ -1,22 +1,25 @@
 package istad.co.exstadbackendapi.domain.vo;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Timeline {
-    private int id;
+
+    private String uuid = UUID.randomUUID().toString();
 
     private LocalDate date;
 
     private String title;
 
-    private String description;
 }

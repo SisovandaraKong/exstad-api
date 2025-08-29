@@ -92,4 +92,16 @@ public class ProgramServiceImpl implements ProgramService {
         programRepository.undeleteByUuid(uuid);
         return new BasedMessage("Program restored successfully");
     }
+
+    @Transactional
+    @Override
+    public BasedMessage hardDeleteProgram(String uuid) {
+        if (!programRepository.existsByUuid(uuid)) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Program not found"
+            );
+        }
+        programRepository.deleteByUuid(uuid);
+        return new BasedMessage("Program hard deleted successfully");
+    }
 }

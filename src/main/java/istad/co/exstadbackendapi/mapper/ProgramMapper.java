@@ -15,7 +15,7 @@ import org.mapstruct.MappingTarget;
 })
 public interface ProgramMapper {
 
-//    @Mapping(target = "audit", source = "program")
+    @Mapping(target = "audit", source = "program")
     ProgramResponse toProgramResponse(Program program);
 
     Program fromProgramRequest(ProgramRequest programRequest);

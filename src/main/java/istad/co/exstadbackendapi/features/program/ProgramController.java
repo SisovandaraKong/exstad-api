@@ -59,4 +59,10 @@ public class ProgramController {
         return new ResponseEntity<>(
                 programService.restoreProgram(uuid), HttpStatus.OK);
     }
+
+    @DeleteMapping("/{uuid}")
+    public ResponseEntity<?> hardDeleteProgram(@PathVariable String uuid) {
+        return new ResponseEntity<>(
+                programService.hardDeleteProgram(uuid), HttpStatus.OK);
+    }
 }

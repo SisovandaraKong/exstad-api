@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.UUID;
 
 @Setter
 @Getter
@@ -21,12 +22,11 @@ public class Roadmap {
 @NoArgsConstructor
 @AllArgsConstructor
 class Node {
-    private String id;
+    private String uuid = UUID.randomUUID().toString();
     private NodeData data;
     private Position position;
     private int width;
     private int height;
-
 }
 
 @Setter
@@ -58,9 +58,8 @@ class Position {
 @NoArgsConstructor
 @AllArgsConstructor
 class Edge {
-    private String id;
+    private String uuid = UUID.randomUUID().toString();
     private String source;
     private String target;
     private boolean animated;
-
 }
