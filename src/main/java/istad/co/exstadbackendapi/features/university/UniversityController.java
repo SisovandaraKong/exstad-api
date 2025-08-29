@@ -28,8 +28,9 @@ public class UniversityController {
     }
 
     @PostMapping
-    public UniversityResponse createUniversity(@RequestBody UniversityRequest universityRequest) {
-        return universityService.createUniversity(universityRequest);
+    public ResponseEntity<?> createUniversity(@RequestBody @Valid UniversityRequest universityRequest){
+        return new ResponseEntity<>(
+                universityService.createUniversity(universityRequest), HttpStatus.CREATED);
     }
 
     @PatchMapping("{uuid}")
