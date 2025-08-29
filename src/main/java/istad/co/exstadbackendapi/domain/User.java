@@ -33,7 +33,7 @@ public class User extends Auditable {
     @Column(nullable = false)
     private Role role;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Column(length = 50, nullable = false)

@@ -14,4 +14,5 @@ public interface ProgramService {
     ProgramResponse createProgram(ProgramRequest programRequest);
     ProgramResponse updateProgram(String uuid, ProgramUpdate programUpdate);
     BasedMessage deleteProgram(String uuid);
+    BasedMessage restoreProgram(String uuid);
 }

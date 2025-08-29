@@ -16,13 +16,19 @@ public class Faq {
     private List<FaqSection> faq;
 
 }
-
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 class FaqSection {
     private String title;
     private List<FaqItem> faqs;
 
 }
-
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 class FaqItem {
     private int id;
     private String question;

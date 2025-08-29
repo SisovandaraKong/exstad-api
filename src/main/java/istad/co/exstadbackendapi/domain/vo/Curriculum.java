@@ -17,6 +17,10 @@ public class Curriculum {
     private List<CurriculumType> curriculumType;
 }
 
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 class CurriculumType {
     private int id;
     private int order;

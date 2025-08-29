@@ -16,7 +16,10 @@ public class Roadmap {
     private List<Edge> edges;
 
 }
-
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 class Node {
     private String id;
     private NodeData data;
@@ -26,6 +29,10 @@ class Node {
 
 }
 
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 class NodeData {
     private int id_courses;
     private int typer_Courses;
@@ -37,12 +44,19 @@ class NodeData {
 
 }
 
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 class Position {
     private double x;
     private double y;
 
 }
-
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 class Edge {
     private String id;
     private String source;
