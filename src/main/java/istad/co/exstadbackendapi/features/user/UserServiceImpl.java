@@ -68,6 +68,14 @@ public class UserServiceImpl implements UserService {
         ));
     }
 
+
+    @Override
+    public UserResponse getUserByUsername(String username) {
+        return userMapper.fromUser(userRepository.findByUsername(username).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found")
+        ));
+    }
+
     @Override
     public UserResponse getCurrentUser() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
