@@ -13,4 +13,7 @@ public interface UserService {
     String getUsernameByUuid(String uuid);
     UserResponse createUser(UserRequest userRequest);
 
+    UserResponse getUserByUuid(String uuid);
+    UserResponse getUserByEmail(String email);
+
 }

@@ -6,19 +6,24 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.UUID;
 
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Curriculum {
-    private int id;
+    private String uuid = UUID.randomUUID().toString();
     private String title;
     private List<CurriculumType> curriculumType;
 }
 
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 class CurriculumType {
-    private int id;
+    private String uuid = UUID.randomUUID().toString();
     private int order;
     private String title;
     private String subtitle;
