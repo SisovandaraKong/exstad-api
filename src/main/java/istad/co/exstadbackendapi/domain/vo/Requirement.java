@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.Map;
 
 @Setter
@@ -13,9 +14,8 @@ import java.util.Map;
 @AllArgsConstructor
 public class Requirement {
 
-    private Integer id;
-
-    private Map<String, String> requirements;
-
-    private Boolean isActive;
+    private int id;
+    private String title;
+    private String subtitle;
+    private List<String> description;
 }

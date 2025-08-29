@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
-public record UniversityRequest(
+public record UniversityUpdate(
         @NotBlank(message = "English name is required")
         @Size(min = 2, max = 200, message = "English name must be between 2 and 200 characters")
         @Pattern(regexp = "^[a-zA-Z\\s.'-]+$", message = "English name can only contain letters, spaces, dots, apostrophes, and hyphens")

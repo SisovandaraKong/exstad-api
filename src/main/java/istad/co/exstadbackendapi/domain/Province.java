@@ -28,9 +28,13 @@ public class Province extends Auditable {
     @Column(unique = true, nullable = false, length = 150)
     private String khmerName;
 
+    @Column(nullable = false)
+    private Boolean isDeleted;
+
     @OneToMany(mappedBy = "province")
     private List<CurrentAddress> currentAddresses;
 
     @OneToMany(mappedBy = "province")
     private List<Scholar> scholars;
+
 }

@@ -10,12 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Timeline {
-
-    private Integer id;
-
+    private int id;
     private String title;
-
-    private String description;
-
-    private Boolean isActive;
+    private String date;
 }

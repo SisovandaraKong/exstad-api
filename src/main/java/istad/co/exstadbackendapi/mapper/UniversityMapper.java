@@ -1,20 +1,19 @@
 package istad.co.exstadbackendapi.mapper;
 
-import istad.co.exstadbackendapi.audit.AuditableMapper;
 import istad.co.exstadbackendapi.domain.University;
-import istad.co.exstadbackendapi.features.university.dto.UniversityRequest;
-import istad.co.exstadbackendapi.features.university.dto.UniversityRequestUpdate;
 import istad.co.exstadbackendapi.features.university.dto.UniversityResponse;
-import org.mapstruct.*;
+import istad.co.exstadbackendapi.features.university.dto.UniversityUpdate;
+import org.mapstruct.BeanMapping;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
-@Mapper(componentModel = "spring", uses = {AuditableMapper.class})
+@Mapper(componentModel = "spring")
 public interface UniversityMapper {
 
-    University toUniversity(UniversityRequest universityRequest);
-
     @Mapping(target = "audit", source = "university")
-    UniversityResponse fromUniversity(University university);
+    UniversityResponse toUniversityResponse(University university);
 
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void toUniversityPartially(@MappingTarget University university, UniversityRequestUpdate universityRequestUpdate);
+    @BeanMapping(nullValuePropertyMappingStrategy = org.mapstruct.NullValuePropertyMappingStrategy.IGNORE)
+    void updateUniversityFromDto(UniversityUpdate universityUpdate,@MappingTarget University entity);
 }

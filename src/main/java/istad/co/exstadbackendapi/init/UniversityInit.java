@@ -54,7 +54,7 @@ public class UniversityInit {
                     build("CamEd Business School", "វិទ្យាស្ថានអាជីវកម្មកែមអេដ", "CamEd"),
                     build("Economics and Finance Institute", "វិទ្យាស្ថានសេដ្ឋកិច្ចនិងហិរញ្ញវត្ថុ", "EFI"),
                     build("Institute of Technology of Cambodia", "វិទ្យាស្ថានបច្ចេកវិទ្យាកម្ពុជា", "ITC"),
-                    build("Institute of Science and Technology Advanced Development", "វិទ្យាស្ថានអាយស្តាដ", "ISTAD"),
+                    build("ISTAD", "វិទ្យាស្ថានអាយស្តាដ", "ISTAD"),
                     build("National Institute of Business", "វិទ្យាស្ថានអាជីវកម្មជាតិ", "NIB"),
                     build("National Institute of Education", "វិទ្យាស្ថានអប់រំជាតិ", "NIE"),
                     build("National Polytechnic Institute of Cambodia", "វិទ្យាស្ថានប៉ូលីតេកនិកជាតិ", "NPIC"),
@@ -76,6 +76,7 @@ public class UniversityInit {
                 .englishName(english)
                 .khmerName(khmer)
                 .shortName(shortName)
+                .isDeleted(false)
                 .build();
     }
 }

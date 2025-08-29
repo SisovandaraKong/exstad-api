@@ -12,11 +12,11 @@ public class AuthController {
 
     private final AuthService authService;
 
-    @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/register")
-    public KeycloakUserResponse register(@RequestBody RegisterRequest registerRequest) {
-        return authService.register(registerRequest);
-    }
+//    @ResponseStatus(HttpStatus.CREATED)
+//    @PostMapping("/register")
+//    public KeycloakUserResponse register(@RequestBody RegisterRequest registerRequest) {
+//        return authService.register(registerRequest);
+//    }
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/login")

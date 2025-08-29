@@ -56,5 +56,4 @@ public class User extends Auditable {
 
     @OneToMany(mappedBy = "instructor")
     private List<InstructorClass> instructorClasses;
-
 }

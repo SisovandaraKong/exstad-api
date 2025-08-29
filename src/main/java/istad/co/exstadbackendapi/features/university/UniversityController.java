@@ -1,20 +1,20 @@
 package istad.co.exstadbackendapi.features.university;
 
+import istad.co.exstadbackendapi.base.BasedMessage;
 import istad.co.exstadbackendapi.features.university.dto.UniversityRequest;
-import istad.co.exstadbackendapi.features.university.dto.UniversityRequestUpdate;
-import istad.co.exstadbackendapi.features.university.dto.UniversityResponse;
+import istad.co.exstadbackendapi.features.university.dto.UniversityUpdate;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
-@RequestMapping(path = "/api/v1/universities")
 @RequiredArgsConstructor
-@CrossOrigin("http://localhost:3000")
+@RequestMapping("/api/v1/universities")
 public class UniversityController {
-
     private final UniversityService universityService;
+
     @GetMapping
     public ResponseEntity<?> getUniversities() {
         return new ResponseEntity<>(
@@ -38,6 +38,9 @@ public class UniversityController {
         return universityService.deleteUniversityByUuid(uuid);
     }
 
-
-
+    @PutMapping("/{uuid}")
+    public ResponseEntity<?> updateUniversityByUuid(@PathVariable String uuid, @RequestBody @Valid UniversityUpdate universityUpdate) {
+        return new ResponseEntity<>(
+                universityService.updateUniversityByUuid(uuid, universityUpdate), HttpStatus.OK);
+    }
 }

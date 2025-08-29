@@ -31,6 +31,9 @@ public class University extends Auditable {
     @Column(length = 150)
     private String shortName;
 
+    @Column(nullable = false)
+    private Boolean isDeleted;
+
     @OneToMany(mappedBy = "university")
     private List<Scholar> scholars;
 }

@@ -1,6 +1,5 @@
 package istad.co.exstadbackendapi.mapper;
 
-import istad.co.exstadbackendapi.audit.AuditableMapper;
 import istad.co.exstadbackendapi.domain.User;
 import istad.co.exstadbackendapi.features.user.dto.UserRequest;
 import istad.co.exstadbackendapi.features.user.dto.UserResponse;
@@ -8,9 +7,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 
-@Mapper(componentModel = "spring",  uses = {AuditableMapper.class})
+@Mapper(componentModel = "spring")
 public interface UserMapper {
-
     @Mapping(target = "audit", source = "user")
     UserResponse fromUser(User user);
 

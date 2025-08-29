@@ -54,6 +54,7 @@ public class ProvinceInit {
                 .uuid(UUID.randomUUID().toString())
                 .englishName(english)
                 .khmerName(khmer)
+                .isDeleted(false)
                 .build();
     }
 }
