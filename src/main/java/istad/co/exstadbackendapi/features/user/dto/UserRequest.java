@@ -11,7 +11,12 @@ public record UserRequest(
         String cfPassword,
         String englishName,
         String khmerName,
-        String gender,
+
+        @NotNull(message = "Gender is required")
+        Gender gender,
+
+        @NotNull(message = "Date of birth is required")
+        @Past(message = "Date of birth must be in the past")
         LocalDate dob,
         Role role
 ) {
