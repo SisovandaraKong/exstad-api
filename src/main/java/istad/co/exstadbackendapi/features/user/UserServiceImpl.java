@@ -70,10 +70,12 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public UserResponse getUserByUsername(String username) {
-        return userMapper.fromUser(userRepository.findByUsername(username).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found")
-        ));
+    public List<UserResponse> getAllUsers() {
+        List<User> users = userRepository.findAll();
+        return users
+                .stream()
+                .map(userMapper::fromUser)
+                .toList();
     }
 
     @Override
