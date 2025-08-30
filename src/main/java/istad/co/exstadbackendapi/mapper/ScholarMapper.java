@@ -3,9 +3,9 @@ package istad.co.exstadbackendapi.mapper;
 import istad.co.exstadbackendapi.audit.AuditableMapper;
 import istad.co.exstadbackendapi.domain.Scholar;
 import istad.co.exstadbackendapi.features.scholar.dto.ScholarRequest;
+import istad.co.exstadbackendapi.features.scholar.dto.ScholarRequestUpdate;
 import istad.co.exstadbackendapi.features.scholar.dto.ScholarResponse;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.mapstruct.*;
 
 @Mapper(componentModel = "spring", uses = {MapperHelper.class, AuditableMapper.class})
 public interface ScholarMapper {
@@ -28,4 +28,9 @@ public interface ScholarMapper {
     @Mapping(source = "province", target = "province", qualifiedByName = "toProvince")
     Scholar toScholar(ScholarRequest scholarRequest);
 
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(source = "university", target = "university", qualifiedByName = "toUniversity")
+    @Mapping(source = "currentAddress", target = "currentAddress", qualifiedByName = "toCurrentAddress")
+    @Mapping(source = "province", target = "province", qualifiedByName = "toProvince")
+    void toScholarPartially(ScholarRequestUpdate scholarRequestUpdate, @MappingTarget Scholar scholar);
 }

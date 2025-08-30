@@ -15,7 +15,7 @@ public interface CurrentAddressMapper
     CurrentAddress toCurrentAddress(CurrentAddressRequest currentAddressRequest);
 
     @Mapping(source = "province.englishName", target = "province")
-    @Mapping(target = "scholars", expression = "java(currentAddress.getScholars != null ? (long) currentAddress.getScholar.size() : 0L")
+    @Mapping(target = "scholars", expression = "java(currentAddress.getScholars() != null ? (long) currentAddress.getScholars().size() : 0L)")
     @Mapping(source = "currentAddress", target = "audit")
     CurrentAddressResponse fromCurrentAddress(CurrentAddress currentAddress);
 }

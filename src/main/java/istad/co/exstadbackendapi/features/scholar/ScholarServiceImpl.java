@@ -4,6 +4,7 @@ import istad.co.exstadbackendapi.domain.Scholar;
 import istad.co.exstadbackendapi.domain.User;
 import istad.co.exstadbackendapi.enums.Role;
 import istad.co.exstadbackendapi.features.scholar.dto.ScholarRequest;
+import istad.co.exstadbackendapi.features.scholar.dto.ScholarRequestUpdate;
 import istad.co.exstadbackendapi.features.scholar.dto.ScholarResponse;
 import istad.co.exstadbackendapi.features.user.UserRepository;
 import istad.co.exstadbackendapi.features.user.UserService;
@@ -14,6 +15,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -26,7 +30,6 @@ public class ScholarServiceImpl implements ScholarService {
 
     @Override
     public ScholarResponse createScholar(ScholarRequest scholarRequest) {
-
         UserRequest userRequest = new UserRequest(
                 scholarRequest.username(),
                 scholarRequest.email(),
@@ -58,5 +61,58 @@ public class ScholarServiceImpl implements ScholarService {
         );
         scholarMapper.toScholarPartially(scholarRequestUpdate, scholar);
         return scholarMapper.fromScholar(scholarRepository.save(scholar));
+    }
+
+    @Override
+    public List<ScholarResponse> createMultipleScholars(List<ScholarRequest> scholarRequests) {
+        List<ScholarResponse> scholarResponses = new ArrayList<>();
+        scholarRequests.forEach(
+                scholarRequest -> scholarResponses.add(createScholar(scholarRequest))
+        );
+        return scholarResponses;
+    }
+
+    @Override
+    public List<ScholarResponse> findAllScholars() {
+        return scholarRepository.findAll().stream().map(
+                scholarMapper::fromScholar
+        ).toList();
+    }
+
+    @Override
+    public ScholarResponse findByUuid(String uuid) {
+        return scholarMapper.fromScholar(
+                scholarRepository.findByUuid(uuid).orElseThrow(
+                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Scholar not found")
+                )
+        );
+    }
+
+    @Override
+    public ScholarResponse findByUsername(String username) {
+        return scholarMapper.fromScholar(
+                userRepository.findByUsernameAndRole(username, Role.SCHOLAR).orElseThrow(
+                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Scholar not found")
+                ).getScholar()
+        );
+    }
+
+    @Override
+    public List<ScholarResponse> searchByEnglishName(String englishName) {
+        return userRepository.findAllByEnglishNameAndRole(englishName, Role.SCHOLAR).stream().map(
+                user -> scholarMapper.fromScholar(user.getScholar())
+        ).toList();
+    }
+
+    @Override
+    public List<ScholarResponse> searchByUsername(String username) {
+        return userRepository.findAllByUsernameAndRole(username, Role.SCHOLAR).stream().map(
+                user -> scholarMapper.fromScholar(user.getScholar())
+        ).toList();
+    }
+
+    @Override
+    public Long countScholars() {
+        return scholarRepository.count();
     }
 }
