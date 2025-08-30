@@ -7,6 +7,7 @@ public record CurrentAddressResponse(
         String englishName,
         String khmerName,
         String province,
+        Long scholars,
         AuditableDto audit
 ) {
 }

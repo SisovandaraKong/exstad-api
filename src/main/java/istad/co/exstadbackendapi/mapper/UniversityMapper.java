@@ -13,6 +13,7 @@ import org.mapstruct.MappingTarget;
 public interface UniversityMapper {
 
     @Mapping(target = "audit", source = "university")
+    @Mapping(target = "scholars", expression = "java(university.getScholars() != null ? (long) university.getScholars().size() : 0L")
     UniversityResponse toUniversityResponse(University university);
 
     @BeanMapping(nullValuePropertyMappingStrategy = org.mapstruct.NullValuePropertyMappingStrategy.IGNORE)

@@ -8,6 +8,8 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring", uses = {AuditableMapper.class})
 public interface ProvinceMapper {
+
+    @Mapping(target = "scholars", expression = "java(province.getScholars() != null ? (long) province.getScholars().size() : 0L)" )
     @Mapping(target = "audit", source = "province")
     ProvinceResponse toProvinceResponse(Province province);
 }

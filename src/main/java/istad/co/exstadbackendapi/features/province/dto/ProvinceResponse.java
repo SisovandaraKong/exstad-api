@@ -6,6 +6,7 @@ public record ProvinceResponse(
         String uuid,
         String englishName,
         String khmerName,
+        Long scholars,
         AuditableDto audit
 ) {
 }
