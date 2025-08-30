@@ -1,13 +1,12 @@
 package istad.co.exstadbackendapi.mapper;
 
 import istad.co.exstadbackendapi.domain.CurrentAddress;
-import istad.co.exstadbackendapi.features.current_address.CurrentAddressMapperHelper;
 import istad.co.exstadbackendapi.features.current_address.dto.CurrentAddressRequest;
 import istad.co.exstadbackendapi.features.current_address.dto.CurrentAddressResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring", uses = {CurrentAddressMapperHelper.class})
+@Mapper(componentModel = "spring", uses = {MapperHelper.class})
 public interface CurrentAddressMapper
 {
 
