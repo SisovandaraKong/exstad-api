@@ -1,12 +1,13 @@
 package istad.co.exstadbackendapi.mapper;
 
+import istad.co.exstadbackendapi.audit.AuditableMapper;
 import istad.co.exstadbackendapi.domain.Scholar;
 import istad.co.exstadbackendapi.features.scholar.dto.ScholarRequest;
 import istad.co.exstadbackendapi.features.scholar.dto.ScholarResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring", uses = MapperHelper.class)
+@Mapper(componentModel = "spring", uses = {MapperHelper.class, AuditableMapper.class})
 public interface ScholarMapper {
 
     @Mapping(source = "university.englishName", target = "university")
@@ -19,6 +20,7 @@ public interface ScholarMapper {
     @Mapping(source = "user.gender", target = "gender")
     @Mapping(source = "user.dob", target = "dob")
     @Mapping(source = "user.role", target = "role")
+    @Mapping(source = "scholar", target = "audit")
     ScholarResponse fromScholar(Scholar scholar);
 
     @Mapping(source = "university", target = "university", qualifiedByName = "toUniversity")

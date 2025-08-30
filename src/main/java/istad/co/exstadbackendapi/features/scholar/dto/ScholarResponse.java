@@ -1,5 +1,6 @@
 package istad.co.exstadbackendapi.features.scholar.dto;
 
+import istad.co.exstadbackendapi.audit.Auditable;
 import istad.co.exstadbackendapi.enums.Gender;
 import istad.co.exstadbackendapi.enums.Role;
 
@@ -36,6 +37,8 @@ public record ScholarResponse(
 
         Boolean isPublic,
 
-        String quote
+        String quote,
+
+        Auditable audit
 ) {
 }

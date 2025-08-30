@@ -10,9 +10,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
-@Mapper(componentModel = "spring", uses = {
-        AuditableMapper.class
-})
+@Mapper(componentModel = "spring", uses = {AuditableMapper.class})
 public interface ProgramMapper {
 
     @Mapping(target = "audit", source = "program")
