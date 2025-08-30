@@ -10,4 +10,6 @@ public interface UniversityRepository extends JpaRepository<University, Integer>
     boolean existsByEnglishName(String englishName);
     boolean existsByKhmerName(String khmerName);
     boolean existsByUuid(String uuid);
+
+    Optional<University> findByEnglishName(String englishName);
 }
