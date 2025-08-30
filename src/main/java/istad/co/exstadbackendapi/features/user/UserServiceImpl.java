@@ -29,6 +29,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponse createUser(UserRequest userRequest) {
 
+        if(userRepository.existsByUsername(userRequest.username())){
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Username already exists");
+        }
+        if(userRepository.existsByEmail(userRequest.email())){
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already exists");
+        }
+
         if(!userRequest.password().equals(userRequest.cfPassword())){
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Passwords do not match");
         }
