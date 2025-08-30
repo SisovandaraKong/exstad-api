@@ -50,4 +50,13 @@ public class ScholarServiceImpl implements ScholarService {
         scholar.setIsDeleted(false);
         return scholarMapper.fromScholar(scholarRepository.save(scholar));
     }
+
+    @Override
+    public ScholarResponse updateScholar(String uuid, ScholarRequestUpdate scholarRequestUpdate) {
+        Scholar scholar = scholarRepository.findByUuid(uuid).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Scholar not found")
+        );
+        scholarMapper.toScholarPartially(scholarRequestUpdate, scholar);
+        return scholarMapper.fromScholar(scholarRepository.save(scholar));
+    }
 }
