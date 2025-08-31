@@ -1,12 +1,17 @@
 package istad.co.exstadbackendapi.features.scholar.dto;
 
-import istad.co.exstadbackendapi.audit.Auditable;
+import istad.co.exstadbackendapi.audit.AuditableDto;
 import istad.co.exstadbackendapi.enums.Gender;
 import istad.co.exstadbackendapi.enums.Role;
+import istad.co.exstadbackendapi.features.badge.dto.BadgeResponse;
+import istad.co.exstadbackendapi.features.scholar_badge.dto.ScholarBadgeResponse;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public record ScholarResponse(
+        String uuid,
+
         String username,
 
         String email,
@@ -39,6 +44,8 @@ public record ScholarResponse(
 
         String quote,
 
-        Auditable audit
+        AuditableDto audit,
+
+        List<ScholarBadgeResponse> badges
 ) {
 }
