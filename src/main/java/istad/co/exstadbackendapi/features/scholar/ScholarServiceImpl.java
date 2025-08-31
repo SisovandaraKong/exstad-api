@@ -10,6 +10,7 @@ import istad.co.exstadbackendapi.features.user.UserRepository;
 import istad.co.exstadbackendapi.features.user.UserService;
 import istad.co.exstadbackendapi.features.user.dto.UserRequest;
 import istad.co.exstadbackendapi.features.user.dto.UserResponse;
+import istad.co.exstadbackendapi.mapper.ScholarBadgeMapper;
 import istad.co.exstadbackendapi.mapper.ScholarMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -27,7 +28,7 @@ public class ScholarServiceImpl implements ScholarService {
     private final ScholarMapper scholarMapper;
     private final UserService userService;
     private final UserRepository userRepository;
-
+    private final ScholarBadgeMapper scholarBadgeMapper;
     @Override
     public ScholarResponse createScholar(ScholarRequest scholarRequest) {
         UserRequest userRequest = new UserRequest(
