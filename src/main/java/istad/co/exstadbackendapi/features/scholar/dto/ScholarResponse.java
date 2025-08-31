@@ -4,6 +4,7 @@ import istad.co.exstadbackendapi.audit.AuditableDto;
 import istad.co.exstadbackendapi.enums.Gender;
 import istad.co.exstadbackendapi.enums.Role;
 import istad.co.exstadbackendapi.features.badge.dto.BadgeResponse;
+import istad.co.exstadbackendapi.features.scholar_badge.dto.ScholarBadgeForScholarResponse;
 import istad.co.exstadbackendapi.features.scholar_badge.dto.ScholarBadgeResponse;
 
 import java.time.LocalDate;
@@ -46,6 +47,6 @@ public record ScholarResponse(
 
         AuditableDto audit,
 
-        List<ScholarBadgeResponse> badges
+        List<ScholarBadgeForScholarResponse> badges
 ) {
 }

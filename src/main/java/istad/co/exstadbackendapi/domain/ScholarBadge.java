@@ -33,6 +33,9 @@ public class ScholarBadge extends Auditable {
     private Badge badge;
 
     private LocalDate completionDate;
+
+    @Column(nullable = false)
+    private boolean isDeleted;
 }
 
 
