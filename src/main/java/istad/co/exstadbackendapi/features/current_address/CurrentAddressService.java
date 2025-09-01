@@ -11,5 +11,4 @@ public interface CurrentAddressService {
     CurrentAddressResponse getCurrentAddressByUuid(String uuid);
     CurrentAddressResponse createCurrentAddress(CurrentAddressRequest currentAddressRequest);
     BasedMessage deleteCurrentAddressByUuid(String uuid);
-    
 }

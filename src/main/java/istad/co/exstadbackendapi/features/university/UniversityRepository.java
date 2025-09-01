@@ -2,6 +2,8 @@ package istad.co.exstadbackendapi.features.university;
 
 import istad.co.exstadbackendapi.domain.University;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.Optional;
 
@@ -12,4 +14,7 @@ public interface UniversityRepository extends JpaRepository<University, Integer>
     boolean existsByUuid(String uuid);
 
     Optional<University> findByEnglishName(String englishName);
+    @Modifying
+    @Query("UPDATE University AS u SET u.isDeleted = true WHERE u.uuid = ?1")
+    void deleteSoft(String uuid);
 }
