@@ -7,6 +7,7 @@ import istad.co.exstadbackendapi.features.current_address.dto.CurrentAddressResp
 import istad.co.exstadbackendapi.mapper.CurrentAddressMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -42,13 +43,13 @@ public class CurrentAddressServiceImpl implements CurrentAddressService {
         return currentAddressMapper.fromCurrentAddress(currentAddressRepository.save(currentAddress));
     }
 
+    @Transactional
     @Override
     public BasedMessage deleteCurrentAddressByUuid(String uuid) {
-        CurrentAddress currentAddress = currentAddressRepository.findByUuid(uuid).orElseThrow(
-                () -> new RuntimeException("Current address not found")
-        );
-        currentAddress.setDeleted(true);
-        currentAddressRepository.save(currentAddress);
+        if (!currentAddressRepository.existsByUuid(uuid)) {
+            throw new RuntimeException("Current address not found");
+        }
+        currentAddressRepository.softDeleteByUuid(uuid);
         return new BasedMessage("Current address deleted successfully");
     }
 }
