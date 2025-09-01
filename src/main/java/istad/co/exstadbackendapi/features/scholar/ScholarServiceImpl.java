@@ -28,7 +28,7 @@ public class ScholarServiceImpl implements ScholarService {
     private final ScholarMapper scholarMapper;
     private final UserService userService;
     private final UserRepository userRepository;
-    private final ScholarBadgeMapper scholarBadgeMapper;
+
     @Override
     public ScholarResponse createScholar(ScholarRequest scholarRequest) {
         UserRequest userRequest = new UserRequest(
