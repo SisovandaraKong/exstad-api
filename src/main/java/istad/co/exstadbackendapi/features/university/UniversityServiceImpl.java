@@ -60,11 +60,10 @@ public class UniversityServiceImpl implements UniversityService {
     @Transactional
     @Override
     public BasedMessage deleteUniversityByUuid(String uuid) {
-        University university = universityRepository.findByUuid(uuid).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "University not found")
-        );
-        university.setIsDeleted(true);
-        universityRepository.save(university);
+        if (!universityRepository.existsByUuid(uuid)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "University not found");
+        }
+        universityRepository.deleteSoft(uuid);
         return new BasedMessage("University deleted successfully");
     }
 
