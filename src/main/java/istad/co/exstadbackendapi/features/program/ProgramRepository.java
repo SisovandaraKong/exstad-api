@@ -20,4 +20,6 @@ public interface ProgramRepository extends JpaRepository<Program, Integer> {
     @Modifying
     @Query("UPDATE Program p SET p.isDeleted = false WHERE p.uuid = ?1")
     void undeleteByUuid(String uuid);
+
+    void deleteByUuid(String uuid);
 }

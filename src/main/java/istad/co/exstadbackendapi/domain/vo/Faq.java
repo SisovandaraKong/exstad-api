@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.UUID;
 
 @Setter
 @Getter
@@ -30,7 +31,7 @@ class FaqSection {
 @NoArgsConstructor
 @AllArgsConstructor
 class FaqItem {
-    private int id;
+    private String uuid= UUID.randomUUID().toString();
     private String question;
     private String answer;
 
