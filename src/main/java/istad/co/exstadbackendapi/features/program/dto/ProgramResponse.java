@@ -26,9 +26,6 @@ public record ProgramResponse(
         List<Curriculum> curricula,
         ProgramLevel programLevel,
         Boolean isDeleted,
-        String createdBy,
-        Instant createdAt,
-        String updatedBy,
-        Instant updatedAt
+        Auditable audit
 ) {
 }
