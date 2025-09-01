@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 public class DocumentController {
@@ -28,5 +30,15 @@ public class DocumentController {
     @GetMapping("/public/{filename:.+}/download")
     public ResponseEntity<Resource> downloadDocument(@PathVariable String filename) {
         return documentService.downloadDocument(filename);
+    }
+
+    @GetMapping("/documents/{fileName}")
+    public DocumentResponse getImageByName(@PathVariable String fileName) {
+        return documentService.getDocumentByFileName(fileName);
+    }
+
+    @GetMapping("/documents")
+    public List<DocumentResponse> getAllImages() {
+        return documentService.getAllImages();
     }
 }

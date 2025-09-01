@@ -1,5 +1,6 @@
 package istad.co.exstadbackendapi.features.scholar;
 
+import istad.co.exstadbackendapi.base.BasedMessage;
 import istad.co.exstadbackendapi.domain.Scholar;
 import istad.co.exstadbackendapi.domain.User;
 import istad.co.exstadbackendapi.enums.Role;
@@ -15,6 +16,7 @@ import istad.co.exstadbackendapi.mapper.ScholarMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
@@ -115,5 +117,35 @@ public class ScholarServiceImpl implements ScholarService {
     @Override
     public Long countScholars() {
         return scholarRepository.count();
+    }
+
+    @Transactional
+    @Override
+    public BasedMessage softDeleteScholarByUuid(String uuid) {
+       if (!scholarRepository.existsByUuid(uuid)) {
+              throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Scholar not found");
+         }
+              scholarRepository.softDeleteByUuid(uuid);
+              return new BasedMessage("Scholar deleted successfully");
+    }
+
+    @Transactional
+    @Override
+    public BasedMessage restoreScholarByUuid(String uuid) {
+       if (!scholarRepository.existsByUuid(uuid)) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Scholar not found");
+             }
+                scholarRepository.restoreByUuid(uuid);
+                return new BasedMessage("Scholar restored successfully");
+    }
+
+    @Transactional
+    @Override
+    public BasedMessage hardDeleteScholarByUuid(String uuid) {
+        if (!scholarRepository.existsByUuid(uuid)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Scholar not found");
+        }
+            scholarRepository.deleteByUuid(uuid);
+            return new BasedMessage("Scholar hard deleted successfully");
     }
 }

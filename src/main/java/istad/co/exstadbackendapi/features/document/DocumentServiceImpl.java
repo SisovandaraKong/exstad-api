@@ -19,6 +19,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -81,7 +82,7 @@ public class DocumentServiceImpl implements DocumentService {
                 .build();
         document = documentRepository.save(document);
         return DocumentResponse.builder()
-                .name(document.getName())
+                .name(document.getName()+ extension)
                 .documentType(document.getDocumentType())
                 .fileSize(document.getFileSize())
                 .mimeType(document.getMimeType())
@@ -146,12 +147,34 @@ public class DocumentServiceImpl implements DocumentService {
     public DocumentResponse getDocumentByFileName(String filename) {
         Document document = getDocument(filename);
         return DocumentResponse.builder()
-                .name(document.getName())
+                .name(document.getName() + "." + document.getExtension())
                 .documentType(document.getDocumentType())
                 .fileSize(document.getFileSize())
                 .mimeType(document.getMimeType())
                 .uri(serverUri + document.getName() + "." + document.getExtension())
                 .build();
+    }
+
+    @Override
+    public List<DocumentResponse> getAllImages() {
+        List<Document> images = documentRepository.findByDocumentTypeIn(
+                List.of(DocumentType.CERTIFICATE,
+                        DocumentType.TRANSCRIPT,
+                        DocumentType.ACTIVITY,
+                        DocumentType.POSTER,
+                        DocumentType.THUMBNAIL,
+                        DocumentType.AVATAR)
+        );
+
+        return images.stream()
+                .map(document -> DocumentResponse.builder()
+                        .name(document.getName() + "." + document.getExtension())
+                        .documentType(document.getDocumentType())
+                        .fileSize(document.getFileSize())
+                        .mimeType(document.getMimeType())
+                        .uri(serverUri + document.getName() + "." + document.getExtension())
+                        .build())
+                .toList();
     }
 
     private Document getDocument(String filename) {

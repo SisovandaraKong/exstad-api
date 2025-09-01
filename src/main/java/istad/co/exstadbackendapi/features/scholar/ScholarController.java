@@ -1,14 +1,17 @@
 package istad.co.exstadbackendapi.features.scholar;
 
+import istad.co.exstadbackendapi.base.BasedMessage;
 import istad.co.exstadbackendapi.features.scholar.dto.ScholarRequest;
 import istad.co.exstadbackendapi.features.scholar.dto.ScholarRequestUpdate;
 import istad.co.exstadbackendapi.features.scholar.dto.ScholarResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,8 +22,9 @@ public class ScholarController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<ScholarResponse> getAllScholars() {
-        return scholarService.findAllScholars();
+    public ResponseEntity<?> getAllScholars() {
+        return new ResponseEntity<>(
+                Map.of("scholars", scholarService.findAllScholars()), HttpStatus.OK);
     }
 
     @GetMapping("/{uuid}")
@@ -48,8 +52,8 @@ public class ScholarController {
 
     @GetMapping("/count")
     @ResponseStatus(HttpStatus.OK)
-    public long getScholarCount() {
-        return scholarService.countScholars();
+    public ResponseEntity<?> getScholarCount() {
+        return new ResponseEntity<>(Map.of("scholars", scholarService.countScholars()), HttpStatus.OK);
     }
 
 
@@ -69,6 +73,23 @@ public class ScholarController {
     @ResponseStatus(HttpStatus.ACCEPTED)
     public ScholarResponse updateScholar(@PathVariable String uuid, @RequestBody @Valid ScholarRequestUpdate scholarRequestUpdate){
         return scholarService.updateScholar(uuid, scholarRequestUpdate);
+    }
+    @PutMapping("/{uuid}/soft-delete")
+    @ResponseStatus(HttpStatus.OK)
+    public BasedMessage softDeleteScholar(@PathVariable String uuid) {
+        return scholarService.softDeleteScholarByUuid(uuid);
+    }
+
+    @PutMapping("/{uuid}/restore")
+    @ResponseStatus(HttpStatus.OK)
+    public BasedMessage restoreScholar(@PathVariable String uuid) {
+        return scholarService.restoreScholarByUuid(uuid);
+    }
+
+    @DeleteMapping("/{uuid}")
+    @ResponseStatus(HttpStatus.OK)
+    public BasedMessage hardDeleteScholar(@PathVariable String uuid) {
+        return scholarService.hardDeleteScholarByUuid(uuid);
     }
 }
 
