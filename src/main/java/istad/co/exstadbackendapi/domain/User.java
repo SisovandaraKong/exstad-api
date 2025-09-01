@@ -51,9 +51,6 @@ public class User extends Auditable {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Scholar scholar;
 
-    @OneToMany(mappedBy = "verifiedBy")
-    private List<ScholarBadge> scholarsBadges;
-
     @OneToMany(mappedBy = "instructor")
     private List<InstructorClass> instructorClasses;
 }

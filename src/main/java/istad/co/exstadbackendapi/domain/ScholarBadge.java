@@ -1,5 +1,6 @@
 package istad.co.exstadbackendapi.domain;
 
+import istad.co.exstadbackendapi.audit.Auditable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,8 +14,8 @@ import java.time.LocalDate;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "scholars_badges")
-public class ScholarBadge {
+@Table(name = "scholar_badges")
+public class ScholarBadge extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,9 +34,8 @@ public class ScholarBadge {
 
     private LocalDate completionDate;
 
-    @ManyToOne
-    @JoinColumn(name = "verified_by")
-    private User verifiedBy;
+    @Column(nullable = false)
+    private boolean isDeleted;
 }
 
 

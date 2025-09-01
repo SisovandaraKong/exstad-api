@@ -60,48 +60,43 @@ public class ProgramServiceImpl implements ProgramService {
 
     @Override
     public ProgramResponse updateProgram(String uuid, ProgramUpdate programUpdate) {
-            Program program = programRepository.findByUuid(uuid)
-                    .orElseThrow(() -> new ResponseStatusException(
-                            HttpStatus.NOT_FOUND, "Program not found"
-                    ));
-            programMapper.toProgramUpdate(programUpdate, program);
-            program = programRepository.save(program);
-            return programMapper.toProgramResponse(program);
+        Program program = programRepository.findByUuid(uuid)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Program not found"
+                ));
+        programMapper.toProgramUpdate(programUpdate, program);
+        program = programRepository.save(program);
+        return programMapper.toProgramResponse(program);
     }
 
     @Transactional
     @Override
     public BasedMessage deleteProgram(String uuid) {
-        if (!programRepository.existsByUuid(uuid)) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "Program not found"
-            );
-        }
-        programRepository.softDeleteByUuid(uuid);
+        Program program = programRepository.findByUuid(uuid).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Program not found")
+        );
+        program.setIsDeleted(true);
+        programRepository.save(program);
         return new BasedMessage("Program deleted successfully");
     }
 
     @Transactional
     @Override
     public BasedMessage restoreProgram(String uuid) {
-        if (!programRepository.existsByUuid(uuid)) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "Program not found"
-            );
-        }
-        programRepository.undeleteByUuid(uuid);
+        Program program = programRepository.findByUuid(uuid).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Program not found")
+        );
+        program.setIsDeleted(false);
+        programRepository.save(program);
         return new BasedMessage("Program restored successfully");
     }
 
     @Transactional
     @Override
     public BasedMessage hardDeleteProgram(String uuid) {
-        if (!programRepository.existsByUuid(uuid)) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "Program not found"
-            );
-        }
-        programRepository.deleteByUuid(uuid);
+        programRepository.delete(programRepository.findByUuid(uuid).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Program not found")
+        ));
         return new BasedMessage("Program hard deleted successfully");
     }
 }

@@ -1,13 +1,12 @@
-package istad.co.exstadbackendapi.features.university.dto;
+package istad.co.exstadbackendapi.features.current_address.dto;
 
 import istad.co.exstadbackendapi.audit.AuditableDto;
 
-public record UniversityResponse(
+public record CurrentAddressResponse(
         String uuid,
         String englishName,
         String khmerName,
-        String shortName,
-        Boolean isDeleted,
+        String province,
         Long scholars,
         AuditableDto audit
 ) {

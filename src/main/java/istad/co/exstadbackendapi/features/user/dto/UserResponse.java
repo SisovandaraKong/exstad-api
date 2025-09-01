@@ -5,7 +5,7 @@ import istad.co.exstadbackendapi.enums.Role;
 
 import java.time.LocalDate;
 
-public record UserResponse(
+public record UserResponse (
         String uuid,
         String username,
         String email,

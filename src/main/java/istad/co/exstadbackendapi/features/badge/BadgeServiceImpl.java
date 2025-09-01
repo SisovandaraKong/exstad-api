@@ -59,30 +59,27 @@ public class BadgeServiceImpl implements BadgeService {
     @Transactional
     @Override
     public BasedMessage deleteBadge(String uuid) {
-        if (!badgeRepository.existsByUuid(uuid)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Badge not found");
-        }
-        badgeRepository.softDeleteByUuid(uuid);
+        Badge badge = badgeRepository.findByUuid(uuid).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Badge not found"));
+        badge.setIsDeleted(true);
+        badgeRepository.save(badge);
         return new BasedMessage("Badge deleted successfully");
     }
 
     @Transactional
     @Override
     public BasedMessage restoreBadge(String uuid) {
-        if (!badgeRepository.existsByUuid(uuid)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Badge not found");
-        }
-        badgeRepository.restoreByUuid(uuid);
+        Badge badge = badgeRepository.findByUuid(uuid).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Badge not found"));
+        badge.setIsDeleted(false);
+        badgeRepository.save(badge);
         return new BasedMessage("Badge restored successfully");
     }
 
     @Transactional
     @Override
     public BasedMessage hardDeleteBadge(String uuid) {
-        if (!badgeRepository.existsByUuid(uuid)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Badge not found");
-        }
-        badgeRepository.deleteByUuid(uuid);
+        badgeRepository.delete(
+                badgeRepository.findByUuid(uuid).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Badge not found"))
+        );
         return new BasedMessage("Badge hard deleted successfully");
     }
 }

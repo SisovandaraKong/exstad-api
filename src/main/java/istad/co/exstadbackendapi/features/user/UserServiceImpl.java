@@ -9,6 +9,8 @@ import istad.co.exstadbackendapi.features.user.dto.UserResponse;
 import istad.co.exstadbackendapi.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
@@ -26,6 +28,13 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public UserResponse createUser(UserRequest userRequest) {
+
+        if(userRepository.existsByUsername(userRequest.username())){
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Username already exists");
+        }
+        if(userRepository.existsByEmail(userRequest.email())){
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already exists");
+        }
 
         if(!userRequest.password().equals(userRequest.cfPassword())){
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Passwords do not match");
@@ -49,6 +58,14 @@ public class UserServiceImpl implements UserService {
 
         return userMapper.fromUser(user);
     }
+
+    @Override
+    public UserResponse getUserByUsername(String username) {
+        return userMapper.fromUser(userRepository.findByUsername(username).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found")
+        ));
+    }
+
 
     @Override
     public List<UserResponse> getAllUsers() {
@@ -75,5 +92,30 @@ public class UserServiceImpl implements UserService {
                         HttpStatus.NOT_FOUND, "User not found"
                 ));
         return userMapper.fromUser(user);
+    }
+
+    @Override
+    public UserResponse getCurrentUser() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username;
+        if (principal instanceof org.springframework.security.oauth2.jwt.Jwt jwt) {
+            username = jwt.getClaimAsString("preferred_username");
+            if (username == null) {
+                username = jwt.getClaimAsString("email");
+            }
+        } else if (principal instanceof UserDetails userDetails) {
+            username = userDetails.getUsername();
+        } else {
+            username = principal.toString();
+        }
+
+
+        return getUserByUsername(username);
+    }
+
+    @Override
+    public String getUsernameByUuid(String uuid) {
+        return userRepository.findByUuid(uuid).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found")).getUsername();
+
     }
 }

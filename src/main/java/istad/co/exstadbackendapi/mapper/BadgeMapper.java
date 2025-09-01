@@ -1,5 +1,6 @@
 package istad.co.exstadbackendapi.mapper;
 
+import istad.co.exstadbackendapi.audit.AuditableMapper;
 import istad.co.exstadbackendapi.domain.Badge;
 import istad.co.exstadbackendapi.features.badge.dto.BadgeRequest;
 import istad.co.exstadbackendapi.features.badge.dto.BadgeResponse;
@@ -9,7 +10,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {AuditableMapper.class})
 public interface BadgeMapper {
 
     @Mapping(target = "audit", source = "badge")

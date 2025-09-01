@@ -1,6 +1,8 @@
 package istad.co.exstadbackendapi.domain;
 
+import istad.co.exstadbackendapi.audit.Auditable;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "current_addresses")
-public class CurrentAddress {
+public class CurrentAddress extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +30,9 @@ public class CurrentAddress {
 
     @Column(unique = true, nullable = false, length = 150)
     private String khmerName;
+
+    @Column(nullable = false)
+    private boolean isDeleted;
 
     @ManyToOne
     @JoinColumn(name = "province_id")

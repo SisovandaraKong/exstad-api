@@ -1,5 +1,6 @@
 package istad.co.exstadbackendapi.domain;
 
+import istad.co.exstadbackendapi.audit.Auditable;
 import istad.co.exstadbackendapi.domain.vo.SocialLink;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -17,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "scholars")
-public class Scholar {
+public class Scholar extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,7 +42,6 @@ public class Scholar {
     @ManyToOne
     @JoinColumn(name = "current_address_id")
     private CurrentAddress currentAddress;
-
 
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(columnDefinition = "jsonb")
