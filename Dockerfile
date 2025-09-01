@@ -1,27 +1,50 @@
-# Stage 1: Build the app
-FROM gradle:8.3.3-jdk21 AS build
+# Stage 1: Build the JAR with Gradle
+FROM eclipse-temurin:21-jdk AS build
+
 WORKDIR /app
 
-# Copy Gradle files first (for caching dependencies)
-COPY build.gradle.kts settings.gradle.kts gradle.properties ./
-COPY gradlew ./
-COPY gradle ./gradle
+# Copy Gradle wrapper and config files first
+COPY gradlew .
+COPY gradle gradle
+
+# Make gradlew executable immediately after copying
+RUN chmod +x ./gradlew
+
+# Verify gradlew is executable and test it
+RUN ls -la ./gradlew
+RUN ./gradlew --version
+
+# Copy build configuration files
+COPY build.gradle .
+COPY settings.gradle .
 
 # Copy source code
-COPY src ./src
+COPY src src
 
-# Build the JAR
+# Build the jar (skip tests for speed)
 RUN ./gradlew clean build -x test
 
-# Stage 2: Run the app
-FROM eclipse-temurin:21-jdk-jammy
+# Stage 2: Run the app with JRE
+FROM eclipse-temurin:21-jre
+
 WORKDIR /app
 
-# Copy the JAR from the build stage
+# Create a non-root user for security
+RUN addgroup --system appgroup && adduser --system appuser --ingroup appgroup
+
+# Copy the built jar from previous stage
 COPY --from=build /app/build/libs/*.jar app.jar
 
-# Use Railway PORT env variable
-ENV SERVER_PORT=${PORT:8080}
+# Change ownership to non-root user
+RUN chown appuser:appgroup app.jar
 
-# Run the JAR
-CMD ["java", "-jar", "app.jar"]
+# Switch to non-root user
+USER appuser:appgroup
+
+EXPOSE 8080
+
+# Add health check (optional)
+HEALTHCHECK --interval=30s --timeout=3s --start-period=60s --retries=3 \
+  CMD curl -f http://localhost:8080/actuator/health || exit 1
+
+ENTRYPOINT ["java", "-Xmx512m", "-Xms256m", "-jar", "app.jar"]
