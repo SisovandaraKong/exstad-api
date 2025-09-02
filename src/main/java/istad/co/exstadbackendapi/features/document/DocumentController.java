@@ -20,13 +20,5 @@ public class DocumentController {
         return documentService.uploadDocument(type, file);
     }
 
-    @GetMapping("/public/{filename:.+}")
-    public ResponseEntity<Resource> getDocument(@PathVariable String filename) {
-        return documentService.previewDocument(filename);
-    }
 
-    @GetMapping("/public/{filename:.+}/download")
-    public ResponseEntity<Resource> downloadDocument(@PathVariable String filename) {
-        return documentService.downloadDocument(filename);
-    }
 }

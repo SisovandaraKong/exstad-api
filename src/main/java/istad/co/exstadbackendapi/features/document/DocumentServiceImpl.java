@@ -5,6 +5,7 @@ import istad.co.exstadbackendapi.domain.Document;
 import istad.co.exstadbackendapi.enums.DocumentType;
 import istad.co.exstadbackendapi.features.document.dto.DocumentResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -23,6 +24,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class DocumentServiceImpl implements DocumentService {
 
     private final DocumentRepository documentRepository;
@@ -52,7 +54,9 @@ public class DocumentServiceImpl implements DocumentService {
         int index = fileName.lastIndexOf(".");
         String extension = fileName.substring(index);
         fileName = String.format("%s-%s", UUID.randomUUID().toString().replace("-", ""), timestamp);
-
+        if(!validateDocumentType(extension.substring(1), documentType)){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid file type");
+        }
         String objectName = fileName + extension;
 
         try {
@@ -68,6 +72,7 @@ public class DocumentServiceImpl implements DocumentService {
                             .build()
             );
         } catch (Exception e) {
+            log.error("Cannot connect to Minio", e);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to upload document");
         }
 
@@ -166,5 +171,14 @@ public class DocumentServiceImpl implements DocumentService {
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Document not found")
         );
 
+    }
+
+    private boolean validateDocumentType(String extension, DocumentType documentType) {
+        for (String file: documentType.getSupportedFiles()){
+            if (extension.equals(file)){
+                return true;
+            }
+        }
+        return false;
     }
 }
