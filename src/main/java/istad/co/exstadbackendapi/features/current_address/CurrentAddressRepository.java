@@ -17,4 +17,6 @@ public interface CurrentAddressRepository extends JpaRepository<CurrentAddress, 
     @Modifying
     @Query("UPDATE CurrentAddress c SET c.isDeleted = true WHERE c.uuid = ?1")
     void softDeleteByUuid(String uuid);
+
+    void deleteByUuid(String uuid);
 }

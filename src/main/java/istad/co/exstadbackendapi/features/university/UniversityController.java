@@ -14,6 +14,7 @@ import java.util.Map;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/universities")
+@CrossOrigin(origins = "http://localhost:3000")
 public class UniversityController {
     private final UniversityService universityService;
 
@@ -36,12 +37,12 @@ public class UniversityController {
                 universityService.createUniversity(universityRequest), HttpStatus.CREATED);
     }
 
-    @PutMapping("/{uuid}/delete")
+    @DeleteMapping("/{uuid}")
     public BasedMessage deleteUniversityByUuid(@PathVariable String uuid) {
         return universityService.deleteUniversityByUuid(uuid);
     }
 
-    @PutMapping("/{uuid}")
+    @PatchMapping("/{uuid}")
     public ResponseEntity<?> updateUniversityByUuid(@PathVariable String uuid, @RequestBody @Valid UniversityUpdate universityUpdate) {
         return new ResponseEntity<>(
                 universityService.updateUniversityByUuid(uuid, universityUpdate), HttpStatus.OK);
