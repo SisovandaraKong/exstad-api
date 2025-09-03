@@ -13,31 +13,22 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/v1/documents")
 public class DocumentController {
 
     private final DocumentService documentService;
 
-    @PostMapping("/documents/upload/{type}")
+    @PostMapping("/{type}")
     public DocumentResponse upload(@PathVariable String type, @RequestPart MultipartFile file) {
         return documentService.uploadDocument(type, file);
     }
 
-    @GetMapping("/public/{filename:.+}")
-    public ResponseEntity<Resource> getDocument(@PathVariable String filename) {
-        return documentService.previewDocument(filename);
-    }
-
-    @GetMapping("/public/{filename:.+}/download")
-    public ResponseEntity<Resource> downloadDocument(@PathVariable String filename) {
-        return documentService.downloadDocument(filename);
-    }
-
-    @GetMapping("/documents/{fileName}")
+    @GetMapping("/{fileName}")
     public DocumentResponse getImageByName(@PathVariable String fileName) {
         return documentService.getDocumentByFileName(fileName);
     }
 
-    @GetMapping("/documents")
+    @GetMapping
     public List<DocumentResponse> getAllImages() {
         return documentService.getAllImages();
     }
