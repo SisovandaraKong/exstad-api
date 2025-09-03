@@ -10,6 +10,4 @@ public interface ScholarBadgeService {
     ScholarBadgeResponse findByUuid(String uuid);
     ScholarBadgeResponse updateScholarBadgeByUuid(String uuid, ScholarBadgeRequestUpdate scholarBadgeRequestUpdate);
     void deleteScholarBadge(String uuid);
-
-
 }
