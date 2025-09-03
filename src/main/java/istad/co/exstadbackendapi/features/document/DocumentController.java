@@ -34,6 +34,11 @@ public class DocumentController {
         return documentService.getDocumentByFileName(fileName);
     }
 
+    @PutMapping("/{fileName}")
+    public DocumentResponse updateImageByFileName(@PathVariable String fileName,@RequestPart("file") MultipartFile file) {
+        return documentService.updateDocumentByFileName(fileName, file);
+    }
+
     @GetMapping
     public List<DocumentResponse> getAllImages() {
         return documentService.getAllImages();
