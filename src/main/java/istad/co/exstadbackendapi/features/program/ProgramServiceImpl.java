@@ -2,6 +2,7 @@ package istad.co.exstadbackendapi.features.program;
 
 import istad.co.exstadbackendapi.base.BasedMessage;
 import istad.co.exstadbackendapi.domain.Program;
+import istad.co.exstadbackendapi.domain.vo.*;
 import istad.co.exstadbackendapi.features.program.dto.ProgramRequest;
 import istad.co.exstadbackendapi.features.program.dto.ProgramResponse;
 import istad.co.exstadbackendapi.features.program.dto.ProgramUpdate;
@@ -51,6 +52,14 @@ public class ProgramServiceImpl implements ProgramService {
     @Override
     public ProgramResponse createProgram(ProgramRequest programRequest) {
         Program program = programMapper.fromProgramRequest(programRequest);
+        program.setHighlights(null);
+        program.setProgramOverviews(null);
+        program.setRoadmaps(null);
+        program.setFaqs(null);
+        program.setRequirements(null);
+        program.setLearningOutcomes(null);
+        program.setTimelines(null);
+        program.setCurricula(null);
 
         program.setUuid(UUID.randomUUID().toString());
         program.setIsDeleted(false);
@@ -104,4 +113,136 @@ public class ProgramServiceImpl implements ProgramService {
         programRepository.deleteByUuid(uuid);
         return new BasedMessage("Program hard deleted successfully");
     }
+
+    @Override
+    public ProgramResponse setUpHighlights(String uuid, List<Highlight> highlights) {
+        Program program = programRepository.findByUuid(uuid)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Program not found"
+                ));
+        program.setHighlights(highlights);
+        program = programRepository.save(program);
+        return programMapper.toProgramResponse(program);
+    }
+
+    @Override
+    public ProgramResponse setUpProgramOverviews(String uuid, List<ProgramOverview> overviews) {
+        Program program = programRepository.findByUuid(uuid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Program not found"));
+        program.setProgramOverviews(overviews);
+        program = programRepository.save(program);
+        return programMapper.toProgramResponse(program);
+    }
+
+    @Override
+    public ProgramResponse setUpRoadmaps(String uuid, List<Roadmap> roadmaps) {
+        Program program = programRepository.findByUuid(uuid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Program not found"));
+        program.setRoadmaps(roadmaps);
+        program = programRepository.save(program);
+        return programMapper.toProgramResponse(program);
+    }
+
+    @Override
+    public ProgramResponse setUpFaqs(String uuid, List<Faq> faqs) {
+        Program program = programRepository.findByUuid(uuid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Program not found"));
+        program.setFaqs(faqs);
+        program = programRepository.save(program);
+        return programMapper.toProgramResponse(program);
+    }
+
+    @Override
+    public ProgramResponse setUpRequirements(String uuid, List<Requirement> requirements) {
+        Program program = programRepository.findByUuid(uuid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Program not found"));
+        program.setRequirements(requirements);
+        program = programRepository.save(program);
+        return programMapper.toProgramResponse(program);
+    }
+
+    @Override
+    public ProgramResponse setUpLearningOutcomes(String uuid, List<LearningOutcome> learningOutcomes) {
+        Program program = programRepository.findByUuid(uuid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Program not found"));
+        program.setLearningOutcomes(learningOutcomes);
+        program = programRepository.save(program);
+        return programMapper.toProgramResponse(program);
+    }
+
+    @Override
+    public ProgramResponse setUpTimelines(String uuid, List<Timeline> timelines) {
+        Program program = programRepository.findByUuid(uuid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Program not found"));
+        program.setTimelines(timelines);
+        program = programRepository.save(program);
+        return programMapper.toProgramResponse(program);
+    }
+
+    @Override
+    public ProgramResponse setUpCurricula(String uuid, List<Curriculum> curricula) {
+        Program program = programRepository.findByUuid(uuid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Program not found"));
+        program.setCurricula(curricula);
+        program = programRepository.save(program);
+        return programMapper.toProgramResponse(program);
+    }
+
+    @Override
+    public List<Highlight> getHighlights(String uuid) {
+        Program program = programRepository.findByUuid(uuid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Program not found"));
+        return program.getHighlights();
+    }
+
+    @Override
+    public List<ProgramOverview> getProgramOverviews(String uuid) {
+        Program program = programRepository.findByUuid(uuid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Program not found"));
+        return program.getProgramOverviews();
+    }
+
+    @Override
+    public List<Roadmap> getRoadmaps(String uuid) {
+        Program program = programRepository.findByUuid(uuid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Program not found"));
+        return program.getRoadmaps();
+    }
+
+    @Override
+    public List<Faq> getFaqs(String uuid) {
+        Program program = programRepository.findByUuid(uuid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Program not found"));
+        return program.getFaqs();
+    }
+
+    @Override
+    public List<Requirement> getRequirements(String uuid) {
+        Program program = programRepository.findByUuid(uuid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Program not found"));
+        return program.getRequirements();
+    }
+
+    @Override
+    public List<LearningOutcome> getLearningOutcomes(String uuid) {
+        Program program = programRepository.findByUuid(uuid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Program not found"));
+        return program.getLearningOutcomes();
+    }
+
+    @Override
+    public List<Timeline> getTimelines(String uuid) {
+        Program program = programRepository.findByUuid(uuid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Program not found"));
+        return program.getTimelines();
+    }
+
+    @Override
+    public List<Curriculum> getCurricula(String uuid) {
+        Program program = programRepository.findByUuid(uuid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Program not found"));
+        return program.getCurricula();
+    }
+
+
 }
