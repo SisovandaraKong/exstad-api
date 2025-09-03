@@ -5,6 +5,7 @@ import istad.co.exstadbackendapi.domain.Document;
 import istad.co.exstadbackendapi.enums.DocumentType;
 import istad.co.exstadbackendapi.features.document.dto.DocumentResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -19,10 +20,12 @@ import org.springframework.web.server.ResponseStatusException;
 import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class DocumentServiceImpl implements DocumentService {
 
     private final DocumentRepository documentRepository;
@@ -52,7 +55,9 @@ public class DocumentServiceImpl implements DocumentService {
         int index = fileName.lastIndexOf(".");
         String extension = fileName.substring(index);
         fileName = String.format("%s-%s", UUID.randomUUID().toString().replace("-", ""), timestamp);
-
+        if(!validateDocumentType(extension.substring(1), documentType)){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid file type");
+        }
         String objectName = fileName + extension;
 
         try {
@@ -68,6 +73,7 @@ public class DocumentServiceImpl implements DocumentService {
                             .build()
             );
         } catch (Exception e) {
+            log.error("Cannot connect to Minio", e);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to upload document");
         }
 
@@ -81,7 +87,7 @@ public class DocumentServiceImpl implements DocumentService {
                 .build();
         document = documentRepository.save(document);
         return DocumentResponse.builder()
-                .name(document.getName())
+                .name(document.getName()+ extension)
                 .documentType(document.getDocumentType())
                 .fileSize(document.getFileSize())
                 .mimeType(document.getMimeType())
@@ -146,12 +152,34 @@ public class DocumentServiceImpl implements DocumentService {
     public DocumentResponse getDocumentByFileName(String filename) {
         Document document = getDocument(filename);
         return DocumentResponse.builder()
-                .name(document.getName())
+                .name(document.getName() + "." + document.getExtension())
                 .documentType(document.getDocumentType())
                 .fileSize(document.getFileSize())
                 .mimeType(document.getMimeType())
                 .uri(serverUri + document.getName() + "." + document.getExtension())
                 .build();
+    }
+
+    @Override
+    public List<DocumentResponse> getAllImages() {
+        List<Document> images = documentRepository.findByDocumentTypeIn(
+                List.of(DocumentType.CERTIFICATE,
+                        DocumentType.TRANSCRIPT,
+                        DocumentType.ACTIVITY,
+                        DocumentType.POSTER,
+                        DocumentType.THUMBNAIL,
+                        DocumentType.AVATAR)
+        );
+
+        return images.stream()
+                .map(document -> DocumentResponse.builder()
+                        .name(document.getName() + "." + document.getExtension())
+                        .documentType(document.getDocumentType())
+                        .fileSize(document.getFileSize())
+                        .mimeType(document.getMimeType())
+                        .uri(serverUri + document.getName() + "." + document.getExtension())
+                        .build())
+                .toList();
     }
 
     private Document getDocument(String filename) {
@@ -166,5 +194,14 @@ public class DocumentServiceImpl implements DocumentService {
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Document not found")
         );
 
+    }
+
+    private boolean validateDocumentType(String extension, DocumentType documentType) {
+        for (String file: documentType.getSupportedFiles()){
+            if (extension.equals(file)){
+                return true;
+            }
+        }
+        return false;
     }
 }

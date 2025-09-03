@@ -52,4 +52,14 @@ public class CurrentAddressServiceImpl implements CurrentAddressService {
         currentAddressRepository.softDeleteByUuid(uuid);
         return new BasedMessage("Current address deleted successfully");
     }
+
+    @Transactional
+    @Override
+    public BasedMessage hardDeleteCurrentAddressByUuid(String uuid) {
+        if (!currentAddressRepository.existsByUuid(uuid)) {
+            throw new RuntimeException("Current address not found");
+        }
+        currentAddressRepository.deleteByUuid(uuid);
+        return new BasedMessage("Current address hard deleted successfully");
+    }
 }

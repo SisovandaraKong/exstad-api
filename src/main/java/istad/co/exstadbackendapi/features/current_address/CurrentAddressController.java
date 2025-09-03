@@ -5,9 +5,11 @@ import istad.co.exstadbackendapi.features.current_address.dto.CurrentAddressRequ
 import istad.co.exstadbackendapi.features.current_address.dto.CurrentAddressResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,8 +20,9 @@ public class CurrentAddressController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<CurrentAddressResponse> getAllCurrentAddresses() {
-        return currentAddressService.getAllCurrentAddresses();
+    public ResponseEntity<?> getAllCurrentAddresses() {
+        return new ResponseEntity<>(
+                Map.of("current addresses",currentAddressService.getAllCurrentAddresses()), HttpStatus.OK);
     }
 
     @GetMapping("{uuid}")
@@ -34,10 +37,17 @@ public class CurrentAddressController {
         return currentAddressService.createCurrentAddress(currentAddressRequest);
     }
 
-    @DeleteMapping("{uuid}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PutMapping("{uuid}/soft-delete")
+    @ResponseStatus(HttpStatus.OK)
     public BasedMessage deleteCurrentAddress(@PathVariable String uuid) {
         return currentAddressService.deleteCurrentAddressByUuid(uuid);
+    }
+
+
+    @DeleteMapping("{uuid}")
+    @ResponseStatus(HttpStatus.OK)
+    public BasedMessage hardDeleteCurrentAddress(@PathVariable String uuid) {
+        return currentAddressService.hardDeleteCurrentAddressByUuid(uuid);
     }
 
 }
