@@ -21,17 +21,15 @@ public abstract class Auditable {
 
     @CreatedBy
     @Column(updatable = false, nullable = false)
-    private String createdBy; // Keycloak UUID
+    private String createdBy; // keycloak uuid
 
     @CreatedDate
     @Column(updatable = false, nullable = false)
     private Instant createdAt;
 
     @LastModifiedBy
-    @Column(insertable = false)
-    private String updatedBy; // Keycloak UUID
+    private String updatedBy; // keycloak uuid
 
     @LastModifiedDate
-    @Column(insertable = false)
     private Instant updatedAt;
 }
