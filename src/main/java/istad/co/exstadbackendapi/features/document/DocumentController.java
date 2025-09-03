@@ -18,9 +18,15 @@ public class DocumentController {
 
     private final DocumentService documentService;
 
-    @PostMapping("/{type}")
-    public DocumentResponse upload(@PathVariable String type, @RequestPart MultipartFile file) {
-        return documentService.uploadDocument(type, file);
+    @PostMapping("/{offeringType}/{gen}/{documentType}")
+    public DocumentResponse upload(
+            @PathVariable String offeringType,
+            @PathVariable int gen,
+            @PathVariable String documentType,
+            @RequestParam(defaultValue = "null", required = false) String filename,
+            @RequestPart("file") MultipartFile file)
+    {
+        return documentService.uploadDocument(offeringType, gen, documentType, filename, file);
     }
 
     @GetMapping("/{fileName}")
