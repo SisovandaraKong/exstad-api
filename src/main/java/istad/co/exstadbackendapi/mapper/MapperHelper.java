@@ -2,7 +2,7 @@ package istad.co.exstadbackendapi.mapper;
 
 import istad.co.exstadbackendapi.domain.*;
 import istad.co.exstadbackendapi.features.badge.BadgeRepository;
-import istad.co.exstadbackendapi.features.currenAddress.CurrentAddressRepository;
+import istad.co.exstadbackendapi.features.currentAddress.CurrentAddressRepository;
 import istad.co.exstadbackendapi.features.openingProgram.OpeningProgramRepository;
 import istad.co.exstadbackendapi.features.program.ProgramRepository;
 import istad.co.exstadbackendapi.features.province.ProvinceRepository;

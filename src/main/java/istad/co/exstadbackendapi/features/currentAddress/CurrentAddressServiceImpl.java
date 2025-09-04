@@ -1,9 +1,9 @@
-package istad.co.exstadbackendapi.features.currenAddress;
+package istad.co.exstadbackendapi.features.currentAddress;
 
 import istad.co.exstadbackendapi.base.BasedMessage;
 import istad.co.exstadbackendapi.domain.CurrentAddress;
-import istad.co.exstadbackendapi.features.currenAddress.dto.CurrentAddressRequest;
-import istad.co.exstadbackendapi.features.currenAddress.dto.CurrentAddressResponse;
+import istad.co.exstadbackendapi.features.currentAddress.dto.CurrentAddressRequest;
+import istad.co.exstadbackendapi.features.currentAddress.dto.CurrentAddressResponse;
 import istad.co.exstadbackendapi.mapper.CurrentAddressMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

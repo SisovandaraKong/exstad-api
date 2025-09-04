@@ -1,4 +1,4 @@
-package istad.co.exstadbackendapi.features.currenAddress.dto;
+package istad.co.exstadbackendapi.features.currentAddress.dto;
 
 public record CurrentAddressRequest(
         String englishName,
