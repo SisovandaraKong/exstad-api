@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio 7.x -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="Certificate"
+              language="java"
+              columnCount="1"
+              pageWidth="842"
+              pageHeight="595"
+              orientation="Landscape"
+              columnWidth="802"
+              leftMargin="20"
+              rightMargin="20"
+              topMargin="20"
+              bottomMargin="20"
+              uuid="8ba2ebe5-71dd-403b-a7aa-141a826357f0">
+
+    <!-- Unit properties (Jaspersoft Studio) -->
+    <property name="com.jaspersoft.studio.unit." value="pixel"/>
+    <property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+    <property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+    <property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+    <property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+    <property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+    <property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+    <property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+    <property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+
+    <!-- Parameters -->
+    <parameter name="studentName" class="java.lang.String"/>
+    <parameter name="bgImage" class="java.awt.Image"/>
+
+    <!-- Empty query -->
+    <queryString><![CDATA[]]></queryString>
+
+    <detail>
+        <band height="555" splitType="Stretch">
+            <!-- Dynamic Background Image -->
+            <image scaleImage="FillFrame" isUsingCache="false">
+                <reportElement x="0" y="0" width="802" height="555" uuid="dd4449e5-e074-4d3c-9414-761744573c03"/>
+                <imageExpression class="java.awt.Image"><![CDATA[$P{bgImage}]]></imageExpression>
+            </image>
+
+            <!-- Student Name Field -->
+            <textField isStretchWithOverflow="true">
+                <reportElement x="196" y="340" width="410" height="30" forecolor="#1925A8" uuid="6b54853b-0801-4c35-b7ab-ea6d3cf7fda1"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="14" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{studentName}]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+</jasperReport>
