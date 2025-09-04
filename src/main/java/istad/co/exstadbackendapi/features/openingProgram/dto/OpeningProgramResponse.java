@@ -17,8 +17,6 @@ public record OpeningProgramResponse(
         Float price,
         String telegramGroup,
         Integer generation,
-        Boolean isDeleted,
-        Status status,
         String qrCodeUrl,
         List<Detail> details,
         List<Timeline> timelines,
@@ -29,7 +27,9 @@ public record OpeningProgramResponse(
         String duration,
         List<Activity> activities,
         String curriculumPdfUri,
+        Status status,
         Boolean isActive,
+        Boolean isDeleted,
         AuditableDto audit
 ) {
 }

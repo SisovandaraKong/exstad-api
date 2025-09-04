@@ -39,11 +39,13 @@ public record ScholarResponse(
 
         String phoneFamilyNumber,
 
-        Boolean isPublic,
-
         String quote,
 
         AuditableDto audit,
+
+        Boolean isPublic,
+
+        Boolean isDeleted,
 
         List<ScholarBadgeForScholarResponse> badges
 ) {

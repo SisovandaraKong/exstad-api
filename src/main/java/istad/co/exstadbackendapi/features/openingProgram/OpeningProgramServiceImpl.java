@@ -2,6 +2,7 @@ package istad.co.exstadbackendapi.features.openingProgram;
 
 import istad.co.exstadbackendapi.base.BasedMessage;
 import istad.co.exstadbackendapi.domain.OpeningProgram;
+import istad.co.exstadbackendapi.domain.vo.*;
 import istad.co.exstadbackendapi.features.openingProgram.dto.OpeningProgramRequest;
 import istad.co.exstadbackendapi.features.openingProgram.dto.OpeningProgramResponse;
 import istad.co.exstadbackendapi.features.openingProgram.dto.OpeningProgramUpdate;
@@ -109,6 +110,118 @@ public class OpeningProgramServiceImpl implements OpeningProgramService {
         }
         openingProgramRepository.deactivateByUuid(uuid);
         return new BasedMessage("Opening Program deactivated successfully");
+    }
+
+    @Override
+    public OpeningProgramResponse setUpActivities(String uuid, List<Activity> activities) {
+        OpeningProgram openingProgram = openingProgramRepository.findByUuid(uuid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Opening Program not found"));
+        openingProgram.setActivities(activities);
+        openingProgram = openingProgramRepository.save(openingProgram);
+        return openingProgramMapper.toOpeningProgramResponse(openingProgram);
+    }
+
+    @Override
+    public OpeningProgramResponse setUpTimelines(String uuid, List<Timeline> timelines) {
+        OpeningProgram openingProgram = openingProgramRepository.findByUuid(uuid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Opening Program not found"));
+        openingProgram.setTimelines(timelines);
+        openingProgram = openingProgramRepository.save(openingProgram);
+        return openingProgramMapper.toOpeningProgramResponse(openingProgram);
+    }
+
+    @Override
+    public OpeningProgramResponse setUpCurricula(String uuid, List<Curriculum> curricula) {
+        OpeningProgram openingProgram = openingProgramRepository.findByUuid(uuid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Opening Program not found"));
+        openingProgram.setCurricula(curricula);
+        openingProgram = openingProgramRepository.save(openingProgram);
+        return openingProgramMapper.toOpeningProgramResponse(openingProgram);
+    }
+
+    @Override
+    public OpeningProgramResponse setUpRoadmaps(String uuid, List<Roadmap> roadmaps) {
+        OpeningProgram openingProgram = openingProgramRepository.findByUuid(uuid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Opening Program not found"));
+        openingProgram.setRoadmaps(roadmaps);
+        openingProgram = openingProgramRepository.save(openingProgram);
+        return openingProgramMapper.toOpeningProgramResponse(openingProgram);
+    }
+
+    @Override
+    public OpeningProgramResponse setUpLearningOutcomes(String uuid, List<LearningOutcome> learningOutcomes) {
+        OpeningProgram openingProgram = openingProgramRepository.findByUuid(uuid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Opening Program not found"));
+        openingProgram.setLearningOutcomes(learningOutcomes);
+        openingProgram = openingProgramRepository.save(openingProgram);
+        return openingProgramMapper.toOpeningProgramResponse(openingProgram);
+    }
+
+    @Override
+    public OpeningProgramResponse setUpRequirements(String uuid, List<Requirement> requirements) {
+        OpeningProgram openingProgram = openingProgramRepository.findByUuid(uuid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Opening Program not found"));
+        openingProgram.setRequirements(requirements);
+        openingProgram = openingProgramRepository.save(openingProgram);
+        return openingProgramMapper.toOpeningProgramResponse(openingProgram);
+    }
+
+    @Override
+    public OpeningProgramResponse setUpDetails(String uuid, List<Detail> details) {
+        OpeningProgram openingProgram = openingProgramRepository.findByUuid(uuid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Opening Program not found"));
+        openingProgram.setDetails(details);
+        openingProgram = openingProgramRepository.save(openingProgram);
+        return openingProgramMapper.toOpeningProgramResponse(openingProgram);
+    }
+
+    @Override
+    public List<Activity> getActivities(String uuid) {
+        OpeningProgram openingProgram = openingProgramRepository.findByUuid(uuid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Opening Program not found"));
+        return openingProgram.getActivities();
+    }
+
+    @Override
+    public List<Timeline> getTimelines(String uuid) {
+        OpeningProgram openingProgram = openingProgramRepository.findByUuid(uuid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Opening Program not found"));
+        return openingProgram.getTimelines();
+    }
+
+    @Override
+    public List<Curriculum> getCurricula(String uuid) {
+        OpeningProgram openingProgram = openingProgramRepository.findByUuid(uuid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Opening Program not found"));
+        return openingProgram.getCurricula();
+    }
+
+    @Override
+    public List<Roadmap> getRoadmaps(String uuid) {
+        OpeningProgram openingProgram = openingProgramRepository.findByUuid(uuid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Opening Program not found"));
+        return openingProgram.getRoadmaps();
+    }
+
+    @Override
+    public List<LearningOutcome> getLearningOutcomes(String uuid) {
+        OpeningProgram openingProgram = openingProgramRepository.findByUuid(uuid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Opening Program not found"));
+        return openingProgram.getLearningOutcomes();
+    }
+
+    @Override
+    public List<Requirement> getRequirements(String uuid) {
+        OpeningProgram openingProgram = openingProgramRepository.findByUuid(uuid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Opening Program not found"));
+        return openingProgram.getRequirements();
+    }
+
+    @Override
+    public List<Detail> getDetails(String uuid) {
+        OpeningProgram openingProgram = openingProgramRepository.findByUuid(uuid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Opening Program not found"));
+        return openingProgram.getDetails();
     }
 
     @Transactional
