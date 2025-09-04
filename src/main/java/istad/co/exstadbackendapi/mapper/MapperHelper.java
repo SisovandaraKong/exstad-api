@@ -9,6 +9,7 @@ import istad.co.exstadbackendapi.features.scholar_badge.dto.ScholarBadgeResponse
 import istad.co.exstadbackendapi.features.university.UniversityRepository;
 import lombok.RequiredArgsConstructor;
 import org.mapstruct.Named;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
@@ -24,6 +25,9 @@ public class MapperHelper {
     private final UniversityRepository universityRepository;
     private final ProvinceRepository provinceRepository;
     private final CurrentAddressRepository currentAddressRepository;
+
+    @Value("${server.public-access}")
+    private String publicAccess;
 
     @Named("toUniversity")
     public University toUniversity(final String university) {
@@ -58,6 +62,16 @@ public class MapperHelper {
         return badgeRepository.findByUuid(badgeUuid).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Badge not found")
         );
+    }
+
+    @Named("toPublicAccessDocument")
+    public String toPublicAccessDocument(Document document) {
+        return this.publicAccess + document.getName() + "." + document.getExtension();
+    }
+
+    @Named("toFullDocumentName")
+    public String toFullDocumentName(Document document) {
+        return document.getName() + "." + document.getExtension();
     }
 
 }

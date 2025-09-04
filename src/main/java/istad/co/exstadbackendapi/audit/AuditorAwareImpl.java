@@ -20,8 +20,7 @@ public class AuditorAwareImpl implements AuditorAware<String> {
             return Optional.of("SYSTEM");
         }
 
-        if (auth instanceof JwtAuthenticationToken) {
-            JwtAuthenticationToken jwtToken = (JwtAuthenticationToken) auth;
+        if (auth instanceof JwtAuthenticationToken jwtToken) {
             String keycloakUuid = jwtToken.getToken().getClaimAsString("sub");
             return Optional.ofNullable(keycloakUuid != null ? keycloakUuid : auth.getName());
         }
