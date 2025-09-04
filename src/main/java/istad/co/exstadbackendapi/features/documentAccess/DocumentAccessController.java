@@ -1,4 +1,4 @@
-package istad.co.exstadbackendapi.features.document_access;
+package istad.co.exstadbackendapi.features.documentAccess;
 
 import istad.co.exstadbackendapi.features.document.DocumentService;
 import lombok.RequiredArgsConstructor;

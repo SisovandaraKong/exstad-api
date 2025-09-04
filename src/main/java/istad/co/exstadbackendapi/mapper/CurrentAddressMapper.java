@@ -2,8 +2,8 @@ package istad.co.exstadbackendapi.mapper;
 
 import istad.co.exstadbackendapi.audit.AuditableMapper;
 import istad.co.exstadbackendapi.domain.CurrentAddress;
-import istad.co.exstadbackendapi.features.current_address.dto.CurrentAddressRequest;
-import istad.co.exstadbackendapi.features.current_address.dto.CurrentAddressResponse;
+import istad.co.exstadbackendapi.features.currenAddress.dto.CurrentAddressRequest;
+import istad.co.exstadbackendapi.features.currenAddress.dto.CurrentAddressResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

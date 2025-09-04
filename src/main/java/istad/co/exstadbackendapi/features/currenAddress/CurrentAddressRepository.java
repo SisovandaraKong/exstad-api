@@ -1,4 +1,4 @@
-package istad.co.exstadbackendapi.features.current_address;
+package istad.co.exstadbackendapi.features.currenAddress;
 
 import istad.co.exstadbackendapi.domain.CurrentAddress;
 import org.springframework.data.jpa.repository.JpaRepository;

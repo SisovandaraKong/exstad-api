@@ -23,7 +23,6 @@ public interface ProgramService {
     ProgramResponse setUpFaqs(String uuid, List<Faq> faqs);
     ProgramResponse setUpRequirements(String uuid, List<Requirement> requirements);
     ProgramResponse setUpLearningOutcomes(String uuid, List<LearningOutcome> learningOutcomes);
-    ProgramResponse setUpTimelines(String uuid, List<Timeline> timelines);
     ProgramResponse setUpCurricula(String uuid, List<Curriculum> curricula);
     List<Highlight> getHighlights(String uuid);
     List<ProgramOverview> getProgramOverviews(String uuid);
@@ -31,7 +30,5 @@ public interface ProgramService {
     List<Faq> getFaqs(String uuid);
     List<Requirement> getRequirements(String uuid);
     List<LearningOutcome> getLearningOutcomes(String uuid);
-    List<Timeline> getTimelines(String uuid);
     List<Curriculum> getCurricula(String uuid);
-
 }

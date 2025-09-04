@@ -58,9 +58,7 @@ public class ProgramServiceImpl implements ProgramService {
         program.setFaqs(null);
         program.setRequirements(null);
         program.setLearningOutcomes(null);
-        program.setTimelines(null);
         program.setCurricula(null);
-
         program.setUuid(UUID.randomUUID().toString());
         program.setIsDeleted(false);
         program = programRepository.save(program);
@@ -171,15 +169,6 @@ public class ProgramServiceImpl implements ProgramService {
     }
 
     @Override
-    public ProgramResponse setUpTimelines(String uuid, List<Timeline> timelines) {
-        Program program = programRepository.findByUuid(uuid)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Program not found"));
-        program.setTimelines(timelines);
-        program = programRepository.save(program);
-        return programMapper.toProgramResponse(program);
-    }
-
-    @Override
     public ProgramResponse setUpCurricula(String uuid, List<Curriculum> curricula) {
         Program program = programRepository.findByUuid(uuid)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Program not found"));
@@ -228,13 +217,6 @@ public class ProgramServiceImpl implements ProgramService {
         Program program = programRepository.findByUuid(uuid)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Program not found"));
         return program.getLearningOutcomes();
-    }
-
-    @Override
-    public List<Timeline> getTimelines(String uuid) {
-        Program program = programRepository.findByUuid(uuid)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Program not found"));
-        return program.getTimelines();
     }
 
     @Override

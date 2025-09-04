@@ -2,7 +2,7 @@ package istad.co.exstadbackendapi.init;
 
 import istad.co.exstadbackendapi.domain.CurrentAddress;
 import istad.co.exstadbackendapi.domain.Province;
-import istad.co.exstadbackendapi.features.current_address.CurrentAddressRepository;
+import istad.co.exstadbackendapi.features.currenAddress.CurrentAddressRepository;
 import istad.co.exstadbackendapi.features.province.ProvinceRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;

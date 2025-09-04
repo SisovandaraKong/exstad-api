@@ -33,18 +33,24 @@ public class OpeningProgram extends Auditable {
     @Column(nullable = false, unique = true)
     private String uuid;
 
+    @Column(length = 60, nullable = false)
+    private String title;
+
     private String thumbnail;
 
     @Column(nullable = false)
     private Integer totalSlot;
 
     @Column(nullable = false)
-    private LocalDate startTime;
+    private Float originalFee;
 
     @Column(nullable = false)
-    private LocalDate endTime;
+    private Float scholarship;
 
-    private String telegramGroupLink;
+    @Column(nullable = false)
+    private Float price;
+
+    private String telegramGroup;
 
     @Column(nullable = false)
     private Integer generation;
@@ -53,9 +59,6 @@ public class OpeningProgram extends Auditable {
     private Boolean isDeleted;
 
     private Status status;
-
-    @Column(length = 60, nullable = false)
-    private String title;
 
     private String qrCodeUrl;
 

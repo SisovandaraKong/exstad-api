@@ -1,8 +1,8 @@
-package istad.co.exstadbackendapi.features.current_address;
+package istad.co.exstadbackendapi.features.currenAddress;
 
 import istad.co.exstadbackendapi.base.BasedMessage;
-import istad.co.exstadbackendapi.features.current_address.dto.CurrentAddressRequest;
-import istad.co.exstadbackendapi.features.current_address.dto.CurrentAddressResponse;
+import istad.co.exstadbackendapi.features.currenAddress.dto.CurrentAddressRequest;
+import istad.co.exstadbackendapi.features.currenAddress.dto.CurrentAddressResponse;
 
 import java.util.List;
 

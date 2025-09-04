@@ -1,4 +1,4 @@
-package istad.co.exstadbackendapi.features.scholar_badge;
+package istad.co.exstadbackendapi.features.scholarBadge;
 
 import istad.co.exstadbackendapi.domain.ScholarBadge;
 import org.springframework.data.jpa.repository.JpaRepository;
