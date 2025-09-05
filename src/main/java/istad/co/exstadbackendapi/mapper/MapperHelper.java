@@ -3,16 +3,21 @@ package istad.co.exstadbackendapi.mapper;
 import istad.co.exstadbackendapi.domain.*;
 import istad.co.exstadbackendapi.features.badge.BadgeRepository;
 import istad.co.exstadbackendapi.features.currentAddress.CurrentAddressRepository;
+import istad.co.exstadbackendapi.features.current_address.CurrentAddressRepository;
 import istad.co.exstadbackendapi.features.openingProgram.OpeningProgramRepository;
 import istad.co.exstadbackendapi.features.program.ProgramRepository;
 import istad.co.exstadbackendapi.features.province.ProvinceRepository;
 import istad.co.exstadbackendapi.features.scholar.ScholarRepository;
+import istad.co.exstadbackendapi.features.scholar_badge.dto.ScholarBadgeResponse;
 import istad.co.exstadbackendapi.features.university.UniversityRepository;
 import lombok.RequiredArgsConstructor;
 import org.mapstruct.Named;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -25,6 +30,9 @@ public class MapperHelper {
     private final CurrentAddressRepository currentAddressRepository;
     private final OpeningProgramRepository openingProgramRepository;
     private final ProgramRepository programRepository;
+
+    @Value("${server.public-access}")
+    private String publicAccess;
 
     @Named("toUniversity")
     public University toUniversity(final String university) {
@@ -66,6 +74,16 @@ public class MapperHelper {
         return programRepository.findByUuid(uuid).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Program not found")
         );
+    }
+
+    @Named("toPublicAccessDocument")
+    public String toPublicAccessDocument(Document document) {
+        return this.publicAccess + document.getName() + "." + document.getExtension();
+    }
+
+    @Named("toFullDocumentName")
+    public String toFullDocumentName(Document document) {
+        return document.getName() + "." + document.getExtension();
     }
 
 }

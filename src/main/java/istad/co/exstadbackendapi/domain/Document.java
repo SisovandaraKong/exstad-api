@@ -2,6 +2,7 @@ package istad.co.exstadbackendapi.domain;
 
 import istad.co.exstadbackendapi.audit.Auditable;
 import istad.co.exstadbackendapi.enums.DocumentType;
+import istad.co.exstadbackendapi.enums.OfferingType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,6 +24,12 @@ public class Document extends Auditable {
 
     @Column(nullable = false)
     private Long fileSize;
+
+    @Column(nullable = false)
+    int gen;
+
+    @Enumerated(EnumType.STRING)
+    private OfferingType offeringType;
 
     @Enumerated(EnumType.STRING)
     private DocumentType documentType;
