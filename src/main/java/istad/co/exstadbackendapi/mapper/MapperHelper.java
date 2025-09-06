@@ -84,4 +84,10 @@ public class MapperHelper {
         return document.getName() + "." + document.getExtension();
     }
 
+    @Named("toOpeningPrgramByUuid")
+    public OpeningProgram toOpeningPrgramByUuid(final String uuid) {
+        return openingProgramRepository.findByUuid(uuid).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Opening program not found")
+        );
+    }
 }
