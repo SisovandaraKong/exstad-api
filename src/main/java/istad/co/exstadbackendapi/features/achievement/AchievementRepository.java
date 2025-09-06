@@ -2,7 +2,6 @@ package istad.co.exstadbackendapi.features.achievement;
 
 import istad.co.exstadbackendapi.domain.Achievement;
 import istad.co.exstadbackendapi.domain.OpeningProgram;
-import istad.co.exstadbackendapi.features.achievement.dto.AchievementResponse;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
