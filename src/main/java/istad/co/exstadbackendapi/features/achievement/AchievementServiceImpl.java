@@ -9,7 +9,6 @@ import istad.co.exstadbackendapi.features.openingProgram.OpeningProgramRepositor
 import istad.co.exstadbackendapi.mapper.AchievementMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
