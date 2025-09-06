@@ -1,5 +1,6 @@
 package istad.co.exstadbackendapi.domain;
 
+import istad.co.exstadbackendapi.audit.Auditable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,7 +13,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "scholars_achievements")
-public class ScholarAchievement {
+public class ScholarAchievement extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +25,9 @@ public class ScholarAchievement {
     @ManyToOne
     @JoinColumn(name = "scholar_id")
     private Scholar scholar;
+
+    @Column(nullable = false)
+    private Boolean isDeleted;
 
     @ManyToOne
     @JoinColumn(name = "achievement_id")
