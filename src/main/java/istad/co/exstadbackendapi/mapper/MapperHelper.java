@@ -67,8 +67,8 @@ public class MapperHelper {
         );
     }
 
-    @Named("toOpeningProgramTitle")
-    public Program toOpeningProgramTitle(final String uuid) {
+    @Named("toProgramTitle")
+    public Program toProgramTitle(final String uuid) {
         return programRepository.findByUuid(uuid).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Program not found")
         );
@@ -84,4 +84,10 @@ public class MapperHelper {
         return document.getName() + "." + document.getExtension();
     }
 
+    @Named("toOpeningProgramTitle")
+    public OpeningProgram toOpeningProgramTitle(final String uuid){
+        return openingProgramRepository.findByUuid(uuid).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Opening program not found")
+        );
+    }
 }
