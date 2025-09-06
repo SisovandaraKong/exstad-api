@@ -1,14 +1,13 @@
-package istad.co.exstadbackendapi.features.current_address;
+package istad.co.exstadbackendapi.features.currentAddress;
 
 import istad.co.exstadbackendapi.base.BasedMessage;
-import istad.co.exstadbackendapi.features.current_address.dto.CurrentAddressRequest;
-import istad.co.exstadbackendapi.features.current_address.dto.CurrentAddressResponse;
+import istad.co.exstadbackendapi.features.currentAddress.dto.CurrentAddressRequest;
+import istad.co.exstadbackendapi.features.currentAddress.dto.CurrentAddressResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Map;
 
 @RestController

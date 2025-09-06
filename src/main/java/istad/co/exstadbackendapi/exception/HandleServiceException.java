@@ -13,7 +13,6 @@ public class HandleServiceException {
     @ExceptionHandler(ResponseStatusException.class)
     public ResponseEntity<?> handleServiceException(ResponseStatusException exception){
         BasedError<String> basedError = new BasedError<>();
-
         basedError.setCode(exception.getStatusCode().toString());
         basedError.setDescription(exception.getReason());
 

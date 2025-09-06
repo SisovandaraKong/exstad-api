@@ -7,8 +7,8 @@ public record UniversityResponse(
         String englishName,
         String khmerName,
         String shortName,
-        Boolean isDeleted,
         Long scholars,
+        Boolean isDeleted,
         AuditableDto audit
 ) {
 }

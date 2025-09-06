@@ -27,7 +27,7 @@ public class HandleValidationException {
             error.put("reason", fieldError.getDefaultMessage());
             errors.add(error);
         }
-        basedError.setCode(HttpStatus.BAD_REQUEST.getReasonPhrase());
+        basedError.setCode(HttpStatus.BAD_GATEWAY.getReasonPhrase());
         basedError.setDescription(errors);
         return new BasedErrorResponse(basedError);
     }

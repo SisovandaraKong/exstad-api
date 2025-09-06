@@ -1,8 +1,8 @@
-package istad.co.exstadbackendapi.features.scholar_badge;
+package istad.co.exstadbackendapi.features.scholarBadge;
 
-import istad.co.exstadbackendapi.features.scholar_badge.dto.ScholarBadgeRequest;
-import istad.co.exstadbackendapi.features.scholar_badge.dto.ScholarBadgeRequestUpdate;
-import istad.co.exstadbackendapi.features.scholar_badge.dto.ScholarBadgeResponse;
+import istad.co.exstadbackendapi.features.scholarBadge.dto.ScholarBadgeRequest;
+import istad.co.exstadbackendapi.features.scholarBadge.dto.ScholarBadgeRequestUpdate;
+import istad.co.exstadbackendapi.features.scholarBadge.dto.ScholarBadgeResponse;
 
 public interface ScholarBadgeService {
 

@@ -1,4 +1,4 @@
-package istad.co.exstadbackendapi.features.scholar_badge.dto;
+package istad.co.exstadbackendapi.features.scholarBadge.dto;
 
 import istad.co.exstadbackendapi.features.badge.dto.BadgeResponse;
 

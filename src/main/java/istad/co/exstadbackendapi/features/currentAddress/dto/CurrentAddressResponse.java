@@ -1,4 +1,4 @@
-package istad.co.exstadbackendapi.features.current_address.dto;
+package istad.co.exstadbackendapi.features.currentAddress.dto;
 
 import istad.co.exstadbackendapi.audit.AuditableDto;
 
@@ -8,6 +8,7 @@ public record CurrentAddressResponse(
         String khmerName,
         String province,
         Long scholars,
+        Boolean isDeleted,
         AuditableDto audit
 ) {
 }

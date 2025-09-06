@@ -1,9 +1,9 @@
-package istad.co.exstadbackendapi.features.scholar_badge;
+package istad.co.exstadbackendapi.features.scholarBadge;
 
 import istad.co.exstadbackendapi.domain.ScholarBadge;
-import istad.co.exstadbackendapi.features.scholar_badge.dto.ScholarBadgeRequest;
-import istad.co.exstadbackendapi.features.scholar_badge.dto.ScholarBadgeRequestUpdate;
-import istad.co.exstadbackendapi.features.scholar_badge.dto.ScholarBadgeResponse;
+import istad.co.exstadbackendapi.features.scholarBadge.dto.ScholarBadgeRequest;
+import istad.co.exstadbackendapi.features.scholarBadge.dto.ScholarBadgeRequestUpdate;
+import istad.co.exstadbackendapi.features.scholarBadge.dto.ScholarBadgeResponse;
 import istad.co.exstadbackendapi.mapper.ScholarBadgeMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

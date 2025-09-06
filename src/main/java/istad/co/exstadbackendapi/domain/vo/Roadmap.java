@@ -16,50 +16,43 @@ public class Roadmap {
     private List<Node> nodes;
     private List<Edge> edges;
 
-}
-@Setter
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
-class Node {
-    private String uuid = UUID.randomUUID().toString();
-    private NodeData data;
-    private Position position;
-    private int width;
-    private int height;
-}
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Node {
+        private String uuid = UUID.randomUUID().toString();
+        private String type;
+        private NodeData data;
+        private Position position;
+    }
 
-@Setter
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
-class NodeData {
-    private int id_courses;
-    private int typer_Courses;
-    private List<String> subject;
-    private String name_over;
-    private String bg;
-    private int node_width;
-    private int node_height;
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class NodeData {
+        private String label;
+        private String description;
+    }
 
-}
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Position {
+        private int x;
+        private int y;
+    }
 
-@Setter
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
-class Position {
-    private double x;
-    private double y;
-
-}
-@Setter
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
-class Edge {
-    private String uuid = UUID.randomUUID().toString();
-    private String source;
-    private String target;
-    private boolean animated;
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Edge {
+        private String id;
+        private String source;
+        private String target;
+        private boolean animated;
+    }
 }

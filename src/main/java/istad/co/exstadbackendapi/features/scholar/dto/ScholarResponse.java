@@ -3,9 +3,7 @@ package istad.co.exstadbackendapi.features.scholar.dto;
 import istad.co.exstadbackendapi.audit.AuditableDto;
 import istad.co.exstadbackendapi.enums.Gender;
 import istad.co.exstadbackendapi.enums.Role;
-import istad.co.exstadbackendapi.features.badge.dto.BadgeResponse;
-import istad.co.exstadbackendapi.features.scholar_badge.dto.ScholarBadgeForScholarResponse;
-import istad.co.exstadbackendapi.features.scholar_badge.dto.ScholarBadgeResponse;
+import istad.co.exstadbackendapi.features.scholarBadge.dto.ScholarBadgeForScholarResponse;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -41,11 +39,13 @@ public record ScholarResponse(
 
         String phoneFamilyNumber,
 
-        Boolean isPublic,
-
         String quote,
 
         AuditableDto audit,
+
+        Boolean isPublic,
+
+        Boolean isDeleted,
 
         List<ScholarBadgeForScholarResponse> badges
 ) {

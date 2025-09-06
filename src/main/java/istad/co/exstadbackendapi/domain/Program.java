@@ -66,10 +66,6 @@ public class Program extends Auditable {
     @Column(columnDefinition = "jsonb")
     private List<LearningOutcome> learningOutcomes;
 
-    @JdbcTypeCode(SqlTypes.JSON)
-    @Column(columnDefinition = "jsonb")
-    private List<Timeline> timelines;
-
     @Enumerated(EnumType.STRING)
     private ProgramType programType;
 
