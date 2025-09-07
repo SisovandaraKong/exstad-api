@@ -3,6 +3,7 @@ package istad.co.exstadbackendapi.features.program.dto;
 import istad.co.exstadbackendapi.domain.vo.*;
 import istad.co.exstadbackendapi.enums.ProgramLevel;
 import istad.co.exstadbackendapi.enums.ProgramType;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -25,7 +26,8 @@ public record ProgramRequest(
         List<Roadmap> roadmaps,
         List<Faq> faqs,
         List<Requirement> requirements,
-        List<LearningOutcome> learningOutcomes,
+        @Valid
+        List<@Valid LearningOutcome> learningOutcomes,
         List<Timeline> timelines,
         @NotNull(message = "Program type is required")
         ProgramType programType,

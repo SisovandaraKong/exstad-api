@@ -30,7 +30,7 @@ public class CurrentAddress extends Auditable {
     private String khmerName;
 
     @Column(nullable = false)
-    private boolean isDeleted;
+    private Boolean isDeleted;
 
     @ManyToOne
     @JoinColumn(name = "province_id")
