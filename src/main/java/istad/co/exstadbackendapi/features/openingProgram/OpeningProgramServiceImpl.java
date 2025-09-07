@@ -2,10 +2,12 @@ package istad.co.exstadbackendapi.features.openingProgram;
 
 import istad.co.exstadbackendapi.base.BasedMessage;
 import istad.co.exstadbackendapi.domain.OpeningProgram;
+import istad.co.exstadbackendapi.domain.Program;
 import istad.co.exstadbackendapi.domain.vo.*;
 import istad.co.exstadbackendapi.features.openingProgram.dto.OpeningProgramRequest;
 import istad.co.exstadbackendapi.features.openingProgram.dto.OpeningProgramResponse;
 import istad.co.exstadbackendapi.features.openingProgram.dto.OpeningProgramUpdate;
+import istad.co.exstadbackendapi.features.program.ProgramRepository;
 import istad.co.exstadbackendapi.mapper.OpeningProgramMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,6 +23,7 @@ import java.util.UUID;
 public class OpeningProgramServiceImpl implements OpeningProgramService {
     private final OpeningProgramRepository openingProgramRepository;
     private final OpeningProgramMapper openingProgramMapper;
+    private final ProgramRepository programRepository;
 
     @Override
     public List<OpeningProgramResponse> getAllOpeningPrograms() {
@@ -47,7 +50,10 @@ public class OpeningProgramServiceImpl implements OpeningProgramService {
 
     @Override
     public OpeningProgramResponse createOpeningProgram(OpeningProgramRequest openingProgramRequest) {
+        Program program = programRepository.findByUuid(openingProgramRequest.programUuid())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Program not found"));
         OpeningProgram openingProgram = openingProgramMapper.fromOpeningProgramRequest(openingProgramRequest);
+        openingProgram.setTitle(program.getTitle());
         openingProgram.setAchievements(null);
         openingProgram.setCurricula(null);
         openingProgram.setDetails(null);

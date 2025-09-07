@@ -1,6 +1,7 @@
 package istad.co.exstadbackendapi.mapper;
 
 import istad.co.exstadbackendapi.domain.*;
+import istad.co.exstadbackendapi.features.achievement.AchievementRepository;
 import istad.co.exstadbackendapi.features.badge.BadgeRepository;
 import istad.co.exstadbackendapi.features.currentAddress.CurrentAddressRepository;
 import istad.co.exstadbackendapi.features.openingProgram.OpeningProgramRepository;
@@ -28,6 +29,7 @@ public class MapperHelper {
     private final CurrentAddressRepository currentAddressRepository;
     private final OpeningProgramRepository openingProgramRepository;
     private final ProgramRepository programRepository;
+    private final AchievementRepository achievementRepository;
 
     @Value("${server.public-access}")
     private String publicAccess;
@@ -88,6 +90,20 @@ public class MapperHelper {
     public OpeningProgram toOpeningProgramTitle(final String uuid){
         return openingProgramRepository.findByUuid(uuid).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Opening program not found")
+        );
+    }
+
+    @Named("toOpeningProgramByUuid")
+    public OpeningProgram toOpeningProgramByUuid(final String uuid){
+        return openingProgramRepository.findByUuid(uuid).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Opening program not found")
+        );
+    }
+
+    @Named("toAchievementByUuid")
+    public Achievement toAchievementByUuid(final String achievementUuid) {
+        return achievementRepository.findByUuid(achievementUuid).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Achievement not found")
         );
     }
 }

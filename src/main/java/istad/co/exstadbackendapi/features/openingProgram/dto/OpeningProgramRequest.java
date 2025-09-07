@@ -11,10 +11,6 @@ public record OpeningProgramRequest(
         @NotBlank(message = "Program uuid is required")
         String programUuid,
 
-        @NotBlank(message = "Title is required")
-        @Size(min = 3, max = 60, message = "Title must be between 3 and 60 characters")
-        String title,
-
         String thumbnail,
 
         @NotNull(message = "Total slot is required")
