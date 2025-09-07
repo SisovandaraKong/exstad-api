@@ -5,9 +5,7 @@ import istad.co.exstadbackendapi.domain.Achievement;
 import istad.co.exstadbackendapi.features.achievement.dto.AchievementRequest;
 import istad.co.exstadbackendapi.features.achievement.dto.AchievementRequestUpdate;
 import istad.co.exstadbackendapi.features.achievement.dto.AchievementResponse;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
+import org.mapstruct.*;
 
 @Mapper(componentModel = "spring",uses = {AuditableMapper.class, MapperHelper.class})
 public interface AchievementMapper
@@ -20,6 +18,7 @@ public interface AchievementMapper
     AchievementResponse fromAchievement(Achievement achievement);
 
 
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void toAchievementPartially(AchievementRequestUpdate achievementRequestUpdate, @MappingTarget Achievement achievement);
 
 }
