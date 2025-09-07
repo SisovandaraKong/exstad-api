@@ -1,0 +1,57 @@
+package istad.co.exstadbackendapi.features.achievement;
+
+import istad.co.exstadbackendapi.features.achievement.dto.AchievementRequest;
+import istad.co.exstadbackendapi.features.achievement.dto.AchievementRequestUpdate;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/api/v1/achievements")
+public class AchievementController {
+
+    private final AchievementService achievementService;
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<?> getAchievements() {
+        return ResponseEntity.ok(
+                achievementService.getAllAchievements()
+        );
+    }
+
+    @GetMapping("/{uuid}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<?> getAchievement(@PathVariable String uuid) {
+        return ResponseEntity.ok(
+                achievementService.getAchievementByUuid(uuid)
+        );
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<?> createAchievement(@RequestBody @Valid AchievementRequest achievementRequest) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+                achievementService.createAchievement(achievementRequest)
+        );
+    }
+
+    @PatchMapping("/{uuid}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public ResponseEntity<?> updateAchievement(@RequestBody AchievementRequestUpdate achievementRequestUpdate, @PathVariable String uuid) {
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(
+                achievementService.updateAchievementByUuid(uuid, achievementRequestUpdate)
+        );
+    }
+
+    @DeleteMapping("/{uuid}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public ResponseEntity<?> deleteAchievement(@PathVariable String uuid) {
+        achievementService.deleteAchievementByUuid(uuid);
+        return ResponseEntity.noContent().build();
+    }
+
+}

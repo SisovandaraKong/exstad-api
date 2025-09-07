@@ -1,6 +1,6 @@
 package istad.co.exstadbackendapi.domain;
 
-import istad.co.exstadbackendapi.domain.vo.EnrollmentData;
+import istad.co.exstadbackendapi.enums.Gender;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,6 +8,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
+
+import java.time.LocalDate;
+import java.util.Map;
 
 @Entity
 @Setter
@@ -28,18 +31,54 @@ public class Enrollment {
     @JoinColumn(name = "opening_program_id")
     private OpeningProgram openingProgram;
 
+    @Column( nullable = false, length = 100)
+    private String englishName;
+
+    @Column( nullable = false, length = 100)
+    private String khmerName;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+
+    @Column(nullable = false)
+    private LocalDate dob;
+
+    @Column(nullable = false, length = 100)
+    private String phoneNumber;
+
+    @Column(nullable = false)
+    private String email;
+
+    private String avatar;
+
+    @ManyToOne
+    private Province province;
+
+    @ManyToOne
+    private CurrentAddress currentAddress;
+
+    @ManyToOne
+    private University university;
+
+    @Column(nullable = false)
+    private String educationQualification;
+
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(columnDefinition = "jsonb")
-    private EnrollmentData enrollmentData;
+    private Map<String, String> extra;
 
     @Column(nullable = false)
     private Boolean isAccepted;
 
     @Column(nullable = false)
+    private Boolean isAchieved;
+
+    @Column(nullable = false)
     private Boolean isPaid;
 
     @Column(nullable = false)
-    private Boolean isAchieved;
+    private Boolean isPassed;
 
     @OneToOne(mappedBy = "enrollment", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
