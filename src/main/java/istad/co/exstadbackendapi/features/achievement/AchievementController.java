@@ -33,7 +33,6 @@ public class AchievementController {
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?> createAchievement(@RequestBody @Valid AchievementRequest achievementRequest) {
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 achievementService.createAchievement(achievementRequest)
@@ -41,7 +40,6 @@ public class AchievementController {
     }
 
     @PatchMapping("/{uuid}")
-    @ResponseStatus(HttpStatus.ACCEPTED)
     public ResponseEntity<?> updateAchievement(@RequestBody AchievementRequestUpdate achievementRequestUpdate, @PathVariable String uuid) {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(
                 achievementService.updateAchievementByUuid(uuid, achievementRequestUpdate)

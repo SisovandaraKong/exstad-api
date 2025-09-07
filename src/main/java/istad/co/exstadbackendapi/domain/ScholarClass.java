@@ -1,5 +1,6 @@
 package istad.co.exstadbackendapi.domain;
 
+import istad.co.exstadbackendapi.audit.Auditable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,11 +12,11 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "scholars_enrollments")
-public class ScholarEnrollment {
+@Table(name = "scholars_classes")
+public class ScholarClass extends Auditable {
 
     @Id
-    @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(nullable = false, unique = true)
@@ -23,7 +24,7 @@ public class ScholarEnrollment {
 
     @ManyToOne
     @JoinColumn(name = "class_id")
-    private Class aClass;
+    private Class AClass;
 
     @ManyToOne
     @JoinColumn(name = "scholar_id")
@@ -34,4 +35,7 @@ public class ScholarEnrollment {
 
     @Column(nullable = false)
     private Boolean isPaid;
+
+    @Column(nullable = false)
+    private Boolean isDeleted;
 }

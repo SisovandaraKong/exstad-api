@@ -1,8 +1,10 @@
 package istad.co.exstadbackendapi.mapper;
 
 import istad.co.exstadbackendapi.domain.*;
+import istad.co.exstadbackendapi.domain.Class;
 import istad.co.exstadbackendapi.features.achievement.AchievementRepository;
 import istad.co.exstadbackendapi.features.badge.BadgeRepository;
+import istad.co.exstadbackendapi.features.classes.ClassRepository;
 import istad.co.exstadbackendapi.features.currentAddress.CurrentAddressRepository;
 import istad.co.exstadbackendapi.features.openingProgram.OpeningProgramRepository;
 import istad.co.exstadbackendapi.features.program.ProgramRepository;
@@ -30,6 +32,7 @@ public class MapperHelper {
     private final OpeningProgramRepository openingProgramRepository;
     private final ProgramRepository programRepository;
     private final AchievementRepository achievementRepository;
+    private final ClassRepository classRepository;
 
     @Value("${server.public-access}")
     private String publicAccess;
@@ -104,6 +107,13 @@ public class MapperHelper {
     public Achievement toAchievementByUuid(final String achievementUuid) {
         return achievementRepository.findByUuid(achievementUuid).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Achievement not found")
+        );
+    }
+
+    @Named("toClassByUuid")
+    public Class toClassByUuid(final String classUuid) {
+        return classRepository.findByUuid(classUuid).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Class not found")
         );
     }
 }
