@@ -1,5 +1,6 @@
 package istad.co.exstadbackendapi.domain;
 
+import istad.co.exstadbackendapi.audit.Auditable;
 import istad.co.exstadbackendapi.enums.Shift;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -7,7 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @Entity
@@ -16,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "classes")
-public class Class {
+public class Class extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,10 +44,16 @@ public class Class {
     private Integer totalSlot;
 
     @Column(nullable = false)
-    private LocalDate startTime;
+    private LocalTime startTime;
 
     @Column(nullable = false)
-    private LocalDate endTime;
+    private LocalTime endTime;
+
+    @Column(nullable = false)
+    private Boolean isDeleted;
+
+    @Column(nullable = false)
+    private Boolean isEnabled;
 
     @OneToMany(mappedBy = "aclass")
     private List<InstructorClass> instructorClasses;

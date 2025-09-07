@@ -16,7 +16,7 @@ public interface OpeningProgramMapper {
     OpeningProgramResponse toOpeningProgramResponse(OpeningProgram openingProgram);
 
     @Mapping(target = "program", source = "programUuid",
-            qualifiedByName = "toOpeningProgramTitle")
+            qualifiedByName = "toProgramTitle")
     OpeningProgram fromOpeningProgramRequest(OpeningProgramRequest openingProgramRequest);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
