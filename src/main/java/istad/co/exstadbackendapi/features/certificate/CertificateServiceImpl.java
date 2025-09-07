@@ -70,15 +70,16 @@ public class CertificateServiceImpl implements CertificateService {
                 certificate.setVerifiedAt(null);
                 certificateRepository.save(certificate);
 
-                if(scholar.get().getUser().getGender().equals("Male")){
-                    scholar.get().getUser().setEnglishName("Mr. "+scholar.get().getUser().getEnglishName());
-                }
-                else if(scholar.get().getUser().getGender().equals("Female")){
-                    scholar.get().getUser().setEnglishName("Ms. "+scholar.get().getUser().getEnglishName());
-                }
+
 
                 Map<String, Object> parameters = new HashMap<>();
-                parameters.put("studentName", scholar.get().getUser().getEnglishName());
+                if(scholar.get().getUser().getGender().equals("Male")){
+                    parameters.put("studentName", "Mr. "+scholar.get().getUser().getEnglishName().toUpperCase());
+                }
+                else if(scholar.get().getUser().getGender().equals("Female")){
+                    parameters.put("studentName", "Ms. "+scholar.get().getUser().getEnglishName().toUpperCase());
+                }
+
                 parameters.put("bgImage", request.bgImage());
 
                 JasperPrint jasperPrint = JasperFillManager.fillReport(
@@ -118,7 +119,7 @@ public class CertificateServiceImpl implements CertificateService {
                     "fswd",  // I will use request.openingProgram() to fine offering type later
                     1,  // This one also
                     "certificate",
-                    fileName,
+                    "null",
                     multipartFile
             );
 
