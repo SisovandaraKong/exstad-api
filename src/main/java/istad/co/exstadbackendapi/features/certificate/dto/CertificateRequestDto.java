@@ -1,7 +1,9 @@
 package istad.co.exstadbackendapi.features.certificate.dto;
 
+import java.util.List;
+
 public record CertificateRequestDto(
-        String bgImage,
-        String studentName
-) {
-}
+        List<String> scholarUuids,
+        Integer openingProgramId,
+        String bgImage
+) {}

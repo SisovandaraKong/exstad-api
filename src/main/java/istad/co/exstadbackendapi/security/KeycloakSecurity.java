@@ -35,8 +35,8 @@ public class KeycloakSecurity {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(endpoint -> endpoint
-                .requestMatchers("/api/v1/users").hasAnyRole("ADMIN")
-                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+//                .requestMatchers("/api/v1/users").hasAnyRole("ADMIN")
+//                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .anyRequest().permitAll()
         );
 
