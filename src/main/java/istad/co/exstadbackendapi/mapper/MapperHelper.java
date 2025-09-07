@@ -92,6 +92,7 @@ public class MapperHelper {
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Opening program not found")
         );
     }
+
     @Named("toOpeningProgramByUuid")
     public OpeningProgram toOpeningProgramByUuid(final String uuid){
         return openingProgramRepository.findByUuid(uuid).orElseThrow(

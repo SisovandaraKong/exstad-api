@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/enrollments")
@@ -26,7 +28,7 @@ public class EnrollmentController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> getAllEnrollments() {
-        return ResponseEntity.ok(enrollmentService.getAllEnrollments());
+        return new ResponseEntity<>(Map.of("enrollments",enrollmentService.getAllEnrollments()), HttpStatus.OK);
     }
 
     @GetMapping("/accepted")
