@@ -117,6 +117,7 @@ public class DocumentServiceImpl implements DocumentService {
         }
     }
 
+
     @Override
     public ResponseEntity<Resource> downloadDocument(String filename) {
         Document document = getDocument(filename);
