@@ -1,5 +1,6 @@
 package istad.co.exstadbackendapi.features.certificate;
 
+import istad.co.exstadbackendapi.base.BasedMessage;
 import istad.co.exstadbackendapi.domain.Certificate;
 import istad.co.exstadbackendapi.domain.OpeningProgram;
 import istad.co.exstadbackendapi.domain.Scholar;
@@ -147,7 +148,7 @@ public class CertificateServiceImpl implements CertificateService {
         OpeningProgram openingProgram = openingProgramRepository.findByUuid(openingProgramUuid)
                 .orElseThrow(() -> new IllegalArgumentException("Opening Program not found"));
 
-        DocumentResponse documentResponse = documentService.uploadDocument(offeringType, openingProgram.getGeneration(), "certificate", null, file);
+        DocumentResponse documentResponse = documentService.uploadDocument(offeringType, openingProgram.getGeneration(), "certificate", "null", file);
         Scholar scholar = scholarRepository.
                 findByUuid(scholarUuid).orElseThrow(() -> new IllegalArgumentException("Scholar not found"));
         // This will be used later when opening program is ready
@@ -160,6 +161,11 @@ public class CertificateServiceImpl implements CertificateService {
             certificateRepository.save(certificate.get());
             return certificateMapper.toCertificateResponse(certificate.get());
         }
+        return null;
+    }
+
+    @Override
+    public BasedMessage getCertificateByScholar(String scholarUuid) {
         return null;
     }
 }

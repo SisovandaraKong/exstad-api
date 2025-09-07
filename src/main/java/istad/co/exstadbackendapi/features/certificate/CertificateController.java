@@ -43,6 +43,6 @@ public class CertificateController {
             @PathVariable String openingProgramUuid,
             @PathVariable String scholarUuid)
     {
-        return new ResponseEntity<>(verifyCertificate(offeringType , file ,openingProgramUuid, scholarUuid), HttpStatus.OK);
+        return new ResponseEntity<>(certificateService.verifyCertificate(offeringType , file ,openingProgramUuid, scholarUuid), HttpStatus.OK);
     }
 }

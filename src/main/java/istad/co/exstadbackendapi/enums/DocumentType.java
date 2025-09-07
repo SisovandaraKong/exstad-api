@@ -8,7 +8,7 @@ import java.util.List;
 @Getter
 @RequiredArgsConstructor
 public enum DocumentType {
-    CERTIFICATE( "certificate","certificates", List.of("pdf")),
+    CERTIFICATE( "certificate","certificates", List.of("pdf","png","jpg")),
     TRANSCRIPT("transcript","transcripts", List.of("pdf")),
     ACTIVITY( "activity","activities", List.of("pdf")),
     POSTER("poster","images/posters", List.of("jpeg", "jpg", "png", "webp")),
