@@ -4,6 +4,6 @@ import java.util.List;
 
 public record CertificateRequestDto(
         List<String> scholarUuids,
-        Integer openingProgramId,
+        String openingProgramUuid,
         String bgImage
 ) {}

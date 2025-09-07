@@ -6,8 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface CertificateService {
 
-    CertificateResponse generateCertificate(CertificateRequestDto request);
+    CertificateResponse generateCertificate(String offeringType, CertificateRequestDto request);
 //    BasedMessage saveCertificateRecord(CertificateRequest certificateRequest);
-    CertificateResponse verifyCertificate(String offeringType, int gen, String documentType, String preferredFileName, MultipartFile file,Integer openingProgramId, String uuid);
-
+    CertificateResponse verifyCertificate(String offeringType, MultipartFile file,String openingProgramUuid, String scholarUuid);
 }

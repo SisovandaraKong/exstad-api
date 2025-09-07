@@ -1,11 +1,13 @@
 package istad.co.exstadbackendapi.features.certificate;
 
 import istad.co.exstadbackendapi.domain.Certificate;
+import istad.co.exstadbackendapi.domain.OpeningProgram;
 import istad.co.exstadbackendapi.domain.Scholar;
 import istad.co.exstadbackendapi.features.certificate.dto.CertificateResponse;
 import istad.co.exstadbackendapi.features.certificate.dto.CertificateRequestDto;
 import istad.co.exstadbackendapi.features.document.DocumentService;
 import istad.co.exstadbackendapi.features.document.dto.DocumentResponse;
+import istad.co.exstadbackendapi.features.openingProgram.OpeningProgramRepository;
 import istad.co.exstadbackendapi.features.scholar.ScholarRepository;
 import istad.co.exstadbackendapi.mapper.CertificateMapper;
 import lombok.RequiredArgsConstructor;
@@ -35,10 +37,11 @@ public class CertificateServiceImpl implements CertificateService {
     private final ScholarRepository scholarRepository;
     private final CertificateRepository certificateRepository;
     private final CertificateMapper certificateMapper;
+    private final OpeningProgramRepository openingProgramRepository;
 
 
     @Override
-    public CertificateResponse generateCertificate(CertificateRequestDto request) {
+    public CertificateResponse generateCertificate(String offeringType,CertificateRequestDto request) {
         try {
             if (request.scholarUuids() == null || request.scholarUuids().isEmpty()) {
                 throw new IllegalArgumentException("At least one student name is required.");
@@ -53,6 +56,8 @@ public class CertificateServiceImpl implements CertificateService {
             List<JasperPrint> jasperPrintList = new ArrayList<>();
 
             Certificate certificate = new Certificate();
+            OpeningProgram openingProgram = openingProgramRepository.findByUuid(request.openingProgramUuid())
+                    .orElseThrow(() -> new IllegalArgumentException("Opening Program not found"));
             for (String scholarUuid : request.scholarUuids()) {
                 if (scholarUuid == null || scholarUuid.trim().isEmpty()) {
                     continue;
@@ -60,10 +65,10 @@ public class CertificateServiceImpl implements CertificateService {
 
                 Optional<Scholar> scholar = scholarRepository.findByUuid(scholarUuid);
                 certificate.setScholar(scholar.orElse(null));
-                certificate.setOpeningProgram(null);
+                certificate.setOpeningProgram(openingProgram);
+                // For testing purpose
+//                certificate.setOpeningProgram(null);
                 certificate.setCertificateUrl(null);
-                // save null uri for each scholar first beacause this uri will store all scholar's certificate
-//                certificate.setTempCertificateUrl(null);
                 certificate.setIsDisabled(false);
                 certificate.setIsDeleted(false);
                 certificate.setIsVerified(false);
@@ -116,8 +121,9 @@ public class CertificateServiceImpl implements CertificateService {
 
             // upload certificate to minio
             DocumentResponse documentResponse = documentService.uploadDocument(
-                    "fswd",  // I will use request.openingProgram() to fine offering type later
-                    1,  // This one also
+                    offeringType,  // I will use request.openingProgram() to fine offering type later
+//                    1,
+                    openingProgram.getGeneration(),
                     "certificate",
                     "null",
                     multipartFile
@@ -136,15 +142,17 @@ public class CertificateServiceImpl implements CertificateService {
     }
 
     @Override
-    public CertificateResponse verifyCertificate(String offeringType, int gen, String documentType, String preferredFileName, MultipartFile file, Integer openingProgramId, String uuid) {
-        DocumentResponse documentResponse = documentService.uploadDocument(offeringType, gen, documentType, preferredFileName, file);
+    public CertificateResponse verifyCertificate(String offeringType, MultipartFile file, String openingProgramUuid, String scholarUuid) {
+
+        OpeningProgram openingProgram = openingProgramRepository.findByUuid(openingProgramUuid)
+                .orElseThrow(() -> new IllegalArgumentException("Opening Program not found"));
+
+        DocumentResponse documentResponse = documentService.uploadDocument(offeringType, openingProgram.getGeneration(), "certificate", null, file);
         Scholar scholar = scholarRepository.
-                findByUuid(uuid).orElseThrow(() -> new IllegalArgumentException("Scholar not found"));
+                findByUuid(scholarUuid).orElseThrow(() -> new IllegalArgumentException("Scholar not found"));
         // This will be used later when opening program is ready
-//        OpeningProgram openingProgram = openingProgramRepository.findById(openingProgramId)
-//                .orElseThrow(() -> new IllegalArgumentException("Opening Program not found"));
-//        Optional<Certificate> certificate = certificateRepository.findByScholarAndOpeningProgram(scholar, openingProgram );
-        Optional<Certificate> certificate = certificateRepository.findByScholar(scholar);
+        Optional<Certificate> certificate = certificateRepository.findByScholarAndOpeningProgram(scholar, openingProgram);
+//        Optional<Certificate> certificate = certificateRepository.findByScholar(scholar);
         if(certificate.isPresent()){
             certificate.get().setIsVerified(true);
             certificate.get().setVerifiedAt(LocalDate.now());
