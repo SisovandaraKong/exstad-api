@@ -17,12 +17,12 @@ public interface ScholarClassMapper {
 
     @Mapping(target = "audit", source = "scholarClass")
     @Mapping(target = "scholarUuid", source = "scholar.uuid")
-    @Mapping(target = "classUuid", source = "AClass.uuid")
+    @Mapping(target = "classUuid", source = "_class.uuid")
     @Mapping(target = "scholarName", source = "scholar.user.englishName")
-    @Mapping(target = "className", source = "AClass.className")
+    @Mapping(target = "className", source = "_class.className")
     ScholarClassResponse toScholarClassResponse(ScholarClass scholarClass);
 
-    @Mapping(target = "AClass", source = "classUuid", qualifiedByName = "toClassByUuid")
+    @Mapping(target = "_class", source = "classUuid", qualifiedByName = "toClassByUuid")
     @Mapping(target = "scholar", source = "scholarUuid", qualifiedByName = "toScholar")
     ScholarClass toScholarClassRequest(ScholarClassRequest scholarClassRequest);
 

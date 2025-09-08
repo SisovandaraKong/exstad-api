@@ -55,9 +55,9 @@ public class Class extends Auditable {
     @Column(nullable = false)
     private Boolean isEnabled;
 
-    @OneToMany(mappedBy = "AClass")
+    @OneToMany(mappedBy = "_class")
     private List<InstructorClass> instructorClasses;
 
-    @OneToMany(mappedBy = "AClass")
+    @OneToMany(mappedBy = "_class")
     private List<ScholarClass> scholarClasses;
 }

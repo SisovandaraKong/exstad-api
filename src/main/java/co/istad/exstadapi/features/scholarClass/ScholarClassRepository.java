@@ -43,5 +43,5 @@ public interface ScholarClassRepository extends JpaRepository<ScholarClass, Inte
 
     Optional<ScholarClass> findAllByScholar(Scholar scholar);
 
-    Optional<ScholarClass> findAllByAClass(Class aClass);
+    Optional<ScholarClass> findAllBy_class(Class _class);
 }
