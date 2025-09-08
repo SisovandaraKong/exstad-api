@@ -26,7 +26,6 @@ public class Achievement extends Auditable {
     @Column(nullable = false, unique = true)
     private String uuid;
 
-
     @Column(length = 100)
     private String title;
 

@@ -50,10 +50,7 @@ public class OpeningProgramServiceImpl implements OpeningProgramService {
 
     @Override
     public OpeningProgramResponse createOpeningProgram(OpeningProgramRequest openingProgramRequest) {
-        Program program = programRepository.findByUuid(openingProgramRequest.programUuid())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Program not found"));
         OpeningProgram openingProgram = openingProgramMapper.fromOpeningProgramRequest(openingProgramRequest);
-        openingProgram.setTitle(program.getTitle());
         openingProgram.setAchievements(null);
         openingProgram.setCurricula(null);
         openingProgram.setDetails(null);

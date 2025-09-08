@@ -11,6 +11,7 @@ import lombok.Setter;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -36,20 +37,24 @@ public class OpeningProgram extends Auditable {
     @Column(length = 60, nullable = false)
     private String title;
 
+    @Column(length = 60, nullable = false)
+    private String slug;
+
     private String thumbnail;
 
     @Column(nullable = false)
     private Integer totalSlot;
 
-    @Column(nullable = false)
-    private Float originalFee;
+    @Column(nullable = false, precision = 10, scale = 2)
+    private BigDecimal originalFee;
 
-    @Column(nullable = false)
-    private Float scholarship;
+    @Column(nullable = false, precision = 5, scale = 2)
+    private BigDecimal scholarship;
 
-    @Column(nullable = false)
-    private Float price;
+    @Column(nullable = false, precision = 10, scale = 2)
+    private BigDecimal price;
 
+    @Column(length = 255)
     private String telegramGroup;
 
     @Column(nullable = false)
@@ -58,8 +63,11 @@ public class OpeningProgram extends Auditable {
     @Column(nullable = false)
     private Boolean isDeleted;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 20)
     private Status status;
 
+    @Column(length = 500)
     private String qrCodeUrl;
 
     @JdbcTypeCode(SqlTypes.JSON)
@@ -86,12 +94,14 @@ public class OpeningProgram extends Auditable {
     @Column(columnDefinition = "jsonb")
     private List<Requirement> requirements;
 
+    @Column(length = 100)
     private String duration;
 
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(columnDefinition = "jsonb")
     private List<Activity> activities;
 
+    @Column(length = 500)
     private String curriculumPdfUri;
 
     @Column(nullable = false)

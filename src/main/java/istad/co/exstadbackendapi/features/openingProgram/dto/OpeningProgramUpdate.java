@@ -4,10 +4,15 @@ import istad.co.exstadbackendapi.enums.Status;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 public record OpeningProgramUpdate(
         @Size(min = 3, max = 60, message = "Title must be between 3 and 60 characters")
         String title,
+
+        @Pattern(regexp = "^[a-z0-9]+(?:-[a-z0-9]+)*$", message = "Slug must be lowercase alphanumeric with hyphens")
+        @Size(max = 100, message = "Slug must not exceed 100 characters")
+        String slug,
 
         String thumbnail,
 
@@ -15,7 +20,7 @@ public record OpeningProgramUpdate(
         Integer totalSlot,
 
         @PositiveOrZero(message = "Original fee must be zero or positive")
-        Float originalFee,
+        BigDecimal originalFee,
 
         @PositiveOrZero(message = "Scholarship must be zero or positive")
         Float scholarship,

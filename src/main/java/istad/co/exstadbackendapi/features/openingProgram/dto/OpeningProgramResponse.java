@@ -4,15 +4,17 @@ import istad.co.exstadbackendapi.audit.AuditableDto;
 import istad.co.exstadbackendapi.domain.vo.*;
 import istad.co.exstadbackendapi.enums.Status;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public record OpeningProgramResponse(
         String programName,
         String uuid,
         String title,
+        String slug,
         String thumbnail,
         Integer totalSlot,
-        Float originalFee,
+        BigDecimal originalFee,
         Float scholarship,
         Float price,
         String telegramGroup,

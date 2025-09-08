@@ -15,6 +15,8 @@ public record ProgramRequest(
         @Size(min = 3, max = 150, message = "Title must be between 3 and 150 characters")
         String title,
 
+        String slug,
+
         @NotBlank(message = "Description is required")
         @Size(min = 5, max = 1000, message = "Description must be between 5 and 1000 characters")
         String description,
