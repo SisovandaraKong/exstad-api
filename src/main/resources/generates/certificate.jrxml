@@ -23,7 +23,7 @@
         <element kind="textField" uuid="760b861d-82db-438a-8dbf-1ed8c0192fec" mode="Transparent" x="71" y="235" width="700" height="50" forecolor="#2E4895" markup="none" fontName="SFProDisplay" fontSize="27.0" textAdjust="ScaleFont" linkType="None" linkTarget="Self" bold="true" hTextAlign="Center" vTextAlign="Justified">
             <paragraph lineSpacing="Single" lineSpacingSize="0.0" firstLineIndent="0"/>
             <expression class="java.lang.String"><![CDATA[
-      $P{studentName} == null ? "" : $P{studentName}.replaceAll("(.)", "$1 ").trim()
+      $P{studentName} == null ? "" : $P{studentName}.replaceAll("(.)", "$1").trim()
   ]]></expression>
 <!--            <property name="net.sf.jasperreports.text.spacing.letter" value="5"/>-->
             <property name="com.jaspersoft.studio.unit.height" value="pixel"/>

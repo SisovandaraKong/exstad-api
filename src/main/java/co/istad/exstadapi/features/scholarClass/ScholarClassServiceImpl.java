@@ -104,7 +104,7 @@ public class ScholarClassServiceImpl implements ScholarClassService{
     public List<ScholarClassResponse> getAllScholarsByOneClassUuid(String classUuid) {
         Class aClass = classRepository.findByUuid(classUuid)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Class with UUID "+ classUuid +" not found"));
-        return scholarClassRepository.findAllByAClass(aClass)
+        return scholarClassRepository.findAllBy_class(aClass)
                 .stream()
                 .map(scholarClassMapper::toScholarClassResponse)
                 .toList();

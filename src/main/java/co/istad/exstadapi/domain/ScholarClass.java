@@ -24,7 +24,7 @@ public class ScholarClass extends Auditable {
 
     @ManyToOne
     @JoinColumn(name = "class_id")
-    private Class AClass;
+    private Class _class;
 
     @ManyToOne
     @JoinColumn(name = "scholar_id")

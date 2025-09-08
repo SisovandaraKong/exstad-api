@@ -24,5 +24,5 @@ public class InstructorClass {
 
     @ManyToOne
     @JoinColumn(name = "class_id")
-    private Class AClass;
+    private Class _class;
 }
