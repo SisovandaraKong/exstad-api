@@ -59,27 +59,21 @@ public record OpeningProgramRequest(
         String qrCodeUrl,
 
         @Valid
-                @NotEmpty(message = "Details list must not be empty")
         List<Detail> details,
 
         @Valid
-        @NotEmpty(message = "Timelines list must not be empty")
         List<Timeline> timelines,
 
         @Valid
-        @NotEmpty(message = "Curricula list must not be empty")
         List<Curriculum> curricula,
 
         @Valid
-        @NotEmpty(message = "Roadmaps list must not be empty")
         List<Roadmap> roadmaps,
 
         @Valid
-        @NotEmpty(message = "Learning outcomes list must not be empty")
         List<LearningOutcome> learningOutcomes,
 
         @Valid
-        @NotEmpty(message = "Requirements list must not be empty")
         List<Requirement> requirements,
 
         @NotBlank(message = "Duration is required")
@@ -87,7 +81,6 @@ public record OpeningProgramRequest(
         String duration,
 
         @Valid
-        @NotEmpty(message = "Activities list must not be empty")
         List<Activity> activities,
 
         @Size(max = 500, message = "Curriculum PDF URI must not exceed 500 characters")

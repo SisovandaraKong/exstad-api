@@ -28,8 +28,7 @@ public record ProgramRequest(
         List<Roadmap> roadmaps,
         List<Faq> faqs,
         List<Requirement> requirements,
-        @Valid
-        List<@Valid LearningOutcome> learningOutcomes,
+        List<LearningOutcome> learningOutcomes,
         List<Timeline> timelines,
         @NotNull(message = "Program type is required")
         ProgramType programType,
