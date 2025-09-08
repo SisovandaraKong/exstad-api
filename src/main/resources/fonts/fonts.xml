@@ -2,8 +2,8 @@
 <fontFamilies>
     <fontFamily name="SFProDisplay">
 
-        <normal>fonts/SFProDisplay-Bold.ttf</normal>
-        <bold>fonts/SFProDisplay-Bold.ttf</bold>
+        <normal>fonts/SF-Pro-Text-Regular.otf</normal>
+        <bold>fonts/SF-Pro-Text-Bold.otf</bold>
 
         <pdfEncoding><![CDATA[Identity-H]]></pdfEncoding>
         <pdfEmbedded><![CDATA[true]]></pdfEmbedded>

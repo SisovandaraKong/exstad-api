@@ -1,5 +1,6 @@
 package istad.co.exstadbackendapi.features.certificate;
 
+import istad.co.exstadbackendapi.base.BasedMessage;
 import istad.co.exstadbackendapi.features.certificate.dto.CertificateResponse;
 import istad.co.exstadbackendapi.features.certificate.dto.CertificateRequestDto;
 import istad.co.exstadbackendapi.features.document.DocumentService;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
@@ -19,7 +22,6 @@ public class CertificateController {
 
 
     private final CertificateService certificateService;
-    private final DocumentService documentService;
 
     @PostMapping("/generate-certificates/{offeringType}")
     public ResponseEntity<?> generateCertificate(@PathVariable String offeringType, @RequestBody CertificateRequestDto request) {
@@ -44,5 +46,20 @@ public class CertificateController {
             @PathVariable String scholarUuid)
     {
         return new ResponseEntity<>(certificateService.verifyCertificate(offeringType , file ,openingProgramUuid, scholarUuid), HttpStatus.OK);
+    }
+
+    @GetMapping("/certificates/{scholarUuid}/opening-program/{openingProgramUuid}")
+    public CertificateResponse getCertificateByScholar(@PathVariable String scholarUuid,@PathVariable String openingProgramUuid){
+        return certificateService.getCertificateByScholarAndOpeningProgram(scholarUuid, openingProgramUuid);
+    }
+
+    @PutMapping("/certificates/{scholarUuid}/opening-program/{openingProgramUuid}/delete")
+    public BasedMessage deleteCertificateByScholar(@PathVariable String scholarUuid, @PathVariable String openingProgramUuid){
+        return certificateService.deleteCertificateByScholarAndOpeningProgram(scholarUuid, openingProgramUuid);
+    }
+
+    @GetMapping("/certificates")
+    public ResponseEntity<?> getAllCertificates(){
+        return ResponseEntity.ok(certificateService.getAllCertificates());
     }
 }

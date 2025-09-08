@@ -13,7 +13,7 @@ public enum OfferingType {
     IT_PROFESSIONAL("itp","/it-professional"),
     IT_EXPERT("ite","it-expert"),
     PRE_UNIVERSITY("pre-uni","/pre-university"),
-    FOUNDATION("found","/foundation"),;
+    FOUNDATION("found","/foundation");
 
     private final String key;
     private final String folderPath;
