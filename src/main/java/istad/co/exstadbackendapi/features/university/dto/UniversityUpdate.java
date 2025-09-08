@@ -9,7 +9,7 @@ public record UniversityUpdate(
         @Pattern(regexp = "^[a-zA-Z\\s.'-]+$", message = "English name can only contain letters, spaces, dots, apostrophes, and hyphens")
         String englishName,
 
-        @Size(min = 1, max = 200, message = "Khmer name must be between 1 and 200 characters")
+        @Size(min = 2, max = 200, message = "Khmer name must be between 2 and 200 characters")
         String khmerName,
 
         @Size(min = 2, max = 20, message = "Short name must be between 2 and 20 characters")

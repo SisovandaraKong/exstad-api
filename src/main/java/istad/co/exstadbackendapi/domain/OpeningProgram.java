@@ -12,7 +12,6 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -40,6 +39,11 @@ public class OpeningProgram extends Auditable {
     @Column(length = 60, nullable = false)
     private String slug;
 
+//    @JdbcTypeCode(SqlTypes.JSON)
+//    @Column(columnDefinition = "jsonb")
+//    private List<String> templates;
+
+    @Column(length = 500)
     private String thumbnail;
 
     @Column(nullable = false)

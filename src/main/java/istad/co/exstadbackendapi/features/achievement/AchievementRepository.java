@@ -13,4 +13,5 @@ public interface AchievementRepository extends JpaRepository<Achievement, Intege
     Optional<Achievement> findByUuid(String uuid);
 
     List<Achievement> findAllByOpeningProgram(OpeningProgram openingProgram);
+    List<Achievement> findAllByIsDeletedFalse();
 }

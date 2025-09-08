@@ -24,6 +24,7 @@ public class Badge extends Auditable {
     @Column(unique = true, nullable = false)
     private String uuid;
 
+    @Column(length = 500)
     private String badgeImage;
 
     @Column(nullable = false, length = 60)

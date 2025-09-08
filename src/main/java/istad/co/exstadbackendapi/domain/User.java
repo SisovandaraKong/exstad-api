@@ -30,10 +30,11 @@ public class User extends Auditable {
     @Column(nullable = false, length = 50)
     private String username;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, length = 100)
     private String email;
 
     @Column(length = 50, nullable = false)
@@ -45,8 +46,11 @@ public class User extends Auditable {
     @Column(nullable = false)
     private LocalDate dob;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 10)
     private String gender;
+
+    @Column(nullable = false)
+    private Boolean isDeleted;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Scholar scholar;

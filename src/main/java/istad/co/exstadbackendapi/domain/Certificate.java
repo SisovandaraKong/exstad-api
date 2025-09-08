@@ -29,12 +29,12 @@ public class Certificate extends Auditable {
     @JoinColumn(name = "scholar_id")
     private Scholar scholar;
 
-
     @Column(nullable = false)
     private Boolean isVerified;
 
     private LocalDate verifiedAt;
 
+    @Column(length = 500)
     private String certificateUrl;
 
     @Column(nullable = false)

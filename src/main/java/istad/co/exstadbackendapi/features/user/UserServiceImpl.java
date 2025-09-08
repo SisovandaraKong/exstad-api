@@ -53,6 +53,7 @@ public class UserServiceImpl implements UserService {
 
         User user = userMapper.toUser(userRequest);
         user.setUuid(response.uuid());
+        user.setIsDeleted(false);
 
         user = userRepository.save(user);
 
