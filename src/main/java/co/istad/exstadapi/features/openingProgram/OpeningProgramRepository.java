@@ -5,11 +5,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface OpeningProgramRepository extends JpaRepository<OpeningProgram, Integer>{
     Optional<OpeningProgram> findByUuid(String uuid);
     boolean existsByUuid(String uuid);
+    List<OpeningProgram> findAllByIsDeletedFalse();
 
     Optional<OpeningProgram> findByTitleIgnoreCase(String title);
 

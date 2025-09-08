@@ -39,9 +39,9 @@ public class OpeningProgram extends Auditable {
     @Column(length = 60, nullable = false)
     private String slug;
 
-//    @JdbcTypeCode(SqlTypes.JSON)
-//    @Column(columnDefinition = "jsonb")
-//    private List<String> templates;
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(columnDefinition = "jsonb")
+    private List<String> templates;
 
     @Column(length = 500)
     private String thumbnail;

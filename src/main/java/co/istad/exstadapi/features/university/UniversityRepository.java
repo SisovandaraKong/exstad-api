@@ -5,10 +5,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UniversityRepository extends JpaRepository<University, Integer> {
     Optional<University> findByUuid(String uuid);
+    List<University> findAllByIsDeletedFalse();
     boolean existsByEnglishName(String englishName);
     boolean existsByKhmerName(String khmerName);
     boolean existsByUuid(String uuid);

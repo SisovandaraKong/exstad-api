@@ -7,7 +7,6 @@ public record ProvinceResponse(
         String englishName,
         String khmerName,
         Long scholars,
-        Boolean isDeleted,
         AuditableDto audit
 ) {
 }

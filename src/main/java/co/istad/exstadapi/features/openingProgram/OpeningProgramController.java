@@ -2,6 +2,7 @@ package co.istad.exstadapi.features.openingProgram;
 
 import co.istad.exstadapi.features.openingProgram.dto.OpeningProgramRequest;
 import co.istad.exstadapi.features.openingProgram.dto.OpeningProgramUpdate;
+import co.istad.exstadapi.features.openingProgram.dto.SetUpTemplate;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -72,5 +73,11 @@ public class OpeningProgramController {
     public ResponseEntity<?> deactivateOpeningProgram(@PathVariable String uuid){
         return new ResponseEntity<>(
                 openingProgramService.deactivateOpeningProgram(uuid),HttpStatus.OK);
+    }
+
+    @PutMapping("/{uuid}/template")
+    public ResponseEntity<?> setUpTemplate(@PathVariable String uuid, @RequestBody @Valid SetUpTemplate setUpTemplate){
+        return new ResponseEntity<>(
+                openingProgramService.setUpTemplate(uuid, setUpTemplate),HttpStatus.OK);
     }
 }

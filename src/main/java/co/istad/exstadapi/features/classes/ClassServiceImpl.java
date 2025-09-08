@@ -23,7 +23,7 @@ public class ClassServiceImpl implements ClassService {
 
     @Override
     public List<ClassResponse> getAllClasses() {
-        List<Class> classes = classRepository.findAll();
+        List<Class> classes = classRepository.findAllByIsDeletedFalse();
         return classes
                 .stream()
                 .map(classMapper::toClassResponse)

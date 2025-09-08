@@ -1,9 +1,11 @@
 package co.istad.exstadapi.features.scholar;
 
 import co.istad.exstadapi.base.BasedMessage;
+import co.istad.exstadapi.domain.OpeningProgram;
 import co.istad.exstadapi.domain.Scholar;
 import co.istad.exstadapi.domain.User;
 import co.istad.exstadapi.enums.Role;
+import co.istad.exstadapi.features.openingProgram.OpeningProgramRepository;
 import co.istad.exstadapi.features.scholar.dto.ScholarRequest;
 import co.istad.exstadapi.features.scholar.dto.ScholarRequestUpdate;
 import co.istad.exstadapi.features.scholar.dto.ScholarResponse;
@@ -29,6 +31,7 @@ public class ScholarServiceImpl implements ScholarService {
     private final ScholarMapper scholarMapper;
     private final UserService userService;
     private final UserRepository userRepository;
+    private final OpeningProgramRepository openingProgramRepository;
 
     @Override
     public ScholarResponse createScholar(ScholarRequest scholarRequest) {
@@ -76,7 +79,7 @@ public class ScholarServiceImpl implements ScholarService {
 
     @Override
     public List<ScholarResponse> findAllScholars() {
-        return scholarRepository.findAll().stream().map(
+        return scholarRepository.findAllByIsDeletedFalse().stream().map(
                 scholarMapper::fromScholar
         ).toList();
     }
@@ -146,5 +149,18 @@ public class ScholarServiceImpl implements ScholarService {
         }
             scholarRepository.deleteByUuid(uuid);
             return new BasedMessage("Scholar hard deleted successfully");
+    }
+
+    @Override
+    public List<ScholarResponse> getAllScholarsByOpeningProgramUuid(String openingProgramUuid) {
+        openingProgramRepository.findByUuid(openingProgramUuid).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Opening Program not found")
+        );
+
+        List<Scholar> scholars = scholarRepository.findAllByOpeningProgramUuid(openingProgramUuid);
+
+        return scholars.stream()
+                .map(scholarMapper::fromScholar)
+                .toList();
     }
 }

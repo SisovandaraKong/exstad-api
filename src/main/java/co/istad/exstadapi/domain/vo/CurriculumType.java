@@ -12,8 +12,10 @@ import java.util.UUID;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Curriculum {
+public class CurriculumType {
     private String uuid = UUID.randomUUID().toString();
+    private Integer order;
     private String title;
-    private List<CurriculumType> curriculumType;
+    private String subtitle;
+    private List<String> description;
 }

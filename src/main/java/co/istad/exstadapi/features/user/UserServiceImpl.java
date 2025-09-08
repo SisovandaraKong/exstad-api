@@ -70,7 +70,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserResponse> getAllUsers() {
-        List<User> users = userRepository.findAll();
+        List<User> users = userRepository.findAllByIsDeletedFalse();
         return users
                 .stream()
                 .map(userMapper::fromUser)

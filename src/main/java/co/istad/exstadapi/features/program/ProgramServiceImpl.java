@@ -3,6 +3,7 @@ package co.istad.exstadapi.features.program;
 import co.istad.exstadapi.base.BasedMessage;
 import co.istad.exstadapi.domain.Program;
 import co.istad.exstadapi.domain.vo.*;
+import co.istad.exstadapi.features.program.curriculum.dto.CurriculumSetUp;
 import co.istad.exstadapi.features.program.dto.ProgramRequest;
 import co.istad.exstadapi.features.program.dto.ProgramResponse;
 import co.istad.exstadapi.features.program.dto.ProgramUpdate;
@@ -24,7 +25,7 @@ public class ProgramServiceImpl implements ProgramService {
 
     @Override
     public List<ProgramResponse> getAllPrograms() {
-        List<Program> programs = programRepository.findAll();
+        List<Program> programs = programRepository.findAllByIsDeletedFalse();
         return programs
                 .stream()
                 .map(programMapper::toProgramResponse)
@@ -169,10 +170,25 @@ public class ProgramServiceImpl implements ProgramService {
     }
 
     @Override
-    public ProgramResponse setUpCurricula(String uuid, List<Curriculum> curricula) {
+    public ProgramResponse setUpCurricula(String uuid, List<CurriculumSetUp> curriculumSetUps) {
         Program program = programRepository.findByUuid(uuid)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Program not found"));
-        program.setCurricula(curricula);
+        List<Curriculum> curriculumSet = curriculumSetUps.stream().map(curriculumSetUp -> {
+            Curriculum curriculum = new Curriculum();
+            curriculum.setUuid(UUID.randomUUID().toString());
+            curriculum.setTitle(curriculumSetUp.title());
+            curriculum.setCurriculumType(curriculumSetUp.curriculumType().stream().map(curriculumTypeSetUp -> {
+                CurriculumType curriculumType = new CurriculumType();
+                curriculumType.setUuid(UUID.randomUUID().toString());
+                curriculumType.setOrder(curriculumTypeSetUp.order());
+                curriculumType.setTitle(curriculumTypeSetUp.title());
+                curriculumType.setSubtitle(curriculumTypeSetUp.subtitle());
+                curriculumType.setDescription(curriculumTypeSetUp.description());
+                return curriculumType;
+            }).toList());
+            return curriculum;
+        }).toList();
+        program.setCurricula(curriculumSet);
         program = programRepository.save(program);
         return programMapper.toProgramResponse(program);
     }
