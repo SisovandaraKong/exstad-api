@@ -18,6 +18,6 @@ public class HandleServiceException {
 
         BasedErrorResponse basedErrorResponse = new BasedErrorResponse();
         basedErrorResponse.setError(basedError);
-        return new ResponseEntity<>(basedErrorResponse,HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(basedErrorResponse,exception.getStatusCode());
     }
 }
