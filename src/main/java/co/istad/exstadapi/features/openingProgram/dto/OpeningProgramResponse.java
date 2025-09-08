@@ -11,6 +11,7 @@ public record OpeningProgramResponse(
         String programName,
         String uuid,
         String title,
+        List<String> templates,
         String slug,
         String thumbnail,
         Integer totalSlot,
@@ -31,7 +32,6 @@ public record OpeningProgramResponse(
         String curriculumPdfUri,
         Status status,
         Boolean isActive,
-        Boolean isDeleted,
         AuditableDto audit
 ) {
 }

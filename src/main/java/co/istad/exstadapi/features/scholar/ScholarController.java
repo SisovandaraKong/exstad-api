@@ -91,5 +91,11 @@ public class ScholarController {
     public BasedMessage hardDeleteScholar(@PathVariable String uuid) {
         return scholarService.hardDeleteScholarByUuid(uuid);
     }
+
+    @GetMapping("/{uuid}/opening-program")
+    public ResponseEntity<?> getAllScholarsByOpeningProgramUuid(@PathVariable String uuid) {
+        return new ResponseEntity<>(
+                Map.of("opening-program-scholars", scholarService.getAllScholarsByOpeningProgramUuid(uuid)), HttpStatus.OK);
+    }
 }
 

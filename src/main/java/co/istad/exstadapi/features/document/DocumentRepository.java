@@ -9,6 +9,10 @@ import java.util.Optional;
 
 public interface DocumentRepository extends JpaRepository<Document, Integer> {
     Optional<Document> findByNameAndExtension(String name, String extension);
+
+    List<Document> findAllByIsDeletedFalse();
+
     Optional<Document> findByNameAndDocumentTypeIn(String name, List<DocumentType> types);
+
     List<Document> findByDocumentTypeIn(List<DocumentType> types);
 }

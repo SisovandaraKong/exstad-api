@@ -183,14 +183,7 @@ public class DocumentServiceImpl implements DocumentService {
 
     @Override
     public List<DocumentResponse> getAllImages() {
-        List<Document> images = documentRepository.findByDocumentTypeIn(
-                List.of(DocumentType.CERTIFICATE,
-                        DocumentType.TRANSCRIPT,
-                        DocumentType.ACTIVITY,
-                        DocumentType.POSTER,
-                        DocumentType.THUMBNAIL,
-                        DocumentType.AVATAR)
-        );
+        List<Document> images = documentRepository.findAllByIsDeletedFalse();
 
         return images.stream()
                 .map(documentMapper::fromDocument)

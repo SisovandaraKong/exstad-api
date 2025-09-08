@@ -15,7 +15,7 @@ public class ProvinceServiceImpl implements ProvinceService {
     private final ProvinceMapper provinceMapper;
     @Override
     public List<ProvinceResponse> getAllProvinces() {
-        List<Province> provinces = provinceRepository.findAll();
+        List<Province> provinces = provinceRepository.findAllByIsDeletedFalse();
         return provinces.stream()
                 .filter(province -> province.getIsDeleted().equals(false))
                 .map(provinceMapper::toProvinceResponse)

@@ -7,7 +7,6 @@ public record BadgeResponse(
         String badgeImage,
         String title,
         String description,
-        Boolean isDeleted,
         AuditableDto audit
 ) {
 }

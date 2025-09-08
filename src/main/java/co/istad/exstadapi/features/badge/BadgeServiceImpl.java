@@ -23,7 +23,7 @@ public class BadgeServiceImpl implements BadgeService {
 
     @Override
     public List<BadgeResponse> getAllBadges() {
-        List<Badge> badges = badgeRepository.findAll();
+        List<Badge> badges = badgeRepository.findAllByIsDeletedFalse();
         return badges.stream()
                 .map(badgeMapper::toBadgeResponse)
                 .toList();

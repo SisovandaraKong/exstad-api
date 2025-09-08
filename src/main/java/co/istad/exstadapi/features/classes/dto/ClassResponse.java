@@ -15,7 +15,6 @@ public record ClassResponse(
         Integer totalSlot,
         LocalTime startTime,
         LocalTime endTime,
-        Boolean isDeleted,
         Boolean isEnabled,
         AuditableDto audit
 ) {

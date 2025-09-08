@@ -10,7 +10,6 @@ public record ScholarClassResponse(
         String className,
         Boolean isReminded,
         Boolean isPaid,
-        Boolean isDeleted,
         AuditableDto audit
 ) {
 }

@@ -5,6 +5,7 @@ import co.istad.exstadapi.domain.vo.*;
 import co.istad.exstadapi.features.openingProgram.dto.OpeningProgramRequest;
 import co.istad.exstadapi.features.openingProgram.dto.OpeningProgramResponse;
 import co.istad.exstadapi.features.openingProgram.dto.OpeningProgramUpdate;
+import co.istad.exstadapi.features.openingProgram.dto.SetUpTemplate;
 
 import java.util.List;
 
@@ -20,6 +21,7 @@ public interface OpeningProgramService {
     BasedMessage deleteHardOpeningProgram(String uuid);
     BasedMessage activateOpeningProgram(String uuid);
     BasedMessage deactivateOpeningProgram(String uuid);
+    String setUpTemplate(String uuid, SetUpTemplate setUpTemplate);
     OpeningProgramResponse setUpActivities(String uuid, List<Activity> activities);
     OpeningProgramResponse setUpTimelines(String uuid, List<Timeline> timelines);
     OpeningProgramResponse setUpCurricula(String uuid, List<Curriculum> curricula);

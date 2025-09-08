@@ -23,7 +23,7 @@ public class UniversityServiceImpl implements UniversityService {
 
     @Override
     public List<UniversityResponse> getAllUniversities() {
-        List<University> universities = universityRepository.findAll();
+        List<University> universities = universityRepository.findAllByIsDeletedFalse();
         return universities
                 .stream()
                 .filter(university -> university.getIsDeleted().equals(false))

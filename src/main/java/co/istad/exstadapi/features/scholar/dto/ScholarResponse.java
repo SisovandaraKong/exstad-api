@@ -45,8 +45,6 @@ public record ScholarResponse(
 
         Boolean isPublic,
 
-        Boolean isDeleted,
-
         List<ScholarBadgeForScholarResponse> badges
 ) {
 }

@@ -38,17 +38,17 @@ public class CertificateServiceImpl implements CertificateService {
     public CertificateResponse generateCertificate(String offeringType,CertificateRequestDto request) {
         try {
             if (request.scholarUuid() == null || request.scholarUuid().isEmpty()) {
-                throw new IllegalArgumentException("At least one student name is required.");
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND,"At least one student name is required.");
             }
             if (request.bgImage() == null || request.bgImage().trim().isEmpty()) {
-                throw new IllegalArgumentException("Template filename is required.");
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Template filename is required.");
             }
 
             InputStream reportStream = getClass().getResourceAsStream("/generates/certificate.jrxml");
             JasperReport jasperReport = JasperCompileManager.compileReport(reportStream);
 
             OpeningProgram openingProgram = openingProgramRepository.findByUuid(request.openingProgramUuid())
-                    .orElseThrow(() -> new IllegalArgumentException("Opening Program not found"));
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Opening Program not found"));
 
             Optional<Scholar> scholar = scholarRepository.findByUuid(request.scholarUuid());
 
@@ -112,11 +112,11 @@ public class CertificateServiceImpl implements CertificateService {
     public CertificateResponse verifyCertificate(String offeringType, MultipartFile file, String openingProgramUuid, String scholarUuid) {
 
         OpeningProgram openingProgram = openingProgramRepository.findByUuid(openingProgramUuid)
-                .orElseThrow(() -> new IllegalArgumentException("Opening Program not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Opening Program not found"));
 
         DocumentResponse documentResponse = documentService.uploadDocument(offeringType, openingProgram.getGeneration(), "certificate", "null", file);
         Scholar scholar = scholarRepository.
-                findByUuid(scholarUuid).orElseThrow(() -> new IllegalArgumentException("Scholar not found"));
+                findByUuid(scholarUuid).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Scholar not found"));
         Optional<Certificate> certificate = certificateRepository.findByScholarAndOpeningProgram(scholar, openingProgram);
 
         if(certificate.isPresent()){
@@ -131,16 +131,16 @@ public class CertificateServiceImpl implements CertificateService {
 
     @Override
     public List<CertificateResponse> getAllCertificates() {
-        List<Certificate> certificates = certificateRepository.findAll();
+        List<Certificate> certificates = certificateRepository.findAllByIsDeletedFalse();
         return certificates.stream().map(certificateMapper::toCertificateResponse).toList();
     }
 
     @Override
     public CertificateResponse getCertificateByScholarAndOpeningProgram(String scholarUuid, String openingProgramUuid) {
         Scholar scholar = scholarRepository.
-                findByUuid(scholarUuid).orElseThrow(() -> new IllegalArgumentException("Scholar not found"));
+                findByUuid(scholarUuid).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Scholar not found"));
         OpeningProgram openingProgram = openingProgramRepository.findByUuid(openingProgramUuid)
-                .orElseThrow(() -> new IllegalArgumentException("Opening Program not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Opening Program not found"));
 
         Certificate certificates = certificateRepository.findByScholarAndOpeningProgram(scholar, openingProgram)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Certificate not found"));
@@ -152,7 +152,7 @@ public class CertificateServiceImpl implements CertificateService {
         Scholar scholar = scholarRepository.
                 findByUuid(scholarUuid).orElseThrow(() -> new IllegalArgumentException("Scholar not found"));
         OpeningProgram openingProgram = openingProgramRepository.findByUuid(openingProgramUuid)
-                .orElseThrow(() -> new IllegalArgumentException("Opening Program not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Opening Program not found"));
 
         Certificate certificates = certificateRepository.findByScholarAndOpeningProgram(scholar, openingProgram)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Certificate not found"));

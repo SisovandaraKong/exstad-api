@@ -25,7 +25,6 @@ public record ProgramResponse(
         ProgramType programType,
         List<Curriculum> curricula,
         ProgramLevel programLevel,
-        Boolean isDeleted,
         AuditableDto audit
 ) {
 }

@@ -38,7 +38,7 @@ public class ScholarClassServiceImpl implements ScholarClassService{
 
     @Override
     public List<ScholarClassResponse> getAllScholarClasses() {
-        List<ScholarClass> scholarClasses = scholarClassRepository.findAll();
+        List<ScholarClass> scholarClasses = scholarClassRepository.findAllByIsDeletedFalse();
         return scholarClasses
                 .stream()
                 .map(scholarClassMapper::toScholarClassResponse)

@@ -8,7 +8,6 @@ public record CurrentAddressResponse(
         String khmerName,
         String province,
         Long scholars,
-        Boolean isDeleted,
         AuditableDto audit
 ) {
 }

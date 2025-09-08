@@ -24,4 +24,6 @@ public interface ScholarService {
     BasedMessage softDeleteScholarByUuid(String uuid);
     BasedMessage restoreScholarByUuid(String uuid);
     BasedMessage hardDeleteScholarByUuid(String uuid);
+
+    List<ScholarResponse> getAllScholarsByOpeningProgramUuid(String openingProgramUuid);
 }

@@ -6,6 +6,7 @@ import co.istad.exstadapi.domain.vo.*;
 import co.istad.exstadapi.features.openingProgram.dto.OpeningProgramRequest;
 import co.istad.exstadapi.features.openingProgram.dto.OpeningProgramResponse;
 import co.istad.exstadapi.features.openingProgram.dto.OpeningProgramUpdate;
+import co.istad.exstadapi.features.openingProgram.dto.SetUpTemplate;
 import co.istad.exstadapi.features.program.ProgramRepository;
 import co.istad.exstadapi.mapper.OpeningProgramMapper;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,7 @@ public class OpeningProgramServiceImpl implements OpeningProgramService {
 
     @Override
     public List<OpeningProgramResponse> getAllOpeningPrograms() {
-        List<OpeningProgram> openingPrograms = openingProgramRepository.findAll();
+        List<OpeningProgram> openingPrograms = openingProgramRepository.findAllByIsDeletedFalse();
         return openingPrograms.
                 stream()
                 .map(openingProgramMapper::toOpeningProgramResponse)
@@ -50,6 +51,7 @@ public class OpeningProgramServiceImpl implements OpeningProgramService {
     @Override
     public OpeningProgramResponse createOpeningProgram(OpeningProgramRequest openingProgramRequest) {
         OpeningProgram openingProgram = openingProgramMapper.fromOpeningProgramRequest(openingProgramRequest);
+        openingProgram.setTemplates(List.of());
         openingProgram.setAchievements(null);
         openingProgram.setCurricula(null);
         openingProgram.setDetails(null);
@@ -112,6 +114,15 @@ public class OpeningProgramServiceImpl implements OpeningProgramService {
         }
         openingProgramRepository.deactivateByUuid(uuid);
         return new BasedMessage("Opening Program deactivated successfully");
+    }
+
+    @Override
+    public String setUpTemplate(String uuid, SetUpTemplate setUpTemplate) {
+        OpeningProgram openingProgram = openingProgramRepository.findByUuid(uuid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Opening Program not found"));
+        openingProgram.getTemplates().add(setUpTemplate.template());
+        openingProgramRepository.save(openingProgram);
+        return setUpTemplate.template();
     }
 
     @Override

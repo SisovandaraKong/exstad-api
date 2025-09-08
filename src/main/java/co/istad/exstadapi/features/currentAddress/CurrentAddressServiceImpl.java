@@ -21,7 +21,7 @@ public class CurrentAddressServiceImpl implements CurrentAddressService {
 
     @Override
     public List<CurrentAddressResponse> getAllCurrentAddresses() {
-        List<CurrentAddress> currentAddresses = currentAddressRepository.findAll();
+        List<CurrentAddress> currentAddresses = currentAddressRepository.findAllByIsDeletedFalse();
         return currentAddresses.stream().map(
                 currentAddressMapper::fromCurrentAddress
         ).toList();
