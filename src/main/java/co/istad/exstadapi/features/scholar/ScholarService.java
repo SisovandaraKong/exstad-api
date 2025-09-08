@@ -1,0 +1,27 @@
+package co.istad.exstadapi.features.scholar;
+
+import co.istad.exstadapi.base.BasedMessage;
+import co.istad.exstadapi.features.scholar.dto.ScholarRequest;
+import co.istad.exstadapi.features.scholar.dto.ScholarRequestUpdate;
+import co.istad.exstadapi.features.scholar.dto.ScholarResponse;
+
+import java.util.List;
+
+public interface ScholarService {
+
+    ScholarResponse createScholar(ScholarRequest scholarRequest);
+    ScholarResponse updateScholar(String uuid, ScholarRequestUpdate scholarRequestUpdate);
+    List<ScholarResponse> createMultipleScholars(List<ScholarRequest> scholarRequests);
+
+    List<ScholarResponse> findAllScholars();
+    ScholarResponse findByUuid(String uuid);
+    ScholarResponse findByUsername(String username);
+    List<ScholarResponse> searchByEnglishName(String englishName);
+    List<ScholarResponse> searchByUsername(String username);
+
+    Long countScholars();
+
+    BasedMessage softDeleteScholarByUuid(String uuid);
+    BasedMessage restoreScholarByUuid(String uuid);
+    BasedMessage hardDeleteScholarByUuid(String uuid);
+}
