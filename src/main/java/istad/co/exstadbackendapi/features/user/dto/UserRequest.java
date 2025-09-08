@@ -9,7 +9,6 @@ import java.time.LocalDate;
 public record UserRequest(
         @NotBlank(message = "Username is required")
         @Size(min = 2, max = 50, message = "Username must be between 2 and 50 characters")
-        @Pattern(regexp = "^[a-zA-Z0-9._-]+$", message = "Username can only contain letters, numbers, dots, underscores, and hyphens")
         String username,
 
         @NotBlank(message = "Email is required")
@@ -27,12 +26,11 @@ public record UserRequest(
         String cfPassword,
 
         @NotBlank(message = "English name is required")
-        @Size(min = 1, max = 100, message = "English name must be between 1 and 100 characters")
-        @Pattern(regexp = "^[a-zA-Z\\s.'-]+$", message = "English name can only contain letters, spaces, dots, apostrophes, and hyphens")
+        @Size(min = 2, max = 100, message = "English name must be between 2 and 100 characters")
         String englishName,
 
         @NotBlank(message = "Khmer name is required")
-        @Size(min = 1, max = 100, message = "Khmer name must be between 1 and 100 characters")
+        @Size(min = 2, max = 100, message = "Khmer name must be between 2 and 100 characters")
         String khmerName,
 
         @NotNull(message = "Gender is required")

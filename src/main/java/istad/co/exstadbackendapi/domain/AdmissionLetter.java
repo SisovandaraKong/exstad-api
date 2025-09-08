@@ -31,6 +31,7 @@ public class AdmissionLetter extends Auditable {
     @Column(nullable = false)
     private Boolean isDeleted;
 
+    @Column(length = 500)
     private String admissionUrl;
 
 

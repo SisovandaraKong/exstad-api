@@ -39,6 +39,7 @@ public class CurrentAddressServiceImpl implements CurrentAddressService {
     @Override
     public CurrentAddressResponse createCurrentAddress(CurrentAddressRequest currentAddressRequest) {
         CurrentAddress currentAddress = currentAddressMapper.toCurrentAddress(currentAddressRequest);
+        currentAddress.setIsDeleted(false);
         currentAddress.setUuid(UUID.randomUUID().toString());
         return currentAddressMapper.fromCurrentAddress(currentAddressRepository.save(currentAddress));
     }

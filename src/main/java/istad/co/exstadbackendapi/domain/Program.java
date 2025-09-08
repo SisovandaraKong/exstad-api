@@ -29,7 +29,7 @@ public class Program extends Auditable {
     @Column(nullable = false, unique = true)
     private String uuid;
 
-    @Column(length = 100, nullable = false, unique = true)
+    @Column(length = 60, nullable = false, unique = true)
     private String slug;
 
     @Column(length = 60, nullable = false)

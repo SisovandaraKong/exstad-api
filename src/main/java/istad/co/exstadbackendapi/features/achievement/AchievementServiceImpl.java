@@ -56,7 +56,7 @@ public class AchievementServiceImpl implements AchievementService {
     @Override
     public List<AchievementResponse> getAllAchievements() {
 
-        return achievementRepository.findAll().stream().map(
+        return achievementRepository.findAllByIsDeletedFalse().stream().map(
                 achievementMapper::fromAchievement
         ).toList();
     }

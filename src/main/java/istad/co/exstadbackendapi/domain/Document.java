@@ -28,9 +28,11 @@ public class Document extends Auditable {
     @Column(nullable = false)
     int gen;
 
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private OfferingType offeringType;
 
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private DocumentType documentType;
 

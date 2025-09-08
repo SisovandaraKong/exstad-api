@@ -14,20 +14,25 @@ public record OpeningProgramUpdate(
         @Size(max = 100, message = "Slug must not exceed 100 characters")
         String slug,
 
+        @Size(max = 255, message = "Thumbnail URL must not exceed 255 characters")
         String thumbnail,
 
         @Min(value = 1, message = "Total slot must be at least 1")
         Integer totalSlot,
 
-        @PositiveOrZero(message = "Original fee must be zero or positive")
+        @DecimalMin(value = "0.0", message = "Original fee must be zero or positive")
+        @Digits(integer = 8, fraction = 2, message = "Original fee must have at most 8 integer digits and 2 decimal places")
         BigDecimal originalFee,
 
-        @PositiveOrZero(message = "Scholarship must be zero or positive")
-        Float scholarship,
+        @DecimalMin(value = "0.0", message = "Scholarship must be zero or positive")
+        @Digits(integer = 3, fraction = 2, message = "Scholarship must have at most 3 integer digits and 2 decimal places")
+        BigDecimal scholarship,
 
-        @PositiveOrZero(message = "Price must be zero or positive")
-        Float price,
+        @DecimalMin(value = "0.0", message = "Price must be zero or positive")
+        @Digits(integer = 8, fraction = 2, message = "Price must have at most 8 integer digits and 2 decimal places")
+        BigDecimal price,
 
+        @Size(max = 100, message = "Telegram group must not exceed 100 characters")
         String telegramGroup,
 
         @Min(value = 1, message = "Generation must be at least 1")
@@ -37,6 +42,7 @@ public record OpeningProgramUpdate(
 
         Status status,
 
+        @Size(max = 255, message = "QR Code URL must not exceed 255 characters")
         String qrCodeUrl,
 
         @Valid
@@ -57,11 +63,13 @@ public record OpeningProgramUpdate(
         @Valid
         List<Requirement> requirements,
 
+        @Size(min = 1, max = 50, message = "Duration must be between 1 and 50 characters")
         String duration,
 
         @Valid
         List<Activity> activities,
 
+        @Size(max = 255, message = "Curriculum PDF URL must not exceed 255 characters")
         String curriculumPdfUri
 ) {
 

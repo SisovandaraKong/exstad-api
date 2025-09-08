@@ -53,6 +53,7 @@ public class Scholar extends Auditable {
     @Column(columnDefinition = "TEXT")
     private String bio;
 
+    @Column(length = 500)
     private String avatar;
 
     @Column(nullable = false)
