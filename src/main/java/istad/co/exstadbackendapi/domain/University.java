@@ -28,7 +28,7 @@ public class University extends Auditable {
     @Column(unique = true, nullable = false, length = 150)
     private String khmerName;
 
-    @Column(length = 150)
+    @Column(length = 50)
     private String shortName;
 
     @Column(nullable = false)

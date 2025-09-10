@@ -47,9 +47,10 @@ public class Enrollment {
     @Column(nullable = false, length = 100)
     private String phoneNumber;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 100)
     private String email;
 
+    @Column(length = 500)
     private String avatar;
 
     @ManyToOne
@@ -61,7 +62,7 @@ public class Enrollment {
     @ManyToOne
     private University university;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 200)
     private String educationQualification;
 
     @JdbcTypeCode(SqlTypes.JSON)

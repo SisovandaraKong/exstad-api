@@ -1,5 +1,6 @@
 package istad.co.exstadbackendapi.features.achievement;
 
+import istad.co.exstadbackendapi.base.BasedMessage;
 import istad.co.exstadbackendapi.features.achievement.dto.AchievementRequest;
 import istad.co.exstadbackendapi.features.achievement.dto.AchievementRequestUpdate;
 import istad.co.exstadbackendapi.features.achievement.dto.AchievementResponse;
@@ -16,7 +17,7 @@ public interface AchievementService {
     List<AchievementResponse> getAchievementByOpeningProgramUuid(String openingProgramUuid);
 
     AchievementResponse updateAchievementByUuid(String uuid, AchievementRequestUpdate achievementRequestUpdate);
-    void deleteAchievementByUuid(String uuid);
+    BasedMessage deleteAchievementByUuid(String uuid);
 
 
 

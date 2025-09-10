@@ -53,6 +53,7 @@ public class Scholar extends Auditable {
     @Column(columnDefinition = "TEXT")
     private String bio;
 
+    @Column(length = 500)
     private String avatar;
 
     @Column(nullable = false)
@@ -71,7 +72,7 @@ public class Scholar extends Auditable {
     private List<ScholarBadge> scholarsBadges;
 
     @OneToMany(mappedBy = "scholar")
-    private List<ScholarEnrollment> scholarEnrollments;
+    private List<ScholarClass> scholarClasses;
 
     @OneToMany(mappedBy = "scholar")
     private List<ScholarAchievement> scholarAchievements;

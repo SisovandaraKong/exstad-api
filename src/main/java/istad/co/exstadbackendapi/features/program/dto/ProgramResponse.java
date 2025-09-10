@@ -12,6 +12,7 @@ import java.util.List;
 public record ProgramResponse(
         String uuid,
         String title,
+        String slug,
         String description,
         String thumbnailUrl,
         String bgColor,

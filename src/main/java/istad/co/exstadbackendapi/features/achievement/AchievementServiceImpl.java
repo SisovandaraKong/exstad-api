@@ -1,5 +1,6 @@
 package istad.co.exstadbackendapi.features.achievement;
 
+import istad.co.exstadbackendapi.base.BasedMessage;
 import istad.co.exstadbackendapi.domain.Achievement;
 import istad.co.exstadbackendapi.domain.OpeningProgram;
 import istad.co.exstadbackendapi.features.achievement.dto.AchievementRequest;
@@ -55,7 +56,7 @@ public class AchievementServiceImpl implements AchievementService {
     @Override
     public List<AchievementResponse> getAllAchievements() {
 
-        return achievementRepository.findAll().stream().map(
+        return achievementRepository.findAllByIsDeletedFalse().stream().map(
                 achievementMapper::fromAchievement
         ).toList();
     }
@@ -82,11 +83,12 @@ public class AchievementServiceImpl implements AchievementService {
     }
 
     @Override
-    public void deleteAchievementByUuid(String uuid) {
+    public BasedMessage deleteAchievementByUuid(String uuid) {
         Achievement achievement = achievementRepository.findByUuid(uuid).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No achievement found with uuid " + uuid)
         );
         achievement.setIsDeleted(true);
         achievementRepository.save(achievement);
+        return new BasedMessage("Achievement with uuid " + uuid + " has been deleted");
     }
 }

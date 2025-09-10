@@ -36,6 +36,7 @@ public class Certificate extends Auditable {
 
     private LocalDate verifiedAt;
 
+    @Column(length = 500)
     private String certificateUrl;
 
     @Column(nullable = false)

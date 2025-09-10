@@ -17,7 +17,7 @@ public class ScholarBadgeController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ScholarBadgeResponse createBadge(@RequestBody ScholarBadgeRequest scholarBadgeRequest) {
+    public ScholarBadgeResponse createBadge(@RequestBody @Valid ScholarBadgeRequest scholarBadgeRequest) {
         return scholarBadgeService.createScholarBadge(scholarBadgeRequest);
     }
 

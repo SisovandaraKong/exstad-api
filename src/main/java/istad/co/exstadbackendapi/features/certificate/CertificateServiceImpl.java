@@ -37,7 +37,7 @@ public class CertificateServiceImpl implements CertificateService {
     @Override
     public CertificateResponse generateCertificate(String offeringType,CertificateRequestDto request) {
         try {
-            if (request.scholarUuids() == null || request.scholarUuids().isEmpty()) {
+            if (request.scholarUuid() == null || request.scholarUuid().isEmpty()) {
                 throw new IllegalArgumentException("At least one student name is required.");
             }
             if (request.bgImage() == null || request.bgImage().trim().isEmpty()) {
@@ -50,15 +50,16 @@ public class CertificateServiceImpl implements CertificateService {
             OpeningProgram openingProgram = openingProgramRepository.findByUuid(request.openingProgramUuid())
                     .orElseThrow(() -> new IllegalArgumentException("Opening Program not found"));
 
-            Optional<Scholar> scholar = scholarRepository.findByUuid(request.scholarUuids());
+           Scholar  scholar = scholarRepository.findByUuid(request.scholarUuid())
+                    .orElseThrow(() -> new IllegalArgumentException("Scholar not found"));
 
             // Prepare parameters (data) for JasperReports
             Map<String, Object> parameters = new HashMap<>();
-            if(scholar.get().getUser().getGender().equals("Male")){
-                parameters.put("studentName", "Mr. "+scholar.get().getUser().getEnglishName().toUpperCase());
+            if(scholar.getUser().getGender().equals("Male")){
+                parameters.put("studentName", "Mr. "+scholar.getUser().getEnglishName().toUpperCase());
             }
-            else if(scholar.get().getUser().getGender().equals("Female")){
-                parameters.put("studentName", "Ms. "+scholar.get().getUser().getEnglishName().toUpperCase());
+            else if(scholar.getUser().getGender().equals("Female")){
+                parameters.put("studentName", "Ms. "+scholar.getUser().getEnglishName().toUpperCase());
             }
             parameters.put("bgImage", request.bgImage());
 
@@ -90,7 +91,7 @@ public class CertificateServiceImpl implements CertificateService {
 
             // Save certificate info to database
             Certificate certificate = new Certificate();
-            certificate.setScholar(scholar.orElse(null));
+            certificate.setScholar(scholar);
             certificate.setOpeningProgram(openingProgram);
             certificate.setTempCertificateUrl(documentResponse.uri());
             certificate.setIsDisabled(false);
@@ -117,16 +118,14 @@ public class CertificateServiceImpl implements CertificateService {
         DocumentResponse documentResponse = documentService.uploadDocument(offeringType, openingProgram.getGeneration(), "certificate", "null", file);
         Scholar scholar = scholarRepository.
                 findByUuid(scholarUuid).orElseThrow(() -> new IllegalArgumentException("Scholar not found"));
-        Optional<Certificate> certificate = certificateRepository.findByScholarAndOpeningProgram(scholar, openingProgram);
+        Certificate certificate = certificateRepository.findByScholarAndOpeningProgram(scholar, openingProgram)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Certificate not found"));
 
-        if(certificate.isPresent()){
-            certificate.get().setIsVerified(true);
-            certificate.get().setVerifiedAt(LocalDate.now());
-            certificate.get().setCertificateUrl(documentResponse.uri());
-            certificateRepository.save(certificate.get());
-            return certificateMapper.toCertificateResponse(certificate.get());
-        }
-        return null;
+        certificate.setIsVerified(true);
+        certificate.setVerifiedAt(LocalDate.now());
+        certificate.setCertificateUrl(documentResponse.uri());
+        certificateRepository.save(certificate);
+        return certificateMapper.toCertificateResponse(certificate);
     }
 
     @Override

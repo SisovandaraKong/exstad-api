@@ -40,14 +40,20 @@ public class Transcript extends Auditable {
     @Column(columnDefinition = "jsonb")
     private TranscriptData transcriptData;
 
+    @Column(length = 500)
     private String qrCodeUrl;
 
+    @Column(length = 500)
     private String tempTranscriptUrl;
 
+    @Column(length = 500)
     private String transcriptUrl;
 
     @Column(nullable = false)
     private Boolean isVerified;
+
+    @Column(nullable = false)
+    private Boolean isDeleted;
 
     private LocalDate verifiedAt;
 }

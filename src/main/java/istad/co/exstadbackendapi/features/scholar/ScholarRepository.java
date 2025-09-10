@@ -21,5 +21,5 @@ public interface ScholarRepository extends JpaRepository<Scholar, Integer> {
     @Modifying
     @Query("UPDATE Scholar s SET s.isDeleted = false WHERE s.uuid = ?1")
     void restoreByUuid(String uuid);
-
 }
+

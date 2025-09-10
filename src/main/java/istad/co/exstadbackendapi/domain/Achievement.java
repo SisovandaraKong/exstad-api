@@ -26,7 +26,6 @@ public class Achievement extends Auditable {
     @Column(nullable = false, unique = true)
     private String uuid;
 
-
     @Column(length = 100)
     private String title;
 
@@ -49,9 +48,10 @@ public class Achievement extends Auditable {
     @Column(length = 100)
     private String tag;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(length = 500)
     private String video;
 
+    @Column(length = 500)
     private String link;
 
     @OneToMany(mappedBy = "achievement")
