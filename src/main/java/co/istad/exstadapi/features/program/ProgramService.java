@@ -12,6 +12,7 @@ import java.util.List;
 public interface ProgramService {
     List<ProgramResponse> getAllPrograms();
     ProgramResponse getProgramByUuid(String uuid);
+    ProgramResponse getProgramBySlug(String slug);
     ProgramResponse getProgramByTitle(String title);
     ProgramResponse createProgram(ProgramRequest programRequest);
     ProgramResponse updateProgram(String uuid, ProgramUpdate programUpdate);

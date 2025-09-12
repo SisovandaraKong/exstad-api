@@ -38,6 +38,10 @@ public class Program extends Auditable {
     @Column(columnDefinition = "TEXT")
     private String description;
 
+    @Column(length = 500)
+    private String posterUrl;
+
+    @Column(length = 500)
     private String thumbnailUrl;
 
     @Column(length = 100)

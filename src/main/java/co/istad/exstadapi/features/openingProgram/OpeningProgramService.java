@@ -13,6 +13,7 @@ public interface OpeningProgramService {
 
     List<OpeningProgramResponse> getAllOpeningPrograms();
     OpeningProgramResponse getOpeningProgramByUuid(String uuid);
+    OpeningProgramResponse getOpeningProgramBySlug(String slug);
     OpeningProgramResponse getOpeningProgramByTitle(String title);
     OpeningProgramResponse createOpeningProgram(OpeningProgramRequest openingProgramRequest);
     OpeningProgramResponse updateOpeningProgram(String uuid, OpeningProgramUpdate openingProgramUpdate);

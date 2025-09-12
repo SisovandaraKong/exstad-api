@@ -24,6 +24,10 @@ public record ProgramRequest(
         @Size(min = 5, max = 1000, message = "Description must be between 5 and 1000 characters")
         String description,
 
+        @NotBlank(message = "Poster URL is required")
+        @Size(max = 255, message = "Poster URL must not exceed 255 characters")
+        String posterUrl,
+
         @NotBlank(message = "Thumbnail URL is required")
         @Size(max = 255, message = "Thumbnail URL must not exceed 255 characters")
         String thumbnailUrl,

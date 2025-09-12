@@ -29,6 +29,12 @@ public class ProgramController {
                 programService.getProgramByUuid(uuid), HttpStatus.OK);
     }
 
+    @GetMapping("/slug/{slug}")
+    public ResponseEntity<?> getProgramBySlug(@PathVariable String slug) {
+        return new ResponseEntity<>(
+                programService.getProgramBySlug(slug), HttpStatus.OK);
+    }
+
     @GetMapping("/title/{title}")
     public ResponseEntity<?> getProgramByTitle(@PathVariable String title) {
         return new ResponseEntity<>(

@@ -42,6 +42,13 @@ public class OpeningProgramServiceImpl implements OpeningProgramService {
     }
 
     @Override
+    public OpeningProgramResponse getOpeningProgramBySlug(String slug) {
+        OpeningProgram openingProgram = openingProgramRepository.findBySlug(slug)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Opening Program not found"));
+        return openingProgramMapper.toOpeningProgramResponse(openingProgram);
+    }
+
+    @Override
     public OpeningProgramResponse getOpeningProgramByTitle(String title) {
         OpeningProgram openingProgram = openingProgramRepository.findByTitleIgnoreCase(title)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Opening Program not found"));
