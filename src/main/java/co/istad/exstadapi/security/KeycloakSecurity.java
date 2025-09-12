@@ -50,11 +50,10 @@ public class KeycloakSecurity {
                 .requestMatchers(HttpMethod.GET,"/api/v1/universities/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
                 .requestMatchers(HttpMethod.DELETE,"/api/v1/universities/**").hasAnyRole("ADMIN","INSTRUCTOR1")
                 // Program
-                        .requestMatchers("/api/v1/programs/**").permitAll()
-//                .requestMatchers(HttpMethod.GET,"/api/v1/programs/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
-//                .requestMatchers(HttpMethod.POST,"/api/v1/programs/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
-//                .requestMatchers(HttpMethod.PUT,"/api/v1/programs/**").hasAnyRole("ADMIN","INSTRUCTOR1")
-//                .requestMatchers(HttpMethod.DELETE,"/api/v1/programs/**").hasAnyRole("ADMIN")
+                .requestMatchers(HttpMethod.GET,"/api/v1/programs/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
+                .requestMatchers(HttpMethod.POST,"/api/v1/programs/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
+                .requestMatchers(HttpMethod.PUT,"/api/v1/programs/**").hasAnyRole("ADMIN","INSTRUCTOR1")
+                .requestMatchers(HttpMethod.DELETE,"/api/v1/programs/**").hasAnyRole("ADMIN")
                 // Badge
                 .requestMatchers(HttpMethod.GET,"/api/v1/programs/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
                 .requestMatchers(HttpMethod.POST,"/api/v1/badges/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
@@ -79,11 +78,10 @@ public class KeycloakSecurity {
                 .requestMatchers(HttpMethod.PUT,"/api/v1/scholars/**").hasAnyRole("ADMIN","INSTRUCTOR1")
                 .requestMatchers(HttpMethod.DELETE,"/api/v1/scholars/**").hasAnyRole("ADMIN")
                 // Opening Program
-                        .requestMatchers("/api/v1/opening-programs/**").permitAll()
-//                .requestMatchers(HttpMethod.GET,"/api/v1/opening-programs/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
-//                .requestMatchers(HttpMethod.POST,"/api/v1/opening-programs/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
-//                .requestMatchers(HttpMethod.PUT,"/api/v1/opening-programs/**").hasAnyRole("ADMIN","INSTRUCTOR1")
-//                .requestMatchers(HttpMethod.DELETE,"/api/v1/opening-programs/**").hasAnyRole("ADMIN")
+                .requestMatchers(HttpMethod.GET,"/api/v1/opening-programs/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
+                .requestMatchers(HttpMethod.POST,"/api/v1/opening-programs/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
+                .requestMatchers(HttpMethod.PUT,"/api/v1/opening-programs/**").hasAnyRole("ADMIN","INSTRUCTOR1")
+                .requestMatchers(HttpMethod.DELETE,"/api/v1/opening-programs/**").hasAnyRole("ADMIN")
                 // Class
                 .requestMatchers(HttpMethod.GET,"/api/v1/classes/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
                 .requestMatchers(HttpMethod.POST,"/api/v1/classes/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
