@@ -11,6 +11,7 @@ import java.util.Optional;
 public interface ProgramRepository extends JpaRepository<Program, Integer> {
 
     Optional<Program> findByUuid(String uuid);
+    Optional<Program> findBySlug(String slug);
     Optional<Program> findByTitleIgnoreCase(String title);
     boolean existsByUuid(String uuid);
     List<Program> findAllByIsDeletedFalse();

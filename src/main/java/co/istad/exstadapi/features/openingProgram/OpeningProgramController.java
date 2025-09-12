@@ -28,6 +28,11 @@ public class OpeningProgramController {
         return new ResponseEntity<>(openingProgramService.getOpeningProgramByUuid(uuid), HttpStatus.OK);
     }
 
+    @GetMapping("/slug/{slug}")
+    public ResponseEntity<?> getOpeningProgramBySlug(@PathVariable String slug) {
+        return new ResponseEntity<>(openingProgramService.getOpeningProgramBySlug(slug), HttpStatus.OK);
+    }
+
     @GetMapping("/title/{title}")
     public ResponseEntity<?> getOpeningProgramByTitle(@PathVariable String title) {
         return new ResponseEntity<>(openingProgramService.getOpeningProgramByTitle(title), HttpStatus.OK);
