@@ -74,6 +74,45 @@ public class ScholarController {
     public ScholarResponse updateScholar(@PathVariable String uuid, @RequestBody @Valid ScholarRequestUpdate scholarRequestUpdate){
         return scholarService.updateScholar(uuid, scholarRequestUpdate);
     }
+
+    @GetMapping("/me")
+    @ResponseStatus(HttpStatus.OK)
+    public ScholarResponse getMe() {
+        return scholarService.getCurrentScholar();
+    }
+
+    @PatchMapping("/me")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public ScholarResponse updateMe(@RequestBody @Valid ScholarRequestUpdate scholarRequestUpdate) {
+        return scholarService.updateCurrentScholar(scholarRequestUpdate);
+    }
+
+    @GetMapping("/{uuid}/social-links")
+    @ResponseStatus(HttpStatus.OK)
+    public List<SocialLinkResponse> getScholarSocialLinks(@PathVariable String uuid) {
+        return scholarService.getScholarSocialLink(uuid);
+    }
+
+    @PostMapping("/{uuid}/social-links")
+    @ResponseStatus(HttpStatus.CREATED)
+    public SocialLinkResponse addScholarSocialLink(@PathVariable String uuid, @RequestBody @Valid SocialLinkRequest socialLinkRequest) {
+        return scholarService.setUpScholarSocialLink(uuid, socialLinkRequest);
+    }
+
+    @PatchMapping("/{scholarUuid}/social-link/{socialLinkUuid}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public SocialLinkResponse updateSocialLinkStatus(@PathVariable String scholarUuid, @PathVariable String socialLinkUuid, @RequestBody Boolean status) {
+        return scholarService.updateSocialLinkStatus(scholarUuid, socialLinkUuid, status);
+    }
+
+    @DeleteMapping("/{scholarUuid}/social-link/{socialLinkUuid}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public BasedMessage deleteSocialLink(@PathVariable String scholarUuid, @PathVariable String socialLinkUuid) {
+        scholarService.deleteSocialLink(scholarUuid, socialLinkUuid);
+        return new BasedMessage("Scholar deleted successfully");
+    }
+
+
     @PutMapping("/{uuid}/soft-delete")
     @ResponseStatus(HttpStatus.OK)
     public BasedMessage softDeleteScholar(@PathVariable String uuid) {
