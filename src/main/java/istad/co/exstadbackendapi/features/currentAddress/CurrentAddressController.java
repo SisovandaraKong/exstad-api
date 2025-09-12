@@ -21,10 +21,10 @@ public class CurrentAddressController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> getAllCurrentAddresses() {
         return new ResponseEntity<>(
-                Map.of("current addresses",currentAddressService.getAllCurrentAddresses()), HttpStatus.OK);
+                Map.of("currentAddresses",currentAddressService.getAllCurrentAddresses()), HttpStatus.OK);
     }
 
-    @GetMapping("{uuid}")
+    @GetMapping("/{uuid}")
     @ResponseStatus(HttpStatus.OK)
     public CurrentAddressResponse getCurrentAddress(@PathVariable String uuid) {
         return currentAddressService.getCurrentAddressByUuid(uuid);
@@ -36,14 +36,14 @@ public class CurrentAddressController {
         return currentAddressService.createCurrentAddress(currentAddressRequest);
     }
 
-    @PutMapping("{uuid}/soft-delete")
+    @PutMapping("/{uuid}/soft-delete")
     @ResponseStatus(HttpStatus.OK)
     public BasedMessage deleteCurrentAddress(@PathVariable String uuid) {
         return currentAddressService.deleteCurrentAddressByUuid(uuid);
     }
 
 
-    @DeleteMapping("{uuid}")
+    @DeleteMapping("/{uuid}")
     @ResponseStatus(HttpStatus.OK)
     public BasedMessage hardDeleteCurrentAddress(@PathVariable String uuid) {
         return currentAddressService.hardDeleteCurrentAddressByUuid(uuid);

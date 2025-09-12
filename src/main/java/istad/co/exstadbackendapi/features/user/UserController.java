@@ -42,4 +42,11 @@ public class UserController {
         );
     }
 
+    @GetMapping("/me")
+    public ResponseEntity<?> getCurrentUser() {
+        return new ResponseEntity<>(
+                userService.getCurrentUser(), HttpStatus.OK
+        );
+    }
+
 }

@@ -8,6 +8,7 @@ import istad.co.exstadbackendapi.features.user.dto.UserRequest;
 import istad.co.exstadbackendapi.features.user.dto.UserResponse;
 import istad.co.exstadbackendapi.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,6 +18,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -96,6 +98,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse getCurrentUser() {
+        String username = getUsernameFromAccessToken();
+        log.info("Username is {}", username);
+        return getUserByUsername(username);
+    }
+
+    public String getUsernameFromAccessToken(){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username;
         if (principal instanceof org.springframework.security.oauth2.jwt.Jwt jwt) {
@@ -108,9 +116,7 @@ public class UserServiceImpl implements UserService {
         } else {
             username = principal.toString();
         }
-
-
-        return getUserByUsername(username);
+        return username;
     }
 
     @Override

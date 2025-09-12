@@ -1,7 +1,6 @@
 package istad.co.exstadbackendapi.features.scholar.dto;
 
 import istad.co.exstadbackendapi.enums.Gender;
-import istad.co.exstadbackendapi.enums.Role;
 import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
@@ -16,6 +15,10 @@ public record ScholarRequest(
         @Email(message = "Email should be valid")
         @Size(max = 100, message = "Email must be at most 100 characters")
         String email,
+
+        @NotBlank(message = "Phone number is required")
+        @Size(max = 20, message = "Phone number must be at most 20 characters")
+        String phoneNumber,
 
         @NotBlank(message = "Password is required")
         @Size(min = 8, max = 100, message = "Password must be between 8 and 100 characters")
