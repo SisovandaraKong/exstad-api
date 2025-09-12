@@ -109,7 +109,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponse getCurrentUser() {
         String username = getUsernameFromAccessToken();
-        log.info("Username is {}", username);
         return getUserByUsername(username);
     }
 
