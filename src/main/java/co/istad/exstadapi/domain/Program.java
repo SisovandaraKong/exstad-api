@@ -43,7 +43,7 @@ public class Program extends Auditable {
     @Column(length = 100)
     private String bgColor;
 
-    @OneToOne(mappedBy = "program")
+    @OneToMany(mappedBy = "program")
     private Document document;
 
     @JdbcTypeCode(SqlTypes.JSON)
