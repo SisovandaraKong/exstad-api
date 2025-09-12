@@ -1,9 +1,7 @@
-package istad.co.exstadbackendapi.features.scholar;
+package co.istad.exstadapi.features.scholar;
 
-import istad.co.exstadbackendapi.base.BasedMessage;
-import istad.co.exstadbackendapi.features.scholar.dto.ScholarRequest;
-import istad.co.exstadbackendapi.features.scholar.dto.ScholarRequestUpdate;
-import istad.co.exstadbackendapi.features.scholar.dto.ScholarResponse;
+import co.istad.exstadapi.base.BasedMessage;
+import co.istad.exstadapi.features.scholar.dto.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -129,6 +127,12 @@ public class ScholarController {
     @ResponseStatus(HttpStatus.OK)
     public BasedMessage hardDeleteScholar(@PathVariable String uuid) {
         return scholarService.hardDeleteScholarByUuid(uuid);
+    }
+
+    @GetMapping("/{uuid}/opening-program")
+    public ResponseEntity<?> getAllScholarsByOpeningProgramUuid(@PathVariable String uuid) {
+        return new ResponseEntity<>(
+                Map.of("opening-program-scholars", scholarService.getAllScholarsByOpeningProgramUuid(uuid)), HttpStatus.OK);
     }
 }
 
