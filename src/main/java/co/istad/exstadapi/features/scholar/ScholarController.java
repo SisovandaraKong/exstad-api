@@ -73,6 +73,8 @@ public class ScholarController {
         return scholarService.updateScholar(uuid, scholarRequestUpdate);
     }
 
+
+
     @GetMapping("/me")
     @ResponseStatus(HttpStatus.OK)
     public ScholarResponse getMe() {
@@ -84,6 +86,7 @@ public class ScholarController {
     public ScholarResponse updateMe(@RequestBody @Valid ScholarRequestUpdate scholarRequestUpdate) {
         return scholarService.updateCurrentScholar(scholarRequestUpdate);
     }
+
 
     @GetMapping("/{uuid}/social-links")
     @ResponseStatus(HttpStatus.OK)
@@ -109,6 +112,7 @@ public class ScholarController {
         scholarService.deleteSocialLink(scholarUuid, socialLinkUuid);
         return new BasedMessage("Scholar deleted successfully");
     }
+
 
 
     @PutMapping("/{uuid}/soft-delete")

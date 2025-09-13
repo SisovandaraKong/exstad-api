@@ -38,10 +38,11 @@ public class KeycloakSecurity {
                 // Register and Login can access by anyone
                 .requestMatchers("/api/auth/**").permitAll()
                 // User and create into our db and keycloak
-                .requestMatchers("/api/v1/users/register").hasAnyRole("ADMIN","INSTRUCTOR1")
-                .requestMatchers("/api/v1/users/login").permitAll()
-                .requestMatchers(HttpMethod.POST,"/api/v1/users/**").hasAnyRole("ADMIN","INSTRUCTOR1")
-                .requestMatchers(HttpMethod.GET,"/api/v1/users/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
+                        .requestMatchers("/api/v1/users/**").permitAll()
+//                .requestMatchers("/api/v1/users/register").hasAnyRole("ADMIN","INSTRUCTOR1")
+//                .requestMatchers("/api/v1/users/login").permitAll()
+//                .requestMatchers(HttpMethod.POST,"/api/v1/users/**").hasAnyRole("ADMIN","INSTRUCTOR1")
+//                .requestMatchers(HttpMethod.GET,"/api/v1/users/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
                 // Province
                 .requestMatchers(HttpMethod.GET,"/api/v1/provinces/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
                 // University
@@ -68,11 +69,12 @@ public class KeycloakSecurity {
                 .requestMatchers(HttpMethod.PATCH,"/api/v1/current-addresses/**").hasAnyRole("ADMIN","INSTRUCTOR1")
                 .requestMatchers(HttpMethod.DELETE,"/api/v1/current-addresses/**").hasAnyRole("ADMIN")
                 // Scholar
-                .requestMatchers(HttpMethod.GET,"/api/v1/scholars/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
-                .requestMatchers(HttpMethod.POST,"/api/v1/scholars/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
-                .requestMatchers(HttpMethod.PUT,"/api/v1/scholars/**").hasAnyRole("ADMIN","INSTRUCTOR1")
-                .requestMatchers(HttpMethod.PATCH,"/api/v1/scholars/**").hasAnyRole("ADMIN","INSTRUCTOR1")
-                .requestMatchers(HttpMethod.DELETE,"/api/v1/scholars/**").hasAnyRole("ADMIN")
+                        .requestMatchers("/api/v1/scholars/**").permitAll()
+//                .requestMatchers(HttpMethod.GET,"/api/v1/scholars/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
+//                .requestMatchers(HttpMethod.POST,"/api/v1/scholars/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
+//                .requestMatchers(HttpMethod.PUT,"/api/v1/scholars/**").hasAnyRole("ADMIN","INSTRUCTOR1")
+//                .requestMatchers(HttpMethod.PATCH,"/api/v1/scholars/**").hasAnyRole("ADMIN","INSTRUCTOR1")
+//                .requestMatchers(HttpMethod.DELETE,"/api/v1/scholars/**").hasAnyRole("ADMIN")
                 // Scholar Badge
                 .requestMatchers(HttpMethod.GET,"/api/v1/scholars/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
                 .requestMatchers(HttpMethod.POST,"/api/v1/scholars/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
