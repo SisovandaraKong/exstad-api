@@ -13,6 +13,7 @@ public record ProgramResponse(
         String slug,
         String description,
         String thumbnailUrl,
+        String posterUrl,
         String bgColor,
         List<Highlight> highlights,
         List<ProgramOverview> programOverviews,

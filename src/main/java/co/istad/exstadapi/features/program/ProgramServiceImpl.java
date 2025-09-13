@@ -42,6 +42,15 @@ public class ProgramServiceImpl implements ProgramService {
     }
 
     @Override
+    public ProgramResponse getProgramBySlug(String slug) {
+        Program program = programRepository.findBySlug(slug)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Program not found"
+                ));
+        return programMapper.toProgramResponse(program);
+    }
+
+    @Override
     public ProgramResponse getProgramByTitle(String title) {
         Program program = programRepository.findByTitleIgnoreCase(title)
                 .orElseThrow(() -> new ResponseStatusException(
