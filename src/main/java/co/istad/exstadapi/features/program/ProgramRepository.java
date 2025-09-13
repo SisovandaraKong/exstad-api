@@ -25,4 +25,6 @@ public interface ProgramRepository extends JpaRepository<Program, Integer> {
     void undeleteByUuid(String uuid);
 
     void deleteByUuid(String uuid);
+
+    Optional<Program> findBySlugAndIsDeletedFalse(String slug);
 }

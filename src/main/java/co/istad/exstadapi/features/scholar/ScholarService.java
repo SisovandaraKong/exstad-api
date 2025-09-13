@@ -1,9 +1,7 @@
 package co.istad.exstadapi.features.scholar;
 
 import co.istad.exstadapi.base.BasedMessage;
-import co.istad.exstadapi.features.scholar.dto.ScholarRequest;
-import co.istad.exstadapi.features.scholar.dto.ScholarRequestUpdate;
-import co.istad.exstadapi.features.scholar.dto.ScholarResponse;
+import co.istad.exstadapi.features.scholar.dto.*;
 
 import java.util.List;
 
@@ -26,4 +24,12 @@ public interface ScholarService {
     BasedMessage hardDeleteScholarByUuid(String uuid);
 
     List<ScholarResponse> getAllScholarsByOpeningProgramUuid(String openingProgramUuid);
+
+    ScholarResponse getCurrentScholar();
+    ScholarResponse updateCurrentScholar(ScholarRequestUpdate scholarRequestUpdate);
+
+    SocialLinkResponse setUpScholarSocialLink(String uuid, SocialLinkRequest socialLinkRequest);
+    List<SocialLinkResponse> getScholarSocialLink(String uuid);
+    SocialLinkResponse updateSocialLinkStatus(String scholarUuid, String socialLinkUuid, boolean status);
+    void deleteSocialLink(String scholarUuid, String socialLinkUuid);
 }

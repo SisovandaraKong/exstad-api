@@ -24,8 +24,13 @@ public class UserController {
     @GetMapping
     public ResponseEntity<?> getAllUsers() {
         return new ResponseEntity<>(
-                Map.of("users",userService.getAllUsers()), HttpStatus.OK
+                Map.of("users", userService.getAllUsers()), HttpStatus.OK
         );
+    }
+
+    @GetMapping
+    public ResponseEntity<?> getNotScholarUsers() {
+        return new ResponseEntity<>(Map.of("users", userService.getNotScholarUsers()), HttpStatus.OK);
     }
 
     @GetMapping("/{uuid}")
@@ -39,6 +44,13 @@ public class UserController {
     public ResponseEntity<?> getUserByEmail(@PathVariable String email) {
         return new ResponseEntity<>(
                 userService.getUserByEmail(email), HttpStatus.OK
+        );
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<?> getCurrentUser() {
+        return new ResponseEntity<>(
+                userService.getCurrentUser(), HttpStatus.OK
         );
     }
 

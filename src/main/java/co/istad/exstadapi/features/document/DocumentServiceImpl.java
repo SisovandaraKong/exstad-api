@@ -1,11 +1,12 @@
 package co.istad.exstadapi.features.document;
 
-import io.minio.*;
 import co.istad.exstadapi.domain.Document;
+import co.istad.exstadapi.domain.Program;
 import co.istad.exstadapi.enums.DocumentType;
-import co.istad.exstadapi.enums.OfferingType;
 import co.istad.exstadapi.features.document.dto.DocumentResponse;
+import co.istad.exstadapi.features.program.ProgramRepository;
 import co.istad.exstadapi.mapper.DocumentMapper;
+import io.minio.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,6 +36,7 @@ public class DocumentServiceImpl implements DocumentService {
     private final DocumentRepository documentRepository;
     private final MinioClient minioClient;
     private final DocumentMapper documentMapper;
+    private final ProgramRepository programRepository;
 
     @Value("${minio.bucket}")
     private String bucketName;
@@ -43,13 +45,16 @@ public class DocumentServiceImpl implements DocumentService {
     private final String EXTENSION_KEY = "extension";
 
     @Override
-    public DocumentResponse uploadDocument(String offeringType, int gen, String documentType, String preferredFileName, MultipartFile file) {
+    public DocumentResponse uploadDocument(String programSlug, int gen, String documentType, String preferredFileName, MultipartFile file) {
         if (file.getOriginalFilename() == null || file.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "File is empty");
         }
 
+        Program program = programRepository.findBySlugAndIsDeletedFalse(programSlug).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Program not found")
+        );
+
         DocumentType fileDocumentType = DocumentType.fromKey(documentType);
-        OfferingType fileOfferingType = OfferingType.fromKey(offeringType);
 
         Map<String, String> fileNameAndExtension = getFileNameAndExtension(file.getOriginalFilename());
 
@@ -59,7 +64,7 @@ public class DocumentServiceImpl implements DocumentService {
 
         validateDocumentType(fileNameAndExtension.get(EXTENSION_KEY), fileDocumentType);
 
-        String objectPath = getObjectPath(fileOfferingType, gen, fileDocumentType, filename, extension);
+        String objectPath = getObjectPath(program, gen, fileDocumentType, filename, extension);
 
         try {
             if (!minioClient.bucketExists(BucketExistsArgs.builder().bucket(bucketName).build())) {
@@ -80,7 +85,7 @@ public class DocumentServiceImpl implements DocumentService {
 
         Document document = Document.builder()
                 .name(filename)
-                .offeringType(fileOfferingType)
+                .program(program)
                 .gen(gen)
                 .documentType(fileDocumentType)
                 .extension(extension)
@@ -96,7 +101,7 @@ public class DocumentServiceImpl implements DocumentService {
     @Override
     public ResponseEntity<Resource> previewDocument(String filename) {
         Document document = getDocument(filename);
-        String objectPath = getObjectPath(document.getOfferingType(), document.getGen(), document.getDocumentType(), document.getName(), document.getExtension());
+        String objectPath = getObjectPath(document.getProgram(), document.getGen(), document.getDocumentType(), document.getName(), document.getExtension());
 
         try {
             InputStream stream = minioClient.getObject(
@@ -122,7 +127,7 @@ public class DocumentServiceImpl implements DocumentService {
     public ResponseEntity<Resource> downloadDocument(String filename) {
         Document document = getDocument(filename);
 
-        String objectPath = getObjectPath(document.getOfferingType(), document.getGen(), document.getDocumentType(), document.getName(), document.getExtension());
+        String objectPath = getObjectPath(document.getProgram(), document.getGen(), document.getDocumentType(), document.getName(), document.getExtension());
 
         try {
             InputStream stream = minioClient.getObject(
@@ -161,7 +166,7 @@ public class DocumentServiceImpl implements DocumentService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "File extension does not match");
         }
 
-        String objectPath = getObjectPath(document.getOfferingType(), document.getGen(), document.getDocumentType(), document.getName(), document.getExtension());
+        String objectPath = getObjectPath(document.getProgram(), document.getGen(), document.getDocumentType(), document.getName(), document.getExtension());
 
         try {
             minioClient.putObject(
@@ -207,10 +212,10 @@ public class DocumentServiceImpl implements DocumentService {
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid document type");
     }
 
-    private String getObjectPath(OfferingType offeringType, int gen, DocumentType documentType, String filename, String extension) {
+    private String getObjectPath(Program program, int gen, DocumentType documentType, String filename, String extension) {
         return String.format(
                 "%s/%s/%s/%s.%s",
-                offeringType.getFolderPath(),
+                program.getSlug(),
                 "gen" + gen,
                 documentType.getFolderPath(),
                 filename,

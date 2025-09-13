@@ -21,7 +21,7 @@ public class CurrentAddressController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> getAllCurrentAddresses() {
         return new ResponseEntity<>(
-                Map.of("current-addresses",currentAddressService.getAllCurrentAddresses()), HttpStatus.OK);
+                Map.of("currentAddresses",currentAddressService.getAllCurrentAddresses()), HttpStatus.OK);
     }
 
     @GetMapping("{uuid}")
