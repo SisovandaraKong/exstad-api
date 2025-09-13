@@ -8,6 +8,7 @@ import java.time.LocalDate;
 public record ScholarRequest(
         @NotBlank(message = "Username is required")
         @Size(min = 2, max = 50, message = "Username must be between 2 and 50 characters")
+        @Pattern(regexp = "^[a-zA-Z0-9._-]+$", message = "Username can only contain letters, numbers, dots, underscores, and hyphens")
         String username,
 
         @NotBlank(message = "Email is required")
@@ -24,8 +25,13 @@ public record ScholarRequest(
         @NotBlank(message = "Confirm password is required")
         String cfPassword,
 
+        @NotBlank(message = "Phone number is required")
+        @Size(min = 6, max = 20, message = "Phone number must be between 6 and 20 characters")
+        String phoneNumber,
+
         @NotBlank(message = "English name is required")
         @Size(min = 1, max = 100, message = "English name must be between 1 and 100 characters")
+        @Pattern(regexp = "^[a-zA-Z\\s.'-]+$", message = "English name can only contain letters, spaces, dots, apostrophes, and hyphens")
         String englishName,
 
         @NotBlank(message = "Khmer name is required")
@@ -67,7 +73,6 @@ public record ScholarRequest(
         @NotNull(message = "Is Public is required")
         Boolean isPublic,
 
-        @Size(max = 300, message = "Quote must not exceed 300 characters")
         String quote
 ) {
 }

@@ -14,15 +14,15 @@ public class DocumentController {
 
     private final DocumentService documentService;
 
-    @PostMapping("/{offeringType}/{gen}/{documentType}")
+    @PostMapping("/{programSlug}/{gen}/{documentType}")
     public DocumentResponse upload(
-            @PathVariable String offeringType,
+            @PathVariable String programSlug,
             @PathVariable int gen,
             @PathVariable String documentType,
             @RequestParam(defaultValue = "null", required = false) String filename,
             @RequestPart("file") MultipartFile file)
     {
-        return documentService.uploadDocument(offeringType, gen, documentType, filename, file);
+        return documentService.uploadDocument(programSlug, gen, documentType, filename, file);
     }
 
     @GetMapping("/{fileName}")

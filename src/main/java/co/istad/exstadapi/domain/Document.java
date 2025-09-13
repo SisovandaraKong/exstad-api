@@ -2,7 +2,6 @@ package co.istad.exstadapi.domain;
 
 import co.istad.exstadapi.audit.Auditable;
 import co.istad.exstadapi.enums.DocumentType;
-import co.istad.exstadapi.enums.OfferingType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -28,9 +27,9 @@ public class Document extends Auditable {
     @Column(nullable = false)
     int gen;
 
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private OfferingType offeringType;
+    @ManyToOne
+    @JoinColumn(name = "program_id")
+    private Program program;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)

@@ -1,6 +1,7 @@
 package co.istad.exstadapi.features.user;
 
 import co.istad.exstadapi.domain.User;
+import co.istad.exstadapi.enums.Role;
 import co.istad.exstadapi.features.auth.AuthService;
 import co.istad.exstadapi.features.auth.dto.RegisterRequest;
 import co.istad.exstadapi.features.auth.dto.KeycloakUserResponse;
@@ -8,6 +9,7 @@ import co.istad.exstadapi.features.user.dto.UserRequest;
 import co.istad.exstadapi.features.user.dto.UserResponse;
 import co.istad.exstadapi.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,7 +18,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Set;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -78,6 +82,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<UserResponse> getNotScholarUsers() {
+        return userRepository.findAllByRoleNotIn(Set.of(Role.SCHOLAR)).stream().map(
+                userMapper::fromUser
+        ).toList();
+    }
+
+    @Override
     public UserResponse getUserByUuid(String uuid) {
         User user = userRepository.findByUuid(uuid)
                 .orElseThrow(() -> new ResponseStatusException(
@@ -97,6 +108,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse getCurrentUser() {
+        String username = getUsernameFromAccessToken();
+        return getUserByUsername(username);
+    }
+
+    @Override
+    public String getUsernameFromAccessToken(){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username;
         if (principal instanceof org.springframework.security.oauth2.jwt.Jwt jwt) {
@@ -109,14 +126,7 @@ public class UserServiceImpl implements UserService {
         } else {
             username = principal.toString();
         }
-
-
-        return getUserByUsername(username);
+        return username;
     }
 
-    @Override
-    public String getUsernameByUuid(String uuid) {
-        return userRepository.findByUuid(uuid).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found")).getUsername();
-
-    }
 }

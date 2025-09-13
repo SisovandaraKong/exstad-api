@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface DocumentService {
 
-    DocumentResponse uploadDocument(String offeringType, int gen, String documentType, String filename, MultipartFile file);
+    DocumentResponse uploadDocument(String programSlug, int gen, String documentType, String filename, MultipartFile file);
     ResponseEntity<Resource> previewDocument(String filename);
     ResponseEntity<Resource> downloadDocument(String filename);
     DocumentResponse getDocumentByFileName(String filename);

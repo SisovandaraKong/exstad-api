@@ -4,11 +4,10 @@ import co.istad.exstadapi.base.BasedMessage;
 import co.istad.exstadapi.domain.OpeningProgram;
 import co.istad.exstadapi.domain.Scholar;
 import co.istad.exstadapi.domain.User;
+import co.istad.exstadapi.domain.vo.SocialLink;
 import co.istad.exstadapi.enums.Role;
 import co.istad.exstadapi.features.openingProgram.OpeningProgramRepository;
-import co.istad.exstadapi.features.scholar.dto.ScholarRequest;
-import co.istad.exstadapi.features.scholar.dto.ScholarRequestUpdate;
-import co.istad.exstadapi.features.scholar.dto.ScholarResponse;
+import co.istad.exstadapi.features.scholar.dto.*;
 import co.istad.exstadapi.features.user.UserRepository;
 import co.istad.exstadapi.features.user.UserService;
 import co.istad.exstadapi.features.user.dto.UserRequest;
@@ -22,6 +21,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -56,6 +56,7 @@ public class ScholarServiceImpl implements ScholarService {
         scholar.setUser(user);
         scholar.setUuid(user.getUuid());
         scholar.setIsDeleted(false);
+        scholar.setSocialLink(List.of());
         return scholarMapper.fromScholar(scholarRepository.save(scholar));
     }
 
@@ -162,5 +163,103 @@ public class ScholarServiceImpl implements ScholarService {
         return scholars.stream()
                 .map(scholarMapper::fromScholar)
                 .toList();
+    }
+
+    @Override
+    public ScholarResponse getCurrentScholar() {
+        String username = userService.getUsernameFromAccessToken();
+        User user = userRepository.findByUsername(username).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found")
+        );
+        if(!user.getRole().equals(Role.SCHOLAR)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to update this role");
+        }
+        return scholarMapper.fromScholar(user.getScholar());
+    }
+
+    @Override
+    public ScholarResponse updateCurrentScholar(ScholarRequestUpdate scholarRequestUpdate) {
+        String username = userService.getUsernameFromAccessToken();
+        User user = userRepository.findByUsername(username).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found")
+        );
+        if(!user.getRole().equals(Role.SCHOLAR)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to update this role");
+        }
+        return updateScholar(user.getUuid(), scholarRequestUpdate);
+    }
+
+
+    @Override
+    public SocialLinkResponse setUpScholarSocialLink(String uuid, SocialLinkRequest socialLinkRequest) {
+        Scholar scholar = scholarRepository.findByUuid(uuid).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Scholar not found")
+        );
+        SocialLink socialLink = new SocialLink();
+        socialLink.setUuid(UUID.randomUUID().toString());
+        socialLink.setType(socialLinkRequest.type());
+        socialLink.setLink(socialLinkRequest.link());
+        socialLink.setTitle(socialLinkRequest.title());
+        socialLink.setIsActive(true);
+        socialLink.setIsDeleted(false);
+        scholar.getSocialLink().add(socialLink);
+        scholarRepository.save(scholar);
+        return SocialLinkResponse.builder()
+                .uuid(socialLink.getUuid())
+                .title(socialLink.getTitle())
+                .type(socialLink.getType())
+                .link(socialLink.getLink())
+                .isActive(socialLink.getIsActive())
+                .build();
+    }
+
+    @Override
+    public List<SocialLinkResponse> getScholarSocialLink(String uuid) {
+        return scholarRepository.findByUuid(uuid).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Scholar not found")
+        ).getSocialLink().stream().map(
+                socialLink -> SocialLinkResponse.builder()
+                        .uuid(socialLink.getUuid())
+                        .title(socialLink.getTitle())
+                        .type(socialLink.getType())
+                        .link(socialLink.getLink())
+                        .isActive(socialLink.getIsActive())
+                        .build()
+        ).toList();
+    }
+
+    @Override
+    public SocialLinkResponse updateSocialLinkStatus(String scholarUuid, String socialLinkUuid, boolean status) {
+        Scholar scholar = scholarRepository.findByUuid(scholarUuid).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Scholar not found")
+        );
+        SocialLink socialLink = scholar.getSocialLink().stream().filter(
+                s -> s.getUuid().equals(socialLinkUuid)
+        ).findFirst().orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "SocialLink not found")
+        );
+        socialLink.setIsActive(status);
+        scholarRepository.save(scholar);
+        return SocialLinkResponse.builder()
+                .uuid(socialLink.getUuid())
+                .title(socialLink.getTitle())
+                .type(socialLink.getType())
+                .link(socialLink.getLink())
+                .isActive(socialLink.getIsActive())
+                .build();
+    }
+
+    @Override
+    public void deleteSocialLink(String scholarUuid, String socialLinkUuid) {
+        Scholar scholar = scholarRepository.findByUuid(scholarUuid).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Scholar not found")
+        );
+        SocialLink socialLink = scholar.getSocialLink().stream().filter(
+                s -> s.getUuid().equals(socialLinkUuid)
+        ).findFirst().orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "SocialLink not found")
+        );
+        socialLink.setIsActive(true);
+        scholarRepository.save(scholar);
     }
 }

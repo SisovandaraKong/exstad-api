@@ -44,8 +44,8 @@ public class Scholar extends Auditable {
     private CurrentAddress currentAddress;
 
     @JdbcTypeCode(SqlTypes.JSON)
-    @Column(columnDefinition = "jsonb")
-    private SocialLink socialLink;
+    @Column(columnDefinition = "jsonb", nullable = false)
+    private List<SocialLink> socialLink;
 
     @Column(length = 50)
     private String nickname;
@@ -58,6 +58,9 @@ public class Scholar extends Auditable {
 
     @Column(nullable = false)
     private Boolean isDeleted;
+
+    @Column(length = 20, unique = true, nullable = false)
+    private String phoneNumber;
 
     @Column(length = 20)
     private String phoneFamilyNumber;
