@@ -1,4 +1,4 @@
-package istad.co.exstadbackendapi.features.certificate.dto;
+package co.istad.exstadapi.features.certificate.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
