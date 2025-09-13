@@ -28,7 +28,7 @@ public class UserController {
         );
     }
 
-    @GetMapping
+    @GetMapping("/not-scholar")
     public ResponseEntity<?> getNotScholarUsers() {
         return new ResponseEntity<>(Map.of("users", userService.getNotScholarUsers()), HttpStatus.OK);
     }

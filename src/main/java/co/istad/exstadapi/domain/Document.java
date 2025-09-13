@@ -27,7 +27,8 @@ public class Document extends Auditable {
     @Column(nullable = false)
     int gen;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
+    @JoinColumn(name = "program_id")
     private Program program;
 
     @Column(nullable = false)
