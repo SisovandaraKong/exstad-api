@@ -63,6 +63,8 @@ public class KeycloakSecurity {
 //                .requestMatchers("/api/v1/documents/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
                 .requestMatchers("/api/v1/documents/**").permitAll()
                         .requestMatchers("/documents/**").permitAll()
+//                .requestMatchers("/api/v1/documents/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
+//                        .requestMatchers("/documents/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
                 // Current Address
                 .requestMatchers(HttpMethod.GET,"/api/v1/current-addresses/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
                 .requestMatchers(HttpMethod.POST,"/api/v1/current-addresses/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")

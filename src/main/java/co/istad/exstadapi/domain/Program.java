@@ -47,6 +47,9 @@ public class Program extends Auditable {
     @Column(length = 100)
     private String bgColor;
 
+    @OneToMany(mappedBy = "program")
+    private List<Document> document;
+
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(columnDefinition = "jsonb")
     private List<Highlight> highlights;

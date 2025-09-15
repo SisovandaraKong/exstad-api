@@ -8,9 +8,10 @@ import java.util.List;
 public interface UserService {
 
     List<UserResponse> getAllUsers();
+    List<UserResponse> getNotScholarUsers();
     UserResponse getUserByUsername(String username);
     UserResponse getCurrentUser();
-    String getUsernameByUuid(String uuid);
+    String getUsernameFromAccessToken();
     UserResponse createUser(UserRequest userRequest);
 
     UserResponse getUserByUuid(String uuid);
