@@ -35,7 +35,7 @@ public class CertificateServiceImpl implements CertificateService {
 
 
     @Override
-    public CertificateResponse generateCertificate(String offeringType,CertificateRequestDto request) {
+    public CertificateResponse generateCertificate(String programSlug,CertificateRequestDto request) {
         try {
             if (request.scholarUuid() == null || request.scholarUuid().isEmpty()) {
                 throw new IllegalArgumentException("At least one student name is required.");
@@ -81,7 +81,7 @@ public class CertificateServiceImpl implements CertificateService {
 
             // upload certificate to minio
             DocumentResponse documentResponse = documentService.uploadDocument(
-                    offeringType,
+                    programSlug,
                     openingProgram.getGeneration(),
                     "certificate",
                     "null",
@@ -93,6 +93,7 @@ public class CertificateServiceImpl implements CertificateService {
             certificate.setScholar(scholar.orElse(null));
             certificate.setOpeningProgram(openingProgram);
             certificate.setTempCertificateUrl(documentResponse.uri());
+            certificate.setFileName(documentResponse.name());
             certificate.setIsDisabled(false);
             certificate.setIsDeleted(false);
             certificate.setIsVerified(false);
@@ -109,12 +110,12 @@ public class CertificateServiceImpl implements CertificateService {
     }
 
     @Override
-    public CertificateResponse verifyCertificate(String offeringType, MultipartFile file, String openingProgramUuid, String scholarUuid) {
+    public CertificateResponse verifyCertificate(String programSlug, MultipartFile file, String openingProgramUuid, String scholarUuid) {
 
         OpeningProgram openingProgram = openingProgramRepository.findByUuid(openingProgramUuid)
                 .orElseThrow(() -> new IllegalArgumentException("Opening Program not found"));
 
-        DocumentResponse documentResponse = documentService.uploadDocument(offeringType, openingProgram.getGeneration(), "certificate", "null", file);
+        DocumentResponse documentResponse = documentService.uploadDocument(programSlug, openingProgram.getGeneration(), "certificate", "null", file);
         Scholar scholar = scholarRepository.
                 findByUuid(scholarUuid).orElseThrow(() -> new IllegalArgumentException("Scholar not found"));
         Optional<Certificate> certificate = certificateRepository.findByScholarAndOpeningProgram(scholar, openingProgram);
@@ -161,5 +162,4 @@ public class CertificateServiceImpl implements CertificateService {
         certificateRepository.save(certificates);
         return new BasedMessage("Certificate deleted successfully");
     }
-
 }

@@ -8,7 +8,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring", uses = {
-        AuditableMapper.class, ScholarMapper.class, OpeningProgramMapper.class})
+        AuditableMapper.class, ScholarMapper.class, OpeningProgramMapper.class , DocumentMapper.class})
 public interface CertificateMapper {
 
     @Mapping(source = "certificate", target = "audit")

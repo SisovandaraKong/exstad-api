@@ -23,24 +23,24 @@ public class CertificateController {
 
     private final CertificateService certificateService;
 
-    @PostMapping("/generate-certificates/{offeringType}")
-    public ResponseEntity<?> generateCertificate(@PathVariable String offeringType, @RequestBody @Valid CertificateRequestDto request) {
+    @PostMapping("/generate-certificates/{programSlug}")
+    public ResponseEntity<?> generateCertificate(@PathVariable String programSlug, @RequestBody @Valid CertificateRequestDto request) {
         try {
-            return ResponseEntity.ok(certificateService.generateCertificate(offeringType, request));
+            return ResponseEntity.ok(certificateService.generateCertificate(programSlug, request));
         } catch (Exception e) {
             log.error("Certificate generation failed", e);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to generate certificate", e);
         }
     }
 
-    @PostMapping("/verify-certificates/{offeringType}/{openingProgramUuid}/{scholarUuid}")
+    @PostMapping("/verify-certificates/{programSlug}/{openingProgramUuid}/{scholarUuid}")
     public ResponseEntity<?> verifyCertificate(
-            @PathVariable String offeringType,
+            @PathVariable String programSlug,
             @RequestPart("file") MultipartFile file,
             @PathVariable String openingProgramUuid,
             @PathVariable String scholarUuid)
     {
-        return new ResponseEntity<>(certificateService.verifyCertificate(offeringType , file ,openingProgramUuid, scholarUuid), HttpStatus.OK);
+        return new ResponseEntity<>(certificateService.verifyCertificate(programSlug , file ,openingProgramUuid, scholarUuid), HttpStatus.OK);
     }
 
     @GetMapping("/certificates/{scholarUuid}/opening-program/{openingProgramUuid}")
