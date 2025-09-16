@@ -14,5 +14,4 @@ public class BasedError<T> {
 
     // Detail error for user
     private T description;
-
 }
