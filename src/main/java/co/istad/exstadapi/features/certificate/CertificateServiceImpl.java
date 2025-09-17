@@ -137,15 +137,18 @@ public class CertificateServiceImpl implements CertificateService {
     }
 
     @Override
-    public CertificateResponse getCertificateByScholarAndOpeningProgram(String scholarUuid, String openingProgramUuid) {
+    public List<CertificateResponse> getCertificateByScholarAndOpeningProgram(String scholarUuid, String openingProgramUuid) {
         Scholar scholar = scholarRepository.
                 findByUuid(scholarUuid).orElseThrow(() -> new IllegalArgumentException("Scholar not found"));
         OpeningProgram openingProgram = openingProgramRepository.findByUuid(openingProgramUuid)
                 .orElseThrow(() -> new IllegalArgumentException("Opening Program not found"));
 
-        Certificate certificates = certificateRepository.findByScholarAndOpeningProgram(scholar, openingProgram)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Certificate not found"));
-        return certificateMapper.toCertificateResponse(certificates);
+        List<Certificate> certificates = certificateRepository.findByScholarAndOpeningProgram(scholar, openingProgram)
+                .stream().toList();
+        if(certificates.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Certificate not found");
+        }
+        return certificates.stream().map(certificateMapper::toCertificateResponse).toList();
     }
 
     @Override
