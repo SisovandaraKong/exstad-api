@@ -39,7 +39,7 @@ public class ClassServiceImpl implements ClassService {
 
     @Override
     public ClassResponse getClassByName(String name) {
-        Class aClass = classRepository.findByClassNameIgnoreCase(name)
+        Class aClass = classRepository.findByRoomIgnoreCase(name)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Class with name " + name + " not found"));
         return classMapper.toClassResponse(aClass);
     }

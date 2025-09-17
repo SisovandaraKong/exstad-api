@@ -11,9 +11,8 @@ import java.util.UUID;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Activity {
-    private String uuid = UUID.randomUUID().toString();
-    private String title;
-    private String description;
-    private String image;
+public class FaqItem {
+    private String uuid= UUID.randomUUID().toString();
+    private String question;
+    private String answer;
 }

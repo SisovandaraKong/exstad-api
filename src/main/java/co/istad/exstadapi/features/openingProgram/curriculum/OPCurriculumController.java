@@ -17,8 +17,8 @@ public class OPCurriculumController {
     private final OpeningProgramService openingProgramService;
 
     @PutMapping("/{uuid}/curriculums")
-    public ResponseEntity<?> setUpCurriculums(@PathVariable String uuid, @RequestBody @Valid List<Curriculum> curriculums) {
-        return new ResponseEntity<>(openingProgramService.setUpCurricula(uuid, curriculums), HttpStatus.OK);
+    public ResponseEntity<?> setUpCurriculums(@PathVariable String uuid, @RequestBody @Valid List<Curriculum> curricula) {
+        return new ResponseEntity<>(openingProgramService.setUpCurricula(uuid, curricula), HttpStatus.OK);
     }
 
     @GetMapping("/{uuid}/curriculums")
