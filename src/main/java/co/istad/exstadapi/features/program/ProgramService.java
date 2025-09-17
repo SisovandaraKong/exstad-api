@@ -6,6 +6,7 @@ import co.istad.exstadapi.features.program.curriculum.dto.CurriculumSetUp;
 import co.istad.exstadapi.features.program.dto.ProgramRequest;
 import co.istad.exstadapi.features.program.dto.ProgramResponse;
 import co.istad.exstadapi.features.program.dto.ProgramUpdate;
+import co.istad.exstadapi.features.program.faq.dto.FaqSetUp;
 
 import java.util.List;
 
@@ -22,7 +23,7 @@ public interface ProgramService {
     ProgramResponse setUpHighlights(String uuid, List<Highlight> highlights);
     ProgramResponse setUpProgramOverviews(String uuid, List<ProgramOverview> overviews);
     ProgramResponse setUpRoadmaps(String uuid, List<Roadmap> roadmaps);
-    ProgramResponse setUpFaqs(String uuid, List<Faq> faqs);
+    ProgramResponse setUpFaqs(String uuid, List<FaqSetUp> faqSetUps);
     ProgramResponse setUpRequirements(String uuid, List<Requirement> requirements);
     ProgramResponse setUpLearningOutcomes(String uuid, List<LearningOutcome> learningOutcomes);
     ProgramResponse setUpCurricula(String uuid, List<CurriculumSetUp> curriculumSetUps);

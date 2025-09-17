@@ -11,6 +11,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Faq {
-    private List<FaqSection> faq;
+public class FaqSection {
+    private String title;
+    private List<FaqItem> faqs;
 }
