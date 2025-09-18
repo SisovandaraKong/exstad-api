@@ -43,7 +43,7 @@ public class KeycloakSecurity {
                 .requestMatchers(HttpMethod.POST,"/api/v1/users/**").hasAnyRole("ADMIN","INSTRUCTOR1")
                 .requestMatchers(HttpMethod.GET,"/api/v1/users/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
                 // Province
-                .requestMatchers(HttpMethod.GET,"/api/v1/provinces/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
+                .requestMatchers(HttpMethod.GET,"/api/v1/provinces/**").permitAll()
                 // University
                 .requestMatchers(HttpMethod.POST,"/api/v1/universities/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
                 .requestMatchers(HttpMethod.PATCH,"/api/v1/universities/**").hasAnyRole("ADMIN","INSTRUCTOR1")
