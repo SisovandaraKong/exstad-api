@@ -19,7 +19,7 @@ public interface ScholarClassMapper {
     @Mapping(target = "scholarUuid", source = "scholar.uuid")
     @Mapping(target = "classUuid", source = "_class.uuid")
     @Mapping(target = "scholarName", source = "scholar.user.englishName")
-    @Mapping(target = "className", source = "_class.className")
+    @Mapping(target = "room", source = "_class.room")
     ScholarClassResponse toScholarClassResponse(ScholarClass scholarClass);
 
     @Mapping(target = "_class", source = "classUuid", qualifiedByName = "toClassByUuid")

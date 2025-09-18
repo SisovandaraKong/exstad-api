@@ -7,6 +7,7 @@ import co.istad.exstadapi.features.program.curriculum.dto.CurriculumSetUp;
 import co.istad.exstadapi.features.program.dto.ProgramRequest;
 import co.istad.exstadapi.features.program.dto.ProgramResponse;
 import co.istad.exstadapi.features.program.dto.ProgramUpdate;
+import co.istad.exstadapi.features.program.faq.dto.FaqSetUp;
 import co.istad.exstadapi.mapper.ProgramMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -152,9 +153,25 @@ public class ProgramServiceImpl implements ProgramService {
     }
 
     @Override
-    public ProgramResponse setUpFaqs(String uuid, List<Faq> faqs) {
+    public ProgramResponse setUpFaqs(String uuid, List<FaqSetUp> faqSetUps) {
         Program program = programRepository.findByUuid(uuid)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Program not found"));
+        List<Faq> faqs = faqSetUps.stream()
+                .map(faqSetUp -> new Faq(
+                        faqSetUp.faq().stream()
+                                .map(faqSection -> new FaqSection(
+                                        faqSection.title(),
+                                        faqSection.faqs().stream()
+                                                .map(faqItem -> new FaqItem(
+                                                        UUID.randomUUID().toString(),
+                                                        faqItem.question(),
+                                                        faqItem.answer()
+                                                ))
+                                                .toList()
+                                ))
+                                .toList()
+                ))
+                .toList();
         program.setFaqs(faqs);
         program = programRepository.save(program);
         return programMapper.toProgramResponse(program);
@@ -186,15 +203,9 @@ public class ProgramServiceImpl implements ProgramService {
             Curriculum curriculum = new Curriculum();
             curriculum.setUuid(UUID.randomUUID().toString());
             curriculum.setTitle(curriculumSetUp.title());
-            curriculum.setCurriculumType(curriculumSetUp.curriculumType().stream().map(curriculumTypeSetUp -> {
-                CurriculumType curriculumType = new CurriculumType();
-                curriculumType.setUuid(UUID.randomUUID().toString());
-                curriculumType.setOrder(curriculumTypeSetUp.order());
-                curriculumType.setTitle(curriculumTypeSetUp.title());
-                curriculumType.setSubtitle(curriculumTypeSetUp.subtitle());
-                curriculumType.setDescription(curriculumTypeSetUp.description());
-                return curriculumType;
-            }).toList());
+            curriculum.setSubtitle(curriculumSetUp.subtitle());
+            curriculum.setOrder(curriculumSetUp.order());
+            curriculum.setDescription(curriculumSetUp.description());
             return curriculum;
         }).toList();
         program.setCurricula(curriculumSet);
