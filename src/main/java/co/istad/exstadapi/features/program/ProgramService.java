@@ -7,6 +7,7 @@ import co.istad.exstadapi.features.program.dto.ProgramRequest;
 import co.istad.exstadapi.features.program.dto.ProgramResponse;
 import co.istad.exstadapi.features.program.dto.ProgramUpdate;
 import co.istad.exstadapi.features.program.faq.dto.FaqSetUp;
+import co.istad.exstadapi.features.program.highlight.dto.HighlightSetUp;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ public interface ProgramService {
     BasedMessage deleteProgram(String uuid);
     BasedMessage restoreProgram(String uuid);
     BasedMessage hardDeleteProgram(String uuid);
-    ProgramResponse setUpHighlights(String uuid, List<Highlight> highlights);
+    ProgramResponse setUpHighlights(String uuid, List<HighlightSetUp> highlightSetUps);
     ProgramResponse setUpProgramOverviews(String uuid, List<ProgramOverview> overviews);
     ProgramResponse setUpRoadmaps(String uuid, List<Roadmap> roadmaps);
     ProgramResponse setUpFaqs(String uuid, List<FaqSetUp> faqSetUps);

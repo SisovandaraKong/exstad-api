@@ -8,6 +8,7 @@ import co.istad.exstadapi.features.program.dto.ProgramRequest;
 import co.istad.exstadapi.features.program.dto.ProgramResponse;
 import co.istad.exstadapi.features.program.dto.ProgramUpdate;
 import co.istad.exstadapi.features.program.faq.dto.FaqSetUp;
+import co.istad.exstadapi.features.program.highlight.dto.HighlightSetUp;
 import co.istad.exstadapi.mapper.ProgramMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -124,15 +125,24 @@ public class ProgramServiceImpl implements ProgramService {
     }
 
     @Override
-    public ProgramResponse setUpHighlights(String uuid, List<Highlight> highlights) {
+    public ProgramResponse setUpHighlights(String uuid, List<HighlightSetUp> highlightSetUps) {
         Program program = programRepository.findByUuid(uuid)
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND, "Program not found"
-                ));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Program not found"));
+        List<Highlight> highlights = highlightSetUps.stream()
+                .map(highlightSetUp -> {
+                    Highlight highlight = new Highlight();
+                    highlight.setLabel(highlightSetUp.label());
+                    highlight.setValue(highlightSetUp.value());
+                    highlight.setDesc(highlightSetUp.desc());
+                    return highlight;
+                })
+                .toList();
         program.setHighlights(highlights);
-        program = programRepository.save(program);
-        return programMapper.toProgramResponse(program);
+        Program savedProgram = programRepository.save(program);
+
+        return programMapper.toProgramResponse(savedProgram);
     }
+
 
     @Override
     public ProgramResponse setUpProgramOverviews(String uuid, List<ProgramOverview> overviews) {
