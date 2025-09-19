@@ -1,6 +1,5 @@
 package co.istad.exstadapi.domain.vo;
 
-import co.istad.exstadapi.domain.vo.FaqSection;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,6 +11,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Faq {
-    private List<FaqSection> faq;
+public class FaqSection {
+    private String title;
+    private List<FaqItem> faqs;
 }

@@ -6,6 +6,12 @@ import co.istad.exstadapi.features.program.curriculum.dto.CurriculumSetUp;
 import co.istad.exstadapi.features.program.dto.ProgramRequest;
 import co.istad.exstadapi.features.program.dto.ProgramResponse;
 import co.istad.exstadapi.features.program.dto.ProgramUpdate;
+import co.istad.exstadapi.features.program.faq.dto.FaqSetUp;
+import co.istad.exstadapi.features.program.highlight.dto.HighlightSetUp;
+import co.istad.exstadapi.features.program.learningOutcome.dto.LearningOutcomeSetUp;
+import co.istad.exstadapi.features.program.programOverview.dto.ProgramOverviewSetUp;
+import co.istad.exstadapi.features.program.requirement.dto.RequirementSetUp;
+import co.istad.exstadapi.features.program.roadmap.dto.RoadmapSetUp;
 
 import java.util.List;
 
@@ -19,12 +25,12 @@ public interface ProgramService {
     BasedMessage deleteProgram(String uuid);
     BasedMessage restoreProgram(String uuid);
     BasedMessage hardDeleteProgram(String uuid);
-    ProgramResponse setUpHighlights(String uuid, List<Highlight> highlights);
-    ProgramResponse setUpProgramOverviews(String uuid, List<ProgramOverview> overviews);
-    ProgramResponse setUpRoadmaps(String uuid, List<Roadmap> roadmaps);
-    ProgramResponse setUpFaqs(String uuid, List<Faq> faqs);
-    ProgramResponse setUpRequirements(String uuid, List<Requirement> requirements);
-    ProgramResponse setUpLearningOutcomes(String uuid, List<LearningOutcome> learningOutcomes);
+    ProgramResponse setUpHighlights(String uuid, List<HighlightSetUp> highlightSetUps);
+    ProgramResponse setUpProgramOverviews(String uuid, List<ProgramOverviewSetUp> programOverviewSetUps);
+    ProgramResponse setUpRoadmaps(String uuid, List<RoadmapSetUp> roadmapSetUps);
+    ProgramResponse setUpFaqs(String uuid, List<FaqSetUp> faqSetUps);
+    ProgramResponse setUpRequirements(String uuid, List<RequirementSetUp> requirementSetUps);
+    ProgramResponse setUpLearningOutcomes(String uuid, List<LearningOutcomeSetUp> learningOutcomeSetUps);
     ProgramResponse setUpCurricula(String uuid, List<CurriculumSetUp> curriculumSetUps);
     List<Highlight> getHighlights(String uuid);
     List<ProgramOverview> getProgramOverviews(String uuid);

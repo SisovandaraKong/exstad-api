@@ -3,10 +3,17 @@ package co.istad.exstadapi.features.openingProgram;
 import co.istad.exstadapi.base.BasedMessage;
 import co.istad.exstadapi.domain.OpeningProgram;
 import co.istad.exstadapi.domain.vo.*;
+import co.istad.exstadapi.features.openingProgram.activity.dto.ActivitySetUp;
+import co.istad.exstadapi.features.openingProgram.curriculum.dto.OPCurriculumSetUp;
+import co.istad.exstadapi.features.openingProgram.detail.dto.DetailSetUp;
 import co.istad.exstadapi.features.openingProgram.dto.OpeningProgramRequest;
 import co.istad.exstadapi.features.openingProgram.dto.OpeningProgramResponse;
 import co.istad.exstadapi.features.openingProgram.dto.OpeningProgramUpdate;
 import co.istad.exstadapi.features.openingProgram.dto.SetUpTemplate;
+import co.istad.exstadapi.features.openingProgram.learningOutcome.dto.OPLearningOutcomeSetUp;
+import co.istad.exstadapi.features.openingProgram.requirement.dto.OPRequirementSetUp;
+import co.istad.exstadapi.features.openingProgram.roadmap.dto.OPRoadmapSetUp;
+import co.istad.exstadapi.features.openingProgram.timeline.dto.TimelineSetUp;
 import co.istad.exstadapi.features.program.ProgramRepository;
 import co.istad.exstadapi.mapper.OpeningProgramMapper;
 import lombok.RequiredArgsConstructor;
@@ -133,63 +140,139 @@ public class OpeningProgramServiceImpl implements OpeningProgramService {
     }
 
     @Override
-    public OpeningProgramResponse setUpActivities(String uuid, List<Activity> activities) {
+    public OpeningProgramResponse setUpActivities(String uuid, List<ActivitySetUp> activitySetUps) {
         OpeningProgram openingProgram = openingProgramRepository.findByUuid(uuid)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Opening Program not found"));
+        List<Activity> activities = activitySetUps.stream()
+                        .map(activitySetUp -> {
+                            Activity activity = new Activity();
+                            activity.setTitle(activitySetUp.title());
+                            activity.setDescription(activitySetUp.description());
+                            activity.setImage(activitySetUp.image());
+                            return activity;
+                        }).toList();
         openingProgram.setActivities(activities);
         openingProgram = openingProgramRepository.save(openingProgram);
         return openingProgramMapper.toOpeningProgramResponse(openingProgram);
     }
 
     @Override
-    public OpeningProgramResponse setUpTimelines(String uuid, List<Timeline> timelines) {
+    public OpeningProgramResponse setUpTimelines(String uuid, List<TimelineSetUp> timelineSetUps) {
         OpeningProgram openingProgram = openingProgramRepository.findByUuid(uuid)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Opening Program not found"));
+        List<Timeline> timelines = timelineSetUps.stream()
+                .map(timelineSetUp -> {
+                    Timeline timeline = new Timeline();
+                    timeline.setTitle(timelineSetUp.title());
+                    timeline.setDate(timelineSetUp.date());
+                    return timeline;
+                }).toList();
         openingProgram.setTimelines(timelines);
         openingProgram = openingProgramRepository.save(openingProgram);
         return openingProgramMapper.toOpeningProgramResponse(openingProgram);
     }
 
     @Override
-    public OpeningProgramResponse setUpCurricula(String uuid, List<Curriculum> curricula) {
+    public OpeningProgramResponse setUpCurricula(String uuid, List<OPCurriculumSetUp> opCurriculumSetUps) {
         OpeningProgram openingProgram = openingProgramRepository.findByUuid(uuid)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Opening Program not found"));
+        List<Curriculum> curricula = opCurriculumSetUps.stream()
+                .map(opCurriculumSetUp -> {
+                    Curriculum curriculum = new Curriculum();
+                    curriculum.setOrder(opCurriculumSetUp.order());
+                    curriculum.setTitle(opCurriculumSetUp.title());
+                    curriculum.setSubtitle(opCurriculumSetUp.subtitle());
+                    curriculum.setDescription(opCurriculumSetUp.description());
+                    return curriculum;
+                }).toList();
         openingProgram.setCurricula(curricula);
         openingProgram = openingProgramRepository.save(openingProgram);
         return openingProgramMapper.toOpeningProgramResponse(openingProgram);
     }
 
     @Override
-    public OpeningProgramResponse setUpRoadmaps(String uuid, List<Roadmap> roadmaps) {
+    public OpeningProgramResponse setUpRoadmaps(String uuid, List<OPRoadmapSetUp> opRoadmapSetUps) {
         OpeningProgram openingProgram = openingProgramRepository.findByUuid(uuid)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Opening Program not found"));
+        List<Roadmap> roadmaps = opRoadmapSetUps.stream()
+                        .map(opRoadmapSetUp -> {
+                            Roadmap roadmap = new Roadmap();
+                            roadmap.setEdges(opRoadmapSetUp.edges().stream()
+                                    .map(edgeSetUp -> {
+                                        Roadmap.Edge edge = new Roadmap.Edge();
+                                        edge.setId(edgeSetUp.id());
+                                        edge.setSource(edgeSetUp.source());
+                                        edge.setTarget(edgeSetUp.target());
+                                        edge.setAnimated(edgeSetUp.animated());
+                                        return edge;
+                                    }).toList());
+                            roadmap.setNodes(opRoadmapSetUp.nodes().stream()
+                                    .map(nodeSetUp -> {
+                                        Roadmap.Node node = new Roadmap.Node();
+                                        node.setType(nodeSetUp.type());
+                                        node.setPosition(new Roadmap.Position(
+                                                nodeSetUp.position().x(),
+                                                nodeSetUp.position().y()
+                                        ));
+                                        node.setData(new Roadmap.NodeData(
+                                                nodeSetUp.data().label(),
+                                                nodeSetUp.data().description()
+                                        ));
+                                        return node;
+                                    }).toList());
+                            return roadmap;
+                        }).toList();
         openingProgram.setRoadmaps(roadmaps);
         openingProgram = openingProgramRepository.save(openingProgram);
         return openingProgramMapper.toOpeningProgramResponse(openingProgram);
     }
 
     @Override
-    public OpeningProgramResponse setUpLearningOutcomes(String uuid, List<LearningOutcome> learningOutcomes) {
+    public OpeningProgramResponse setUpLearningOutcomes(String uuid, List<OPLearningOutcomeSetUp> opLearningOutcomeSetUps) {
         OpeningProgram openingProgram = openingProgramRepository.findByUuid(uuid)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Opening Program not found"));
+        List<LearningOutcome> learningOutcomes = opLearningOutcomeSetUps.stream()
+                .map(opLearningOutcomeSetUp -> {
+                    LearningOutcome learningOutcome = new LearningOutcome();
+                    learningOutcome.setTitle(opLearningOutcomeSetUp.title());
+                    learningOutcome.setSubtitle(opLearningOutcomeSetUp.subtitle());
+                    learningOutcome.setDescription(opLearningOutcomeSetUp.description());
+                    return learningOutcome;
+                }).toList();
         openingProgram.setLearningOutcomes(learningOutcomes);
         openingProgram = openingProgramRepository.save(openingProgram);
         return openingProgramMapper.toOpeningProgramResponse(openingProgram);
     }
 
     @Override
-    public OpeningProgramResponse setUpRequirements(String uuid, List<Requirement> requirements) {
+    public OpeningProgramResponse setUpRequirements(String uuid, List<OPRequirementSetUp> opRequirementSetUps) {
         OpeningProgram openingProgram = openingProgramRepository.findByUuid(uuid)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Opening Program not found"));
+        List<Requirement> requirements = opRequirementSetUps.stream()
+                .map(opRequirementSetUp -> {
+                    Requirement requirement = new Requirement();
+                    requirement.setTitle(opRequirementSetUp.title());
+                    requirement.setSubtitle(opRequirementSetUp.subtitle());
+                    requirement.setDescription(opRequirementSetUp.description());
+                    return requirement;
+                }).toList();
         openingProgram.setRequirements(requirements);
         openingProgram = openingProgramRepository.save(openingProgram);
         return openingProgramMapper.toOpeningProgramResponse(openingProgram);
     }
 
     @Override
-    public OpeningProgramResponse setUpDetails(String uuid, List<Detail> details) {
+    public OpeningProgramResponse setUpDetails(String uuid, List<DetailSetUp> detailSetUps) {
         OpeningProgram openingProgram = openingProgramRepository.findByUuid(uuid)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Opening Program not found"));
+        List<Detail> details = detailSetUps.stream()
+                .map(detailSetUp -> {
+                    Detail detail = new Detail();
+                    detail.setTitle(detailSetUp.title());
+                    detail.setDescription(detailSetUp.description());
+                    detail.setIsActive(detailSetUp.isActive());
+                    return detail;
+                }).toList();
         openingProgram.setDetails(details);
         openingProgram = openingProgramRepository.save(openingProgram);
         return openingProgramMapper.toOpeningProgramResponse(openingProgram);

@@ -3,14 +3,18 @@ package co.istad.exstadapi.features.program.requirement;
 import co.istad.exstadapi.domain.vo.Requirement;
 import co.istad.exstadapi.features.program.ProgramService;
 import co.istad.exstadapi.features.program.dto.ProgramResponse;
+import co.istad.exstadapi.features.program.requirement.dto.RequirementSetUp;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@Validated
 @RequestMapping("/api/v1/programs")
 public class RequirementController {
     private final ProgramService programService;
@@ -18,9 +22,9 @@ public class RequirementController {
     @PutMapping("/{uuid}/requirements")
     public ResponseEntity<ProgramResponse> updateRequirements(
             @PathVariable String uuid,
-            @RequestBody List<Requirement> requirements
+            @RequestBody @Valid List<@Valid RequirementSetUp> requirementSetUps
     ) {
-        return ResponseEntity.ok(programService.setUpRequirements(uuid, requirements));
+        return ResponseEntity.ok(programService.setUpRequirements(uuid, requirementSetUps));
     }
 
     @GetMapping("/{uuid}/requirements")
