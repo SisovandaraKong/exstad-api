@@ -35,8 +35,8 @@ public class KeycloakSecurity {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(endpoint -> endpoint
-                        .requestMatchers("/api/v1/**").permitAll()
                 .requestMatchers("/documents/**").permitAll()
+                        .requestMatchers("/api/v1/**").permitAll()
 //                 User and create into our db and keycloak
 //                .requestMatchers("/api/v1/users/register").hasAnyRole("ADMIN","INSTRUCTOR1")
 //                .requestMatchers("/api/v1/users/login").permitAll()

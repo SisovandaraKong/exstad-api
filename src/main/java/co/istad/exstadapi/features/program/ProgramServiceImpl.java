@@ -186,15 +186,9 @@ public class ProgramServiceImpl implements ProgramService {
             Curriculum curriculum = new Curriculum();
             curriculum.setUuid(UUID.randomUUID().toString());
             curriculum.setTitle(curriculumSetUp.title());
-            curriculum.setCurriculumType(curriculumSetUp.curriculumType().stream().map(curriculumTypeSetUp -> {
-                CurriculumType curriculumType = new CurriculumType();
-                curriculumType.setUuid(UUID.randomUUID().toString());
-                curriculumType.setOrder(curriculumTypeSetUp.order());
-                curriculumType.setTitle(curriculumTypeSetUp.title());
-                curriculumType.setSubtitle(curriculumTypeSetUp.subtitle());
-                curriculumType.setDescription(curriculumTypeSetUp.description());
-                return curriculumType;
-            }).toList());
+            curriculum.setSubtitle(curriculumSetUp.subtitle());
+            curriculum.setOrder(curriculumSetUp.order());
+            curriculum.setDescription(curriculumSetUp.description());
             return curriculum;
         }).toList();
         program.setCurricula(curriculumSet);

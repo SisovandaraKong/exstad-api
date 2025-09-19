@@ -7,12 +7,14 @@ import co.istad.exstadapi.features.program.dto.ProgramResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@Validated
 @RequestMapping("/api/v1/programs")
 public class CurriculumController {
     private final ProgramService programService;

@@ -33,25 +33,24 @@ public class CertificateController {
         }
     }
 
-    @PostMapping("/verify-certificates/{programSlug}/{openingProgramUuid}/{scholarUuid}")
+    @PostMapping("/verify-certificates/{programSlug}/{certificateUuid}")
     public ResponseEntity<?> verifyCertificate(
             @PathVariable String programSlug,
             @RequestPart("file") MultipartFile file,
-            @PathVariable String openingProgramUuid,
-            @PathVariable String scholarUuid)
+            @PathVariable String certificateUuid)
     {
-        return new ResponseEntity<>(certificateService.verifyCertificate(programSlug , file ,openingProgramUuid, scholarUuid), HttpStatus.OK);
+        return new ResponseEntity<>(certificateService.verifyCertificate(programSlug , file ,certificateUuid), HttpStatus.OK);
     }
 
     @GetMapping("/certificates/{scholarUuid}/opening-program/{openingProgramUuid}")
-    public CertificateResponse getCertificateByScholar(@PathVariable String scholarUuid, @PathVariable String openingProgramUuid){
+    public List<CertificateResponse> getCertificateByScholar(@PathVariable String scholarUuid, @PathVariable String openingProgramUuid){
         return certificateService.getCertificateByScholarAndOpeningProgram(scholarUuid, openingProgramUuid);
     }
 
-    @PutMapping("/certificates/{scholarUuid}/opening-program/{openingProgramUuid}/delete")
-    public BasedMessage deleteCertificateByScholar(@PathVariable String scholarUuid, @PathVariable String openingProgramUuid){
-        return certificateService.deleteCertificateByScholarAndOpeningProgram(scholarUuid, openingProgramUuid);
-    }
+//    @PutMapping("/certificates/{scholarUuid}/opening-program/{openingProgramUuid}/delete")
+//    public BasedMessage deleteCertificateByScholar(@PathVariable String scholarUuid, @PathVariable String openingProgramUuid){
+//        return certificateService.deleteCertificateByScholarAndOpeningProgram(scholarUuid, openingProgramUuid);
+//    }
 
     @GetMapping("/certificates")
     public ResponseEntity<?> getAllCertificates(){

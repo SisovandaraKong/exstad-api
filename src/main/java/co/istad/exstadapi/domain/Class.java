@@ -30,15 +30,24 @@ public class Class extends Auditable {
     @JoinColumn(name = "opening_program_id")
     private OpeningProgram openingProgram;
 
-    @Column(nullable = false, length = 100)
-    private String className;
-
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Shift shift;
 
     @Column(nullable = false)
     private Boolean isWeekend;
+
+    @Column(length = 60, nullable = false)
+    private String room;
+
+    @Column(length = 60)
+    private String instructor;
+
+    @Column(length = 20, nullable = false, unique = true)
+    private String classCode;
+
+    @Column(length = 500)
+    private String telegram;
 
     @Column(nullable = false)
     private Integer totalSlot;

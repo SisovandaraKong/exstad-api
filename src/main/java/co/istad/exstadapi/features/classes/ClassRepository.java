@@ -13,7 +13,7 @@ public interface ClassRepository extends JpaRepository<Class,Integer> {
 
     Optional<Class> findByUuid(String uuid);
     List<Class> findAllByIsDeletedFalse();
-    Optional<Class> findByClassNameIgnoreCase(String className);
+    Optional<Class> findByRoomIgnoreCase(String room);
     boolean existsByUuid(String uuid);
 
     @Modifying

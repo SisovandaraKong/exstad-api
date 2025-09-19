@@ -7,7 +7,7 @@ public record ScholarClassResponse(
         String scholarUuid,
         String scholarName,
         String classUuid,
-        String className,
+        String room,
         Boolean isReminded,
         Boolean isPaid,
         AuditableDto audit
