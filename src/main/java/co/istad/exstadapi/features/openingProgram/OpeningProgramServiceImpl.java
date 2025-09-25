@@ -164,7 +164,8 @@ public class OpeningProgramServiceImpl implements OpeningProgramService {
                 .map(timelineSetUp -> {
                     Timeline timeline = new Timeline();
                     timeline.setTitle(timelineSetUp.title());
-                    timeline.setDate(timelineSetUp.date());
+                    timeline.setStartDate(timelineSetUp.startDate());
+                    timeline.setEndDate(timelineSetUp.endDate());
                     return timeline;
                 }).toList();
         openingProgram.setTimelines(timelines);
