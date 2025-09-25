@@ -18,8 +18,9 @@ public class Timeline {
 
     private String uuid = UUID.randomUUID().toString();
 
-    private LocalDate date;
-
     private String title;
 
+    private LocalDate startDate;
+
+    private LocalDate endDate;
 }
