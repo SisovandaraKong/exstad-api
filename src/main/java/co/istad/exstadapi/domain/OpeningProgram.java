@@ -33,6 +33,9 @@ public class OpeningProgram extends Auditable {
     @Column(nullable = false, unique = true)
     private String uuid;
 
+    @Column(length = 30, nullable = false)
+    private String deadline;
+
     @Column(length = 60, nullable = false)
     private String title;
 
@@ -45,6 +48,9 @@ public class OpeningProgram extends Auditable {
 
     @Column(length = 500)
     private String thumbnail;
+
+    @Column(length = 500)
+    private String posterUrl;
 
     @Column(nullable = false)
     private Integer totalSlot;

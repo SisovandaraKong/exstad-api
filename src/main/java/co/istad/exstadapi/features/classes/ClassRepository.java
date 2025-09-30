@@ -1,6 +1,7 @@
 package co.istad.exstadapi.features.classes;
 
 import co.istad.exstadapi.domain.Class;
+import co.istad.exstadapi.domain.OpeningProgram;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -12,6 +13,7 @@ import java.util.Optional;
 public interface ClassRepository extends JpaRepository<Class,Integer> {
 
     Optional<Class> findByUuid(String uuid);
+    Optional<Class> findByOpeningProgram(OpeningProgram openingProgram);
     List<Class> findAllByIsDeletedFalse();
     Optional<Class> findByRoomIgnoreCase(String room);
     boolean existsByUuid(String uuid);
