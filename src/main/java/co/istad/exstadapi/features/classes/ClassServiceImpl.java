@@ -2,9 +2,11 @@ package co.istad.exstadapi.features.classes;
 
 import co.istad.exstadapi.base.BasedMessage;
 import co.istad.exstadapi.domain.Class;
+import co.istad.exstadapi.domain.OpeningProgram;
 import co.istad.exstadapi.features.classes.dto.ClassRequest;
 import co.istad.exstadapi.features.classes.dto.ClassResponse;
 import co.istad.exstadapi.features.classes.dto.ClassUpdate;
+import co.istad.exstadapi.features.openingProgram.OpeningProgramRepository;
 import co.istad.exstadapi.mapper.ClassMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,6 +21,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ClassServiceImpl implements ClassService {
     private final ClassRepository classRepository;
+    private final OpeningProgramRepository openingProgramRepository;
     private final ClassMapper classMapper;
 
     @Override
@@ -42,6 +45,15 @@ public class ClassServiceImpl implements ClassService {
         Class aClass = classRepository.findByRoomIgnoreCase(name)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Class with name " + name + " not found"));
         return classMapper.toClassResponse(aClass);
+    }
+
+    @Override
+    public ClassResponse getClassByOpeningProgramTitle(String openingProgramTitle) {
+        OpeningProgram openingProgram = openingProgramRepository.findByTitleIgnoreCase(openingProgramTitle)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Opening Program with title " + openingProgramTitle + " not found"));
+        Class _class = classRepository.findByOpeningProgram(openingProgram)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Class with title " + openingProgramTitle + " not found"));
+        return classMapper.toClassResponse(_class);
     }
 
     @Override
