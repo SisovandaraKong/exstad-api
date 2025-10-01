@@ -8,6 +8,11 @@ import co.istad.exstadapi.features.program.dto.ProgramRequest;
 import co.istad.exstadapi.features.program.dto.ProgramResponse;
 import co.istad.exstadapi.features.program.dto.ProgramUpdate;
 import co.istad.exstadapi.features.program.faq.dto.FaqSetUp;
+import co.istad.exstadapi.features.program.highlight.dto.HighlightSetUp;
+import co.istad.exstadapi.features.program.learningOutcome.dto.LearningOutcomeSetUp;
+import co.istad.exstadapi.features.program.programOverview.dto.ProgramOverviewSetUp;
+import co.istad.exstadapi.features.program.requirement.dto.RequirementSetUp;
+import co.istad.exstadapi.features.program.roadmap.dto.RoadmapSetUp;
 import co.istad.exstadapi.mapper.ProgramMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -124,29 +130,77 @@ public class ProgramServiceImpl implements ProgramService {
     }
 
     @Override
-    public ProgramResponse setUpHighlights(String uuid, List<Highlight> highlights) {
+    public ProgramResponse setUpHighlights(String uuid, List<HighlightSetUp> highlightSetUps) {
         Program program = programRepository.findByUuid(uuid)
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND, "Program not found"
-                ));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Program not found"));
+        List<Highlight> highlights = highlightSetUps.stream()
+                .map(highlightSetUp -> {
+                    Highlight highlight = new Highlight();
+                    highlight.setLabel(highlightSetUp.label());
+                    highlight.setValue(highlightSetUp.value());
+                    highlight.setDesc(highlightSetUp.desc());
+                    return highlight;
+                })
+                .toList();
         program.setHighlights(highlights);
+        Program savedProgram = programRepository.save(program);
+
+        return programMapper.toProgramResponse(savedProgram);
+    }
+
+
+    @Override
+    public ProgramResponse setUpProgramOverviews(String uuid, List<ProgramOverviewSetUp> programOverviewSetUps) {
+        Program program = programRepository.findByUuid(uuid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Program not found"));
+        List<ProgramOverview> programOverviews = programOverviewSetUps.stream()
+                .map(programOverviewSetUp -> {
+                    ProgramOverview programOverview = new ProgramOverview();
+                    programOverview.setTitle(programOverviewSetUp.title());
+                    programOverview.setDescription(programOverviewSetUp.description());
+                    return programOverview;
+                })
+                .toList();
+        program.setProgramOverviews(programOverviews);
         program = programRepository.save(program);
         return programMapper.toProgramResponse(program);
     }
 
     @Override
-    public ProgramResponse setUpProgramOverviews(String uuid, List<ProgramOverview> overviews) {
+    public ProgramResponse setUpRoadmaps(String uuid, List<RoadmapSetUp> roadmapSetUps) {
         Program program = programRepository.findByUuid(uuid)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Program not found"));
-        program.setProgramOverviews(overviews);
-        program = programRepository.save(program);
-        return programMapper.toProgramResponse(program);
-    }
-
-    @Override
-    public ProgramResponse setUpRoadmaps(String uuid, List<Roadmap> roadmaps) {
-        Program program = programRepository.findByUuid(uuid)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Program not found"));
+        List<Roadmap> roadmaps = roadmapSetUps.stream()
+                .map(roadmapSetUp -> {
+                    Roadmap roadmap = new Roadmap();
+                    roadmap.setEdges(roadmapSetUp.edges().stream()
+                    .map(edgeSetUp -> {
+                                Roadmap.Edge edge = new Roadmap.Edge();
+                                edge.setId(edgeSetUp.id());
+                                edge.setAnimated(edgeSetUp.animated());
+                                edge.setSource(edgeSetUp.source());
+                                edge.setTarget(edgeSetUp.target());
+                                return edge;
+                            })
+                            .toList());
+                    roadmap.setNodes(roadmapSetUp.nodes().stream()
+                            .map(nodeSetUp -> {
+                                Roadmap.Node node = new Roadmap.Node();
+                                node.setType(nodeSetUp.type());
+                                node.setPosition(new Roadmap.Position(
+                                        nodeSetUp.position().x(),
+                                        nodeSetUp.position().y()
+                                ));
+                                node.setData(new Roadmap.NodeData(
+                                        nodeSetUp.data().label(),
+                                        nodeSetUp.data().description()
+                                ));
+                                return node;
+                            })
+                            .toList());
+                    return roadmap;
+                })
+                .toList();
         program.setRoadmaps(roadmaps);
         program = programRepository.save(program);
         return programMapper.toProgramResponse(program);
@@ -178,18 +232,34 @@ public class ProgramServiceImpl implements ProgramService {
     }
 
     @Override
-    public ProgramResponse setUpRequirements(String uuid, List<Requirement> requirements) {
+    public ProgramResponse setUpRequirements(String uuid, List<RequirementSetUp> requirementSetUps) {
         Program program = programRepository.findByUuid(uuid)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Program not found"));
+        List<Requirement> requirements = requirementSetUps.stream()
+                        .map(requirementSetUp -> {
+                            Requirement requirement = new Requirement();
+                            requirement.setTitle(requirementSetUp.title());
+                            requirement.setSubtitle(requirementSetUp.subtitle());
+                            requirement.setDescription(requirementSetUp.description());
+                            return requirement;
+                        }).toList();
         program.setRequirements(requirements);
         program = programRepository.save(program);
         return programMapper.toProgramResponse(program);
     }
 
     @Override
-    public ProgramResponse setUpLearningOutcomes(String uuid, List<LearningOutcome> learningOutcomes) {
+    public ProgramResponse setUpLearningOutcomes(String uuid, List<LearningOutcomeSetUp> learningOutcomeSetUps) {
         Program program = programRepository.findByUuid(uuid)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Program not found"));
+        List<LearningOutcome> learningOutcomes = learningOutcomeSetUps.stream()
+                        .map(learningOutcomeSetUp -> {
+                            LearningOutcome learningOutcome = new LearningOutcome();
+                            learningOutcome.setTitle(learningOutcomeSetUp.title());
+                            learningOutcome.setDescription(learningOutcomeSetUp.description());
+                            learningOutcome.setSubtitle(learningOutcomeSetUp.subtitle());
+                            return learningOutcome;
+                        }).toList();
         program.setLearningOutcomes(learningOutcomes);
         program = programRepository.save(program);
         return programMapper.toProgramResponse(program);

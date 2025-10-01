@@ -10,6 +10,7 @@ import io.minio.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -27,6 +29,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 @Service
 @RequiredArgsConstructor
@@ -145,6 +149,58 @@ public class DocumentServiceImpl implements DocumentService {
 
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to get document");
+        }
+    }
+
+    @Override
+    public ResponseEntity<Resource> downloadDocumentsAsZip(List<String> filenames) {
+        try {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ZipOutputStream zos = new ZipOutputStream(baos);
+
+            for (String filename : filenames) {
+                Document document = getDocument(filename);
+
+                String objectPath = getObjectPath(
+                        document.getProgram(),
+                        document.getGen(),
+                        document.getDocumentType(),
+                        document.getName(),
+                        document.getExtension()
+                );
+
+                try (InputStream stream = minioClient.getObject(
+                        GetObjectArgs.builder()
+                                .bucket(bucketName)
+                                .object(objectPath)
+                                .build()
+                )) {
+                    // Add file to ZIP
+                    ZipEntry entry = new ZipEntry(document.getName() + "." + document.getExtension());
+                    zos.putNextEntry(entry);
+
+                    byte[] buffer = new byte[1024];
+                    int length;
+                    while ((length = stream.read(buffer)) > 0) {
+                        zos.write(buffer, 0, length);
+                    }
+
+                    zos.closeEntry();
+                }
+            }
+
+            zos.close();
+
+            ByteArrayResource resource = new ByteArrayResource(baos.toByteArray());
+
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=documents.zip")
+                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                    .contentLength(resource.contentLength())
+                    .body(resource);
+
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to create zip file", e);
         }
     }
 

@@ -4,6 +4,7 @@ import co.istad.exstadapi.audit.Auditable;
 import co.istad.exstadapi.domain.vo.*;
 import co.istad.exstadapi.enums.ProgramLevel;
 import co.istad.exstadapi.enums.ProgramType;
+import co.istad.exstadapi.enums.Visibility;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,11 +30,14 @@ public class Program extends Auditable {
     @Column(nullable = false, unique = true)
     private String uuid;
 
-    @Column(length = 60, nullable = false, unique = true)
+    @Column(length = 60, nullable = false)
     private String slug;
 
     @Column(length = 60, nullable = false)
     private String title;
+
+    @Column(length = 60, nullable = false)
+    private String subtitle;
 
     @Column(columnDefinition = "TEXT")
     private String description;
@@ -78,6 +82,9 @@ public class Program extends Auditable {
 
     @Enumerated(EnumType.STRING)
     private ProgramType programType;
+
+    @Enumerated(EnumType.STRING)
+    private Visibility visibility;
 
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(columnDefinition = "jsonb")

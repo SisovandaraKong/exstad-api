@@ -2,10 +2,17 @@ package co.istad.exstadapi.features.openingProgram;
 
 import co.istad.exstadapi.base.BasedMessage;
 import co.istad.exstadapi.domain.vo.*;
+import co.istad.exstadapi.features.openingProgram.activity.dto.ActivitySetUp;
+import co.istad.exstadapi.features.openingProgram.curriculum.dto.OPCurriculumSetUp;
+import co.istad.exstadapi.features.openingProgram.detail.dto.DetailSetUp;
 import co.istad.exstadapi.features.openingProgram.dto.OpeningProgramRequest;
 import co.istad.exstadapi.features.openingProgram.dto.OpeningProgramResponse;
 import co.istad.exstadapi.features.openingProgram.dto.OpeningProgramUpdate;
 import co.istad.exstadapi.features.openingProgram.dto.SetUpTemplate;
+import co.istad.exstadapi.features.openingProgram.learningOutcome.dto.OPLearningOutcomeSetUp;
+import co.istad.exstadapi.features.openingProgram.requirement.dto.OPRequirementSetUp;
+import co.istad.exstadapi.features.openingProgram.roadmap.dto.OPRoadmapSetUp;
+import co.istad.exstadapi.features.openingProgram.timeline.dto.TimelineSetUp;
 
 import java.util.List;
 
@@ -23,13 +30,13 @@ public interface OpeningProgramService {
     BasedMessage activateOpeningProgram(String uuid);
     BasedMessage deactivateOpeningProgram(String uuid);
     String setUpTemplate(String uuid, SetUpTemplate setUpTemplate);
-    OpeningProgramResponse setUpActivities(String uuid, List<Activity> activities);
-    OpeningProgramResponse setUpTimelines(String uuid, List<Timeline> timelines);
-    OpeningProgramResponse setUpCurricula(String uuid, List<Curriculum> curricula);
-    OpeningProgramResponse setUpRoadmaps(String uuid, List<Roadmap> roadmaps);
-    OpeningProgramResponse setUpLearningOutcomes(String uuid, List<LearningOutcome> learningOutcomes);
-    OpeningProgramResponse setUpRequirements(String uuid, List<Requirement> requirements);
-    OpeningProgramResponse setUpDetails(String uuid, List<Detail> details);
+    OpeningProgramResponse setUpActivities(String uuid, List<ActivitySetUp> activitySetUps);
+    OpeningProgramResponse setUpTimelines(String uuid, List<TimelineSetUp> timelineSetUps);
+    OpeningProgramResponse setUpCurricula(String uuid, List<OPCurriculumSetUp> opCurriculumSetUps);
+    OpeningProgramResponse setUpRoadmaps(String uuid, List<OPRoadmapSetUp> opRoadmapSetUps);
+    OpeningProgramResponse setUpLearningOutcomes(String uuid, List<OPLearningOutcomeSetUp> opLearningOutcomeSetUps);
+    OpeningProgramResponse setUpRequirements(String uuid, List<OPRequirementSetUp> opRequirementSetUps);
+    OpeningProgramResponse setUpDetails(String uuid, List<DetailSetUp> detailSetUps);
     List<Activity> getActivities(String uuid);
     List<Timeline> getTimelines(String uuid);
     List<Curriculum> getCurricula(String uuid);

@@ -4,17 +4,20 @@ import co.istad.exstadapi.audit.AuditableDto;
 import co.istad.exstadapi.domain.vo.*;
 import co.istad.exstadapi.enums.ProgramLevel;
 import co.istad.exstadapi.enums.ProgramType;
+import co.istad.exstadapi.enums.Visibility;
 
 import java.util.List;
 
 public record ProgramResponse(
         String uuid,
         String title,
+        String subtitle,
         String slug,
         String description,
         String thumbnailUrl,
         String posterUrl,
         String bgColor,
+        Visibility visibility,
         List<Highlight> highlights,
         List<ProgramOverview> programOverviews,
         String curriculumPdfUrl,

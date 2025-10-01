@@ -17,8 +17,16 @@ public record OpeningProgramUpdate(
         @Size(max = 255, message = "Thumbnail URL must not exceed 255 characters")
         String thumbnail,
 
+        @NotBlank(message = "Poster URL is required")
+        @Size(max = 255, message = "Poster URL must not exceed 255 characters")
+        String posterUrl,
+
         @Min(value = 1, message = "Total slot must be at least 1")
         Integer totalSlot,
+
+        @NotBlank(message = "Deadline is required")
+        @Size(min = 1, max = 30, message = "Deadline must be between 1 and 30 characters")
+        String deadline,
 
         @DecimalMin(value = "0.0", message = "Original fee must be zero or positive")
         @Digits(integer = 8, fraction = 2, message = "Original fee must have at most 8 integer digits and 2 decimal places")
