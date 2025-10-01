@@ -13,14 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping(path = "/documents")
 public class DocumentAccessController {
-
     private final DocumentService documentService;
 
     @GetMapping("/{filename:.+}")
     public ResponseEntity<Resource> getDocument(@PathVariable String filename) {
         return documentService.previewDocument(filename);
     }
-
     @GetMapping("/download/{filename:.+}")
     public ResponseEntity<Resource> downloadDocument(@PathVariable String filename) {
         return documentService.downloadDocument(filename);
