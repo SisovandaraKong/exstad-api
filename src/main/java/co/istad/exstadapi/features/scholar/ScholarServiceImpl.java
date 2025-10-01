@@ -6,6 +6,7 @@ import co.istad.exstadapi.domain.Scholar;
 import co.istad.exstadapi.domain.User;
 import co.istad.exstadapi.domain.vo.SocialLink;
 import co.istad.exstadapi.enums.Role;
+import co.istad.exstadapi.enums.ScholarStatus;
 import co.istad.exstadapi.features.openingProgram.OpeningProgramRepository;
 import co.istad.exstadapi.features.scholar.dto.*;
 import co.istad.exstadapi.features.user.UserRepository;
@@ -56,6 +57,8 @@ public class ScholarServiceImpl implements ScholarService {
         scholar.setUser(user);
         scholar.setUuid(user.getUuid());
         scholar.setIsDeleted(false);
+        scholar.setStatus(ScholarStatus.ACTIVE);
+        scholar.setIsAbroad(false);
         scholar.setSocialLink(List.of());
         return scholarMapper.fromScholar(scholarRepository.save(scholar));
     }
@@ -261,5 +264,15 @@ public class ScholarServiceImpl implements ScholarService {
         );
         socialLink.setIsActive(true);
         scholarRepository.save(scholar);
+    }
+
+    @Override
+    public List<ScholarResponse> getAllScholarsByStatus(ScholarStatus scholarStatus) {
+        return scholarRepository.findAllByStatusAndIsDeletedFalse(scholarStatus).stream().map(scholarMapper::fromScholar).toList() ;
+    }
+
+    @Override
+    public List<ScholarResponse> getAllAbroadScholars() {
+        return scholarRepository.findAllByIsAbroadTrueAndIsDeletedFalse().stream().map(scholarMapper::fromScholar).toList() ;
     }
 }
