@@ -1,6 +1,7 @@
 package co.istad.exstadapi.features.scholar;
 
 import co.istad.exstadapi.base.BasedMessage;
+import co.istad.exstadapi.enums.ScholarStatus;
 import co.istad.exstadapi.features.scholar.dto.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,14 @@ public class ScholarController {
     public ResponseEntity<?> getAllScholars() {
         return new ResponseEntity<>(
                 Map.of("scholars", scholarService.findAllScholars()), HttpStatus.OK);
+    }
+
+    @GetMapping("/status/{scholarStatus}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<?> getAllScholarsByStatus(@PathVariable("scholarStatus") String scholarStatus) {
+        return new ResponseEntity<>(
+                Map.of("scholars", scholarService.getAllScholarsByStatus(ScholarStatus.valueOf(scholarStatus.trim().toUpperCase()))), HttpStatus.OK
+        );
     }
 
     @GetMapping("/{uuid}")

@@ -9,13 +9,13 @@ import java.util.List;
 
 public interface CertificateService {
 
-    CertificateResponse generateCertificate(String offeringType, CertificateRequestDto request);
+    CertificateResponse generateCertificate(String programSlug, CertificateRequestDto request);
 
-    CertificateResponse verifyCertificate(String offeringType, MultipartFile file,String openingProgramUuid, String scholarUuid);
+    CertificateResponse verifyCertificate(String programSlug, MultipartFile file,String certificateUuid);
 
     List<CertificateResponse> getAllCertificates();
 
-    CertificateResponse getCertificateByScholarAndOpeningProgram(String scholarUuid, String openingProgramUuid);
+    List<CertificateResponse> getCertificateByScholarAndOpeningProgram(String scholarUuid, String openingProgramUuid);
 
-    BasedMessage deleteCertificateByScholarAndOpeningProgram(String scholarUuid, String openingProgramUuid);
+//    BasedMessage deleteCertificateByScholarAndOpeningProgram(String scholarUuid, String openingProgramUuid);
 }

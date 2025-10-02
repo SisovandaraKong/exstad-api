@@ -14,9 +14,12 @@ public interface CertificateRepository extends JpaRepository<Certificate, Intege
 
     List<Certificate> findAllByIsDeletedFalse();
 
-
-    @Query("SELECT c FROM Certificate c WHERE c.scholar = :scholar AND c.openingProgram = :openingProgram")
-    Optional<Certificate> findByScholarAndOpeningProgram(@Param("scholar") Scholar scholar,
-                                                         @Param("openingProgram") OpeningProgram openingProgram);
+    @Query("SELECT c FROM Certificate c " +
+            "WHERE c.scholar = :scholar " +
+            "AND c.openingProgram = :openingProgram")
+    List<Certificate> findByScholarAndOpeningProgram(
+            @Param("scholar") Scholar scholar,
+            @Param("openingProgram") OpeningProgram openingProgram);
+    Optional<Certificate> findByUuid(String uuid);
 }
 

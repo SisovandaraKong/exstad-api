@@ -21,9 +21,14 @@ public class Certificate extends Auditable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(nullable = false, unique = true)
+    private String uuid;
+
     @ManyToOne
     @JoinColumn(name = "opening_program_id")
     private OpeningProgram openingProgram;
+
+    private String fileName;
 
     @ManyToOne
     @JoinColumn(name = "scholar_id")

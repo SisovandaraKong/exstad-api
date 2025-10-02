@@ -1,6 +1,7 @@
 package co.istad.exstadapi.features.scholar;
 
 import co.istad.exstadapi.base.BasedMessage;
+import co.istad.exstadapi.enums.ScholarStatus;
 import co.istad.exstadapi.features.scholar.dto.*;
 
 import java.util.List;
@@ -24,7 +25,8 @@ public interface ScholarService {
     BasedMessage hardDeleteScholarByUuid(String uuid);
 
     List<ScholarResponse> getAllScholarsByOpeningProgramUuid(String openingProgramUuid);
-
+    List<ScholarResponse> getAllScholarsByStatus(ScholarStatus scholarStatus);
+    List<ScholarResponse> getAllAbroadScholars();
     ScholarResponse getCurrentScholar();
     ScholarResponse updateCurrentScholar(ScholarRequestUpdate scholarRequestUpdate);
 
