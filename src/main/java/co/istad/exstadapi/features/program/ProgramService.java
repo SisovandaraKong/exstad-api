@@ -25,6 +25,7 @@ public interface ProgramService {
     BasedMessage deleteProgram(String uuid);
     BasedMessage restoreProgram(String uuid);
     BasedMessage hardDeleteProgram(String uuid);
+    ProgramResponse getProgramByOpeningProgramUuid(String openingProgramUuid);
     ProgramResponse setUpHighlights(String uuid, List<HighlightSetUp> highlightSetUps);
     ProgramResponse setUpProgramOverviews(String uuid, List<ProgramOverviewSetUp> programOverviewSetUps);
     ProgramResponse setUpRoadmaps(String uuid, List<RoadmapSetUp> roadmapSetUps);

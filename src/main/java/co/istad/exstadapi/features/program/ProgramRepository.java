@@ -1,5 +1,6 @@
 package co.istad.exstadapi.features.program;
 
+import co.istad.exstadapi.domain.OpeningProgram;
 import co.istad.exstadapi.domain.Program;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -15,6 +16,8 @@ public interface ProgramRepository extends JpaRepository<Program, Integer> {
     Optional<Program> findByTitleIgnoreCase(String title);
     boolean existsByUuid(String uuid);
     List<Program> findAllByIsDeletedFalse();
+    Optional<Program> findByOpeningPrograms(OpeningProgram openingProgram);
+
 
     @Modifying
     @Query("UPDATE Program p SET p.isDeleted = true WHERE p.uuid = ?1")

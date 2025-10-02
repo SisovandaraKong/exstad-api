@@ -48,13 +48,12 @@ public class ClassServiceImpl implements ClassService {
     }
 
     @Override
-    public ClassResponse getClassByOpeningProgramTitle(String openingProgramTitle) {
+    public List<ClassResponse> getClassByOpeningProgramTitle(String openingProgramTitle) {
         OpeningProgram openingProgram = openingProgramRepository.findByTitleIgnoreCase(openingProgramTitle)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Opening Program with title " + openingProgramTitle + " not found"));
-        Class _class = classRepository.findByOpeningProgram(openingProgram)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Class with title " + openingProgramTitle + " not found"));
-        return classMapper.toClassResponse(_class);
+        return classRepository.findAllByOpeningProgramAndIsDeletedFalse(openingProgram).stream().map(classMapper::toClassResponse).toList();
     }
+
 
     @Override
     public ClassResponse createClass(ClassRequest classRequest) {
