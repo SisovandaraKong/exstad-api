@@ -29,7 +29,7 @@ public record EnrollmentRequestUpdate(
         @Size(min = 2, max = 100, message = "Education qualification must be between 2 and 100 characters")
         String educationQualification,
         Boolean isPaid,
-        Boolean isAccepted,
+        Boolean isInterviewed,
         Boolean isPassed,
         Boolean isAchieved
 ) {

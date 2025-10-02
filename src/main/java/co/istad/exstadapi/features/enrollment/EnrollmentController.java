@@ -31,10 +31,10 @@ public class EnrollmentController {
         return new ResponseEntity<>(Map.of("enrollments",enrollmentService.getAllEnrollments()), HttpStatus.OK);
     }
 
-    @GetMapping("/accepted")
+    @GetMapping("/interviewed")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> getAllAcceptedEnrollments() {
-        return ResponseEntity.ok(enrollmentService.getAllAcceptedEnrollments());
+        return ResponseEntity.ok(enrollmentService.getAllInterviewedEnrollments());
     }
 
     @GetMapping("/achieved")
