@@ -33,7 +33,7 @@ public class EnrollmentController {
 
     @GetMapping("/interviewed")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<?> getAllAcceptedEnrollments() {
+    public ResponseEntity<?> getAllInterviewedEnrollments() {
         return ResponseEntity.ok(enrollmentService.getAllInterviewedEnrollments());
     }
 
