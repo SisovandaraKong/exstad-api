@@ -25,7 +25,7 @@ public class EnrollmentServiceImpl implements EnrollmentService {
     public EnrollmentResponse createEnrollment(EnrollmentRequest enrollmentRequest) {
         Enrollment enrollment = enrollmentMapper.toEnrollment(enrollmentRequest);
         enrollment.setUuid(UUID.randomUUID().toString());
-        enrollment.setIsAccepted(false);
+        enrollment.setIsInterviewed(false);
         enrollment.setIsAchieved(false);
         enrollment.setIsPaid(false);
         enrollment.setIsPassed(false);
@@ -35,21 +35,21 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 
     @Override
     public List<EnrollmentResponse> getAllEnrollments() {
-        return enrollmentRepository.findAllByIsAcceptedAndIsAchievedAndIsPassed(false, false, false).stream().map(
+        return enrollmentRepository.findAllByIsInterviewedAndIsAchievedAndIsPassed(false, false, false).stream().map(
                 enrollmentMapper::fromEnrollment
         ).toList();
     }
 
     @Override
-    public List<EnrollmentResponse> getAllAcceptedEnrollments() {
-        return enrollmentRepository.findAllByIsAcceptedAndIsAchievedAndIsPassed(true, false,false ).stream().map(
+    public List<EnrollmentResponse> getAllInterviewedEnrollments() {
+        return enrollmentRepository.findAllByIsInterviewedAndIsAchievedAndIsPassed(true, false,false ).stream().map(
                 enrollmentMapper::fromEnrollment
         ).toList();
     }
 
     @Override
     public List<EnrollmentResponse> getAllPassedEnrollments() {
-        return enrollmentRepository.findAllByIsAcceptedAndIsAchievedAndIsPassed(true, false,true ).stream().map(
+        return enrollmentRepository.findAllByIsInterviewedAndIsAchievedAndIsPassed(true, false,true ).stream().map(
                 enrollmentMapper::fromEnrollment
         ).toList();
     }
