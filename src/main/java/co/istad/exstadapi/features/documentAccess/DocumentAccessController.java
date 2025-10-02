@@ -4,10 +4,9 @@ import co.istad.exstadapi.features.document.DocumentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,6 +23,11 @@ public class DocumentAccessController {
     @GetMapping("/download/{filename:.+}")
     public ResponseEntity<Resource> downloadDocument(@PathVariable String filename) {
         return documentService.downloadDocument(filename);
+    }
+
+    @GetMapping("/download-zip")
+    public ResponseEntity<Resource> downloadZip(@RequestParam List<String> filenames) {
+        return documentService.downloadDocumentsAsZip(filenames);
     }
 
 }

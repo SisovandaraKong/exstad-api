@@ -21,7 +21,7 @@ public record EnrollmentResponse(
         String educationQualification,
         Map<String, String> extra,
         Boolean isPaid,
-        Boolean isAccepted,
+        Boolean isInterviewed,
         Boolean isAchieved,
         Boolean isPassed
 

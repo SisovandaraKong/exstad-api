@@ -11,7 +11,7 @@ public interface EnrollmentService {
     EnrollmentResponse createEnrollment(EnrollmentRequest enrollmentRequest);
 
     List<EnrollmentResponse> getAllEnrollments();
-    List<EnrollmentResponse> getAllAcceptedEnrollments();
+    List<EnrollmentResponse> getAllInterviewedEnrollments();
     List<EnrollmentResponse> getAllPassedEnrollments();
     List<EnrollmentResponse> getAllAchievedEnrollments();
     EnrollmentResponse getEnrollment(String uuid);

@@ -1,8 +1,10 @@
 package co.istad.exstadapi.features.program;
 
 import co.istad.exstadapi.base.BasedMessage;
+import co.istad.exstadapi.domain.OpeningProgram;
 import co.istad.exstadapi.domain.Program;
 import co.istad.exstadapi.domain.vo.*;
+import co.istad.exstadapi.features.openingProgram.OpeningProgramRepository;
 import co.istad.exstadapi.features.program.curriculum.dto.CurriculumSetUp;
 import co.istad.exstadapi.features.program.dto.ProgramRequest;
 import co.istad.exstadapi.features.program.dto.ProgramResponse;
@@ -29,6 +31,7 @@ import java.util.UUID;
 public class ProgramServiceImpl implements ProgramService {
     private final ProgramRepository programRepository;
     private final ProgramMapper programMapper;
+    private final OpeningProgramRepository openingProgramRepository;
 
     @Override
     public List<ProgramResponse> getAllPrograms() {
@@ -65,6 +68,15 @@ public class ProgramServiceImpl implements ProgramService {
                 ));
         return programMapper.toProgramResponse(program);
     }
+    @Override
+    public ProgramResponse getProgramByOpeningProgramUuid(String openingProgramUuid) {
+        OpeningProgram openingProgram = openingProgramRepository.findByUuid(openingProgramUuid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Opening Program not found"));
+        Program program = programRepository.findByOpeningPrograms(openingProgram)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Program not found"));
+        return programMapper.toProgramResponse(program);
+    }
+
 
     @Override
     public ProgramResponse createProgram(ProgramRequest programRequest) {

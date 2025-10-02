@@ -1,6 +1,7 @@
 package co.istad.exstadapi.features.scholar;
 
 import co.istad.exstadapi.base.BasedMessage;
+import co.istad.exstadapi.enums.ScholarStatus;
 import co.istad.exstadapi.features.scholar.dto.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,21 @@ public class ScholarController {
     public ResponseEntity<?> getAllScholars() {
         return new ResponseEntity<>(
                 Map.of("scholars", scholarService.findAllScholars()), HttpStatus.OK);
+    }
+
+    @GetMapping("/abroad")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<?> getAllAbroadScholars() {
+        return new ResponseEntity<>(
+                Map.of("scholars", scholarService.getAllAbroadScholars()), HttpStatus.OK);
+    }
+
+    @GetMapping("/status/{scholarStatus}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<?> getAllScholarsByStatus(@PathVariable("scholarStatus") String scholarStatus) {
+        return new ResponseEntity<>(
+                Map.of("scholars", scholarService.getAllScholarsByStatus(ScholarStatus.valueOf(scholarStatus.trim().toUpperCase()))), HttpStatus.OK
+        );
     }
 
     @GetMapping("/{uuid}")
@@ -54,7 +70,6 @@ public class ScholarController {
         return new ResponseEntity<>(Map.of("scholars", scholarService.countScholars()), HttpStatus.OK);
     }
 
-
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ScholarResponse createScholar(@RequestBody @Valid ScholarRequest scholarRequest) {
@@ -72,7 +87,6 @@ public class ScholarController {
     public ScholarResponse updateScholar(@PathVariable String uuid, @RequestBody @Valid ScholarRequestUpdate scholarRequestUpdate){
         return scholarService.updateScholar(uuid, scholarRequestUpdate);
     }
-
 
 
     @GetMapping("/me")
@@ -120,6 +134,7 @@ public class ScholarController {
     public BasedMessage softDeleteScholar(@PathVariable String uuid) {
         return scholarService.softDeleteScholarByUuid(uuid);
     }
+
 
     @PutMapping("/{uuid}/restore")
     @ResponseStatus(HttpStatus.OK)

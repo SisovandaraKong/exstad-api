@@ -35,20 +35,20 @@ public class CertificateServiceImpl implements CertificateService {
 
 
     @Override
-    public CertificateResponse generateCertificate(String offeringType,CertificateRequestDto request) {
+    public CertificateResponse generateCertificate(String programSlug,CertificateRequestDto request) {
         try {
             if (request.scholarUuid() == null || request.scholarUuid().isEmpty()) {
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND,"At least one student name is required.");
+                throw new IllegalArgumentException("At least one student name is required.");
             }
             if (request.bgImage() == null || request.bgImage().trim().isEmpty()) {
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Template filename is required.");
+                throw new IllegalArgumentException("Template filename is required.");
             }
 
             InputStream reportStream = getClass().getResourceAsStream("/generates/certificate.jrxml");
             JasperReport jasperReport = JasperCompileManager.compileReport(reportStream);
 
             OpeningProgram openingProgram = openingProgramRepository.findByUuid(request.openingProgramUuid())
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Opening Program not found"));
+                    .orElseThrow(() -> new IllegalArgumentException("Opening Program not found"));
 
             Optional<Scholar> scholar = scholarRepository.findByUuid(request.scholarUuid());
 
@@ -81,7 +81,7 @@ public class CertificateServiceImpl implements CertificateService {
 
             // upload certificate to minio
             DocumentResponse documentResponse = documentService.uploadDocument(
-                    offeringType,
+                    programSlug,
                     openingProgram.getGeneration(),
                     "certificate",
                     "null",
@@ -90,9 +90,11 @@ public class CertificateServiceImpl implements CertificateService {
 
             // Save certificate info to database
             Certificate certificate = new Certificate();
+            certificate.setUuid(UUID.randomUUID().toString());
             certificate.setScholar(scholar.orElse(null));
             certificate.setOpeningProgram(openingProgram);
             certificate.setTempCertificateUrl(documentResponse.uri());
+            certificate.setFileName(documentResponse.name());
             certificate.setIsDisabled(false);
             certificate.setIsDeleted(false);
             certificate.setIsVerified(false);
@@ -109,57 +111,55 @@ public class CertificateServiceImpl implements CertificateService {
     }
 
     @Override
-    public CertificateResponse verifyCertificate(String offeringType, MultipartFile file, String openingProgramUuid, String scholarUuid) {
+    public CertificateResponse verifyCertificate(String programSlug, MultipartFile file, String certificateUuid) {
+        Certificate certificate = certificateRepository.findByUuid(certificateUuid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Certificate not found"));
 
-        OpeningProgram openingProgram = openingProgramRepository.findByUuid(openingProgramUuid)
+        OpeningProgram openingProgram = openingProgramRepository.findByUuid(certificate.getOpeningProgram().getUuid())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Opening Program not found"));
 
-        DocumentResponse documentResponse = documentService.uploadDocument(offeringType, openingProgram.getGeneration(), "certificate", "null", file);
-        Scholar scholar = scholarRepository.
-                findByUuid(scholarUuid).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Scholar not found"));
-        Optional<Certificate> certificate = certificateRepository.findByScholarAndOpeningProgram(scholar, openingProgram);
+        DocumentResponse documentResponse = documentService.uploadDocument(programSlug, openingProgram.getGeneration(), "certificate", "null", file);
 
-        if(certificate.isPresent()){
-            certificate.get().setIsVerified(true);
-            certificate.get().setVerifiedAt(LocalDate.now());
-            certificate.get().setCertificateUrl(documentResponse.uri());
-            certificateRepository.save(certificate.get());
-            return certificateMapper.toCertificateResponse(certificate.get());
-        }
-        return null;
+        certificate.setIsVerified(true);
+        certificate.setVerifiedAt(LocalDate.now());
+        certificate.setCertificateUrl(documentResponse.uri());
+        certificateRepository.save(certificate);
+        return certificateMapper.toCertificateResponse(certificate);
     }
 
     @Override
     public List<CertificateResponse> getAllCertificates() {
-        List<Certificate> certificates = certificateRepository.findAllByIsDeletedFalse();
+        List<Certificate> certificates = certificateRepository.findAll();
         return certificates.stream().map(certificateMapper::toCertificateResponse).toList();
     }
 
     @Override
-    public CertificateResponse getCertificateByScholarAndOpeningProgram(String scholarUuid, String openingProgramUuid) {
+    public List<CertificateResponse> getCertificateByScholarAndOpeningProgram(String scholarUuid, String openingProgramUuid) {
         Scholar scholar = scholarRepository.
                 findByUuid(scholarUuid).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Scholar not found"));
         OpeningProgram openingProgram = openingProgramRepository.findByUuid(openingProgramUuid)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Opening Program not found"));
+                .orElseThrow(() -> new IllegalArgumentException("Opening Program not found"));
 
-        Certificate certificates = certificateRepository.findByScholarAndOpeningProgram(scholar, openingProgram)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Certificate not found"));
-        return certificateMapper.toCertificateResponse(certificates);
+        List<Certificate> certificates = certificateRepository.findByScholarAndOpeningProgram(scholar, openingProgram)
+                .stream().toList();
+        if(certificates.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Certificate not found");
+        }
+        return certificates.stream().map(certificateMapper::toCertificateResponse).toList();
     }
 
-    @Override
-    public BasedMessage deleteCertificateByScholarAndOpeningProgram(String scholarUuid, String openingProgramUuid) {
-        Scholar scholar = scholarRepository.
-                findByUuid(scholarUuid).orElseThrow(() -> new IllegalArgumentException("Scholar not found"));
-        OpeningProgram openingProgram = openingProgramRepository.findByUuid(openingProgramUuid)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Opening Program not found"));
-
-        Certificate certificates = certificateRepository.findByScholarAndOpeningProgram(scholar, openingProgram)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Certificate not found"));
-
-        certificates.setIsDeleted(true);
-        certificateRepository.save(certificates);
-        return new BasedMessage("Certificate deleted successfully");
-    }
-
+//    @Override
+//    public BasedMessage deleteCertificateByScholarAndOpeningProgram(String scholarUuid, String openingProgramUuid) {
+//        Scholar scholar = scholarRepository.
+//                findByUuid(scholarUuid).orElseThrow(() -> new IllegalArgumentException("Scholar not found"));
+//        OpeningProgram openingProgram = openingProgramRepository.findByUuid(openingProgramUuid)
+//                .orElseThrow(() -> new IllegalArgumentException("Opening Program not found"));
+//
+//        List<Certificate> certificates = certificateRepository.findByScholarAndOpeningProgram(scholar, openingProgram)
+//                .stream().toList();
+//
+//        certificates.setIsDeleted(true);
+//        certificateRepository.save(certificates);
+//        return new BasedMessage("Certificate deleted successfully");
+//    }
 }

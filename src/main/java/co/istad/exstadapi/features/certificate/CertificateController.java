@@ -23,40 +23,34 @@ public class CertificateController {
 
     private final CertificateService certificateService;
 
-    @PostMapping("/generate-certificates/{offeringType}")
-    public ResponseEntity<?> generateCertificate(@PathVariable String offeringType, @RequestBody @Valid CertificateRequestDto request) {
+    @PostMapping("/generate-certificates/{programSlug}")
+    public ResponseEntity<?> generateCertificate(@PathVariable String programSlug, @RequestBody @Valid CertificateRequestDto request) {
         try {
-//            byte[] pdfBytes = certificateService.generateCertificate(request);
-//            return ResponseEntity.ok()
-//                    .contentType(MediaType.APPLICATION_PDF)
-//                    .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=certificate.pdf")
-//                    .body(pdfBytes);
-            return ResponseEntity.ok(certificateService.generateCertificate(offeringType, request));
+            return ResponseEntity.ok(certificateService.generateCertificate(programSlug, request));
         } catch (Exception e) {
             log.error("Certificate generation failed", e);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to generate certificate", e);
         }
     }
 
-    @PostMapping("/verify-certificates/{offeringType}/{openingProgramUuid}/{scholarUuid}")
+    @PostMapping("/verify-certificates/{programSlug}/{certificateUuid}")
     public ResponseEntity<?> verifyCertificate(
-            @PathVariable String offeringType,
+            @PathVariable String programSlug,
             @RequestPart("file") MultipartFile file,
-            @PathVariable String openingProgramUuid,
-            @PathVariable String scholarUuid)
+            @PathVariable String certificateUuid)
     {
-        return new ResponseEntity<>(certificateService.verifyCertificate(offeringType , file ,openingProgramUuid, scholarUuid), HttpStatus.OK);
+        return new ResponseEntity<>(certificateService.verifyCertificate(programSlug , file ,certificateUuid), HttpStatus.OK);
     }
 
     @GetMapping("/certificates/{scholarUuid}/opening-program/{openingProgramUuid}")
-    public CertificateResponse getCertificateByScholar(@PathVariable String scholarUuid, @PathVariable String openingProgramUuid){
+    public List<CertificateResponse> getCertificateByScholar(@PathVariable String scholarUuid, @PathVariable String openingProgramUuid){
         return certificateService.getCertificateByScholarAndOpeningProgram(scholarUuid, openingProgramUuid);
     }
 
-    @PutMapping("/certificates/{scholarUuid}/opening-program/{openingProgramUuid}/delete")
-    public BasedMessage deleteCertificateByScholar(@PathVariable String scholarUuid, @PathVariable String openingProgramUuid){
-        return certificateService.deleteCertificateByScholarAndOpeningProgram(scholarUuid, openingProgramUuid);
-    }
+//    @PutMapping("/certificates/{scholarUuid}/opening-program/{openingProgramUuid}/delete")
+//    public BasedMessage deleteCertificateByScholar(@PathVariable String scholarUuid, @PathVariable String openingProgramUuid){
+//        return certificateService.deleteCertificateByScholarAndOpeningProgram(scholarUuid, openingProgramUuid);
+//    }
 
     @GetMapping("/certificates")
     public ResponseEntity<?> getAllCertificates(){

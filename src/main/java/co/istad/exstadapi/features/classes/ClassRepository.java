@@ -17,6 +17,8 @@ public interface ClassRepository extends JpaRepository<Class,Integer> {
     List<Class> findAllByIsDeletedFalse();
     Optional<Class> findByRoomIgnoreCase(String room);
     boolean existsByUuid(String uuid);
+    List<Class> findAllByOpeningProgramAndIsDeletedFalse(OpeningProgram openingProgram);
+
 
     @Modifying
     @Query("UPDATE Class c SET c.isDeleted = true WHERE c.uuid = ?1")

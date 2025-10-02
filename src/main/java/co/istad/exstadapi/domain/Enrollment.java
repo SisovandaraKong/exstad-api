@@ -70,7 +70,7 @@ public class Enrollment {
     private Map<String, String> extra;
 
     @Column(nullable = false)
-    private Boolean isAccepted;
+    private Boolean isInterviewed;
 
     @Column(nullable = false)
     private Boolean isAchieved;

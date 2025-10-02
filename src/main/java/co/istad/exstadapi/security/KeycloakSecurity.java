@@ -109,7 +109,7 @@ public class KeycloakSecurity {
 //                // Certificate
 //                .requestMatchers(HttpMethod.GET,"/api/v1/certificates/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
 //                .requestMatchers(HttpMethod.POST,"/api/v1/certificates/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
-//                .requestMatchers(HttpMethod.PUT,"/api/v1/certificates/**").hasAnyRole("ADMIN","INSTRUCTOR1")
+//                .requestMatchers(HttpMethod.PUT,"/api/v1/certificates/**").hasAnyRole("ADMIN","INSTRUCTOR1")xp
                 .anyRequest().permitAll()
         );
 
