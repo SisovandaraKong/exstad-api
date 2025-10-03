@@ -29,11 +29,10 @@ public class ScholarBadgeServiceImpl implements ScholarBadgeService {
 
     @Override
     public ScholarBadgeResponse findByUuid(String uuid) {
-        return scholarBadgeMapper.fromScholarBadge(
-                scholarBadgeRepository.findByUuid(uuid).orElseThrow(
-                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Scholar badge not found")
-                )
+        ScholarBadge scholarBadge = scholarBadgeRepository.findByUuid(uuid).filter(scholarBadge1 -> !scholarBadge1.isDeleted()).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Scholar badge not found")
         );
+        return scholarBadgeMapper.fromScholarBadge(scholarBadge);
     }
 
     @Override

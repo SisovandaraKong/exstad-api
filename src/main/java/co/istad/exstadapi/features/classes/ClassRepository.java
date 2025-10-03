@@ -17,6 +17,7 @@ public interface ClassRepository extends JpaRepository<Class,Integer> {
     List<Class> findAllByIsDeletedFalse();
     Optional<Class> findByRoomIgnoreCase(String room);
     boolean existsByUuid(String uuid);
+    boolean existsByClassCode(String classCode);
     List<Class> findAllByOpeningProgramAndIsDeletedFalse(OpeningProgram openingProgram);
 
 

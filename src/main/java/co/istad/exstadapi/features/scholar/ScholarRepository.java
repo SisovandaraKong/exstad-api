@@ -16,6 +16,8 @@ public interface ScholarRepository extends JpaRepository<Scholar, Integer> {
 
     boolean existsByUuid(String uuid);
 
+    boolean existsByPhoneNumber(String phoneNumber);
+
     void deleteByUuid(String uuid);
 
     @Modifying
