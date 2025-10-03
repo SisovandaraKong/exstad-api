@@ -37,6 +37,7 @@ public interface OpeningProgramService {
     OpeningProgramResponse setUpLearningOutcomes(String uuid, List<OPLearningOutcomeSetUp> opLearningOutcomeSetUps);
     OpeningProgramResponse setUpRequirements(String uuid, List<OPRequirementSetUp> opRequirementSetUps);
     OpeningProgramResponse setUpDetails(String uuid, List<DetailSetUp> detailSetUps);
+    List<OpeningProgramResponse> getAllOpeningProgramByScholarUuid(String scholarUuid);
     List<Activity> getActivities(String uuid);
     List<Timeline> getTimelines(String uuid);
     List<Curriculum> getCurricula(String uuid);

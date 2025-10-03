@@ -9,6 +9,7 @@ import java.util.List;
 public interface ScholarService {
 
     ScholarResponse createScholar(ScholarRequest scholarRequest);
+    ScholarResponse setMajorToAlumniScholar(SetMajorToAlumniScholar setMajorToAlumniScholar, String uuid);
     ScholarResponse updateScholar(String uuid, ScholarRequestUpdate scholarRequestUpdate);
     List<ScholarResponse> createMultipleScholars(List<ScholarRequest> scholarRequests);
 

@@ -16,6 +16,9 @@ public interface ScholarClassRepository extends JpaRepository<ScholarClass, Inte
 
     List<ScholarClass> findAllByIsDeletedFalse();
 
+    List<ScholarClass> findAllByScholar(Scholar scholar);
+
+
     boolean existsByUuid(String uuid);
 
     void deleteByUuid(String uuid);
@@ -43,8 +46,6 @@ public interface ScholarClassRepository extends JpaRepository<ScholarClass, Inte
     @Modifying
     @Query("UPDATE ScholarClass sc SET sc.isReminded = false WHERE sc.uuid = ?1")
     void markAsUnremindedByUuid(String uuid);
-
-    Optional<ScholarClass> findAllByScholar(Scholar scholar);
 
     Optional<ScholarClass> findAllBy_class(Class _class);
 }

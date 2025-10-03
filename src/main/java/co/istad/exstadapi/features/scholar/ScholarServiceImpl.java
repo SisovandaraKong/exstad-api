@@ -36,6 +36,18 @@ public class ScholarServiceImpl implements ScholarService {
 
     @Override
     public ScholarResponse createScholar(ScholarRequest scholarRequest) {
+        if (scholarRepository.existsByPhoneNumber(scholarRequest.phoneNumber())){
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Phone number already exists");
+        }
+        if (userRepository.existsByUsername(scholarRequest.username())){
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Username already exists");
+        }
+        if (userRepository.existsByEmail(scholarRequest.email())){
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already exists");
+        }
+        if (!scholarRequest.password().equals(scholarRequest.cfPassword())){
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Password does not match");
+        }
         UserRequest userRequest = new UserRequest(
                 scholarRequest.username(),
                 scholarRequest.email(),
@@ -54,6 +66,7 @@ public class ScholarServiceImpl implements ScholarService {
         );
 
         Scholar scholar = scholarMapper.toScholar(scholarRequest);
+        scholar.setMajor(null);
         scholar.setUser(user);
         scholar.setUuid(user.getUuid());
         scholar.setIsDeleted(false);
@@ -61,6 +74,16 @@ public class ScholarServiceImpl implements ScholarService {
         scholar.setIsAbroad(false);
         scholar.setSocialLink(List.of());
         return scholarMapper.fromScholar(scholarRepository.save(scholar));
+    }
+
+    @Override
+    public ScholarResponse setMajorToAlumniScholar(SetMajorToAlumniScholar setMajorToAlumniScholar, String uuid) {
+        Scholar scholar = scholarRepository.findByUuid(uuid).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Scholar not found")
+        );
+        scholar.setMajor(setMajorToAlumniScholar.major());
+        scholar = scholarRepository.save(scholar);
+        return scholarMapper.fromScholar(scholar);
     }
 
     @Override

@@ -57,6 +57,9 @@ public class ClassServiceImpl implements ClassService {
 
     @Override
     public ClassResponse createClass(ClassRequest classRequest) {
+        if (classRepository.existsByClassCode(classRequest.classCode())){
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Class code already exists");
+        }
         Class aClass = classMapper.fromClassRequest(classRequest);
         aClass.setUuid(UUID.randomUUID().toString());
         aClass.setIsDeleted(false);

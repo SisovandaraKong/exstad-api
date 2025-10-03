@@ -88,6 +88,10 @@ public class ScholarController {
         return scholarService.updateScholar(uuid, scholarRequestUpdate);
     }
 
+    @PutMapping("/set-major/{uuid}")
+    public ScholarResponse setMajorToAlumniScholar(@PathVariable String uuid, @RequestBody @Valid SetMajorToAlumniScholar setMajorToAlumniScholar){
+        return scholarService.setMajorToAlumniScholar(setMajorToAlumniScholar, uuid);
+    }
 
     @GetMapping("/me")
     @ResponseStatus(HttpStatus.OK)

@@ -27,7 +27,7 @@ public class User extends Auditable {
     @Column(nullable = false)
     private String uuid; // keycloak uuid
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, length = 50, unique = true)
     private String username;
 
     @Enumerated(EnumType.STRING)

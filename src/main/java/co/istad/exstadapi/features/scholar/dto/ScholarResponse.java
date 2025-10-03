@@ -36,6 +36,8 @@ public record ScholarResponse(
 
         String bio,
 
+        String major,
+
         String avatar,
 
         String phoneFamilyNumber,
