@@ -18,6 +18,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 public class MapperHelper {
@@ -101,6 +103,7 @@ public class MapperHelper {
         );
     }
 
+
     @Named("toAchievementByUuid")
     public Achievement toAchievementByUuid(final String achievementUuid) {
         return achievementRepository.findByUuid(achievementUuid).orElseThrow(
@@ -114,4 +117,12 @@ public class MapperHelper {
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Class not found")
         );
     }
+
+//    @Named("toClassListByUuid")
+//    public List<Class> toClassListByUuid(final String classUuid) {
+//        Class clazz = classRepository.findByUuid(classUuid).orElseThrow(
+//                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Class not found")
+//        );
+//        return List.of(clazz);
+//    }
 }
