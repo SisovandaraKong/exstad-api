@@ -7,6 +7,8 @@ import java.util.Map;
 
 public record EnrollmentResponse(
         String uuid,
+//        String classRoom,
+//        String classShift,
         String englishName,
         String khmerName,
         String program,

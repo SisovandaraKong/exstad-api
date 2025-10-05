@@ -13,6 +13,7 @@ public interface EnrollmentMapper {
     @Mapping(source = "currentAddress", target = "currentAddress", qualifiedByName = "toCurrentAddress")
     @Mapping(source = "province", target = "province", qualifiedByName = "toProvince")
     @Mapping(source = "openingProgramUuid", target = "openingProgram", qualifiedByName = "toOpeningProgramByUuid")
+//    @Mapping(source = "classUuid", target = "openingProgram.classes", qualifiedByName = "toClassListByUuid")
     Enrollment toEnrollment(EnrollmentRequest enrollmentRequest);
 
 
@@ -20,6 +21,8 @@ public interface EnrollmentMapper {
     @Mapping(source = "province.englishName", target = "province")
     @Mapping(source = "currentAddress.englishName", target = "currentAddress")
     @Mapping(source = "openingProgram.program.title", target = "program")
+//    @Mapping(target = "classRoom", expression = "java(getFirstClassRoom(enrollment))")
+//    @Mapping(target = "classShift", expression = "java(getFirstClassShift(enrollment))")
     EnrollmentResponse fromEnrollment(Enrollment enrollment);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
@@ -28,4 +31,21 @@ public interface EnrollmentMapper {
     @Mapping(source = "province", target = "province", qualifiedByName = "toProvince")
     void toEnrollmentPartially(EnrollmentRequestUpdate enrollmentRequestUpdate, @MappingTarget Enrollment enrollment);
 
+//    default String getFirstClassRoom(Enrollment enrollment) {
+//        if (enrollment.getOpeningProgram() != null &&
+//            enrollment.getOpeningProgram().getClasses() != null &&
+//            !enrollment.getOpeningProgram().getClasses().isEmpty()) {
+//            return enrollment.getOpeningProgram().getClasses().get(0).getRoom();
+//        }
+//        return null;
+//    }
+//
+//    default String getFirstClassShift(Enrollment enrollment) {
+//        if (enrollment.getOpeningProgram() != null &&
+//            enrollment.getOpeningProgram().getClasses() != null &&
+//            !enrollment.getOpeningProgram().getClasses().isEmpty()) {
+//            return enrollment.getOpeningProgram().getClasses().get(0).getShift().toString();
+//        }
+//        return null;
+//    }
 }

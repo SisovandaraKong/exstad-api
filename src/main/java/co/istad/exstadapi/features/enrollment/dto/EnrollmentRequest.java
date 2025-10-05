@@ -56,4 +56,6 @@ public record EnrollmentRequest(
         String educationQualification,
 
         Map<String, String> extra
+//
+//        String classUuid
 ) {}
