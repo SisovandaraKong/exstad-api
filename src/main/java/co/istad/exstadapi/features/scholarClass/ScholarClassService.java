@@ -1,9 +1,12 @@
 package co.istad.exstadapi.features.scholarClass;
 
 import co.istad.exstadapi.base.BasedMessage;
+import co.istad.exstadapi.features.classes.dto.ClassResponse;
+import co.istad.exstadapi.features.scholar.dto.ScholarResponse;
 import co.istad.exstadapi.features.scholarClass.dto.ScholarClassRequest;
 import co.istad.exstadapi.features.scholarClass.dto.ScholarClassResponse;
 import co.istad.exstadapi.features.scholarClass.dto.ScholarClassUpdate;
+import co.istad.exstadapi.features.user.dto.UserResponse;
 
 import java.util.List;
 
@@ -17,8 +20,8 @@ public interface ScholarClassService {
     BasedMessage restoreScholarClassByUuid(String uuid);
     BasedMessage hardDeleteScholarClassByUuid(String uuid);
 
-    List<ScholarClassResponse> getAllClassesByOneScholarUuid(String scholarUuid);
-    List<ScholarClassResponse> getAllScholarsByOneClassUuid(String classUuid);
+    List<ClassResponse> getAllClassesByOneScholarUuid(String scholarUuid);
+    List<ScholarResponse> getAllScholarsByOneClassUuid(String classUuid);
 
     BasedMessage markAsPaid(String uuid);
     BasedMessage markAsUnpaid(String uuid);
