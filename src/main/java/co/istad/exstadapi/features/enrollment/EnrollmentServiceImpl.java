@@ -2,10 +2,12 @@ package co.istad.exstadapi.features.enrollment;
 
 import co.istad.exstadapi.domain.Class;
 import co.istad.exstadapi.domain.Enrollment;
+import co.istad.exstadapi.domain.OpeningProgram;
 import co.istad.exstadapi.features.classes.ClassRepository;
 import co.istad.exstadapi.features.enrollment.dto.EnrollmentRequest;
 import co.istad.exstadapi.features.enrollment.dto.EnrollmentRequestUpdate;
 import co.istad.exstadapi.features.enrollment.dto.EnrollmentResponse;
+import co.istad.exstadapi.features.openingProgram.OpeningProgramRepository;
 import co.istad.exstadapi.mapper.EnrollmentMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,15 +22,12 @@ import java.util.UUID;
 public class EnrollmentServiceImpl implements EnrollmentService {
 
     private final EnrollmentRepository enrollmentRepository;
-    private final ClassRepository classRepository;
     private final EnrollmentMapper enrollmentMapper;
+    private final OpeningProgramRepository openingProgramRepository;
 
 
     @Override
     public EnrollmentResponse createEnrollment(EnrollmentRequest enrollmentRequest) {
-//        if (!classRepository.existsByUuid(enrollmentRequest.classUuid())){
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Class not found");
-//        }
         Enrollment enrollment = enrollmentMapper.toEnrollment(enrollmentRequest);
         enrollment.setUuid(UUID.randomUUID().toString());
         enrollment.setIsInterviewed(false);
@@ -41,7 +40,7 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 
     @Override
     public List<EnrollmentResponse> getAllEnrollments() {
-        return enrollmentRepository.findAllByIsInterviewedAndIsAchievedAndIsPassed(false, false, false).stream().map(
+        return enrollmentRepository.findAll().stream().map(
                 enrollmentMapper::fromEnrollment
         ).toList();
     }
@@ -73,6 +72,45 @@ public class EnrollmentServiceImpl implements EnrollmentService {
         return enrollmentMapper.fromEnrollment(getEnrollmentByUuid(uuid));
     }
 
+    @Override
+    public List<EnrollmentResponse> getAllEnrollmentsByOpeningProgramUuid(String openingProgramUuid) {
+        OpeningProgram program = openingProgramRepository.findByUuid(openingProgramUuid).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Opening program not found")
+        );
+        return enrollmentRepository.findAllByOpeningProgram(program).stream().map(
+                enrollmentMapper::fromEnrollment
+        ).toList();
+    }
+
+    @Override
+    public List<EnrollmentResponse> getAllInterviewedEnrollmentsByOpeningProgramUuid(String openingProgramUuid) {
+        OpeningProgram program = openingProgramRepository.findByUuid(openingProgramUuid).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Opening program not found")
+        );
+        return enrollmentRepository.findAllByOpeningProgramAndIsInterviewedAndIsAchievedAndIsPassed(program,true, false,false ).stream().map(
+                enrollmentMapper::fromEnrollment
+        ).toList();
+    }
+
+    @Override
+    public List<EnrollmentResponse> getAllPassedEnrollmentsByOpeningProgramUuid(String openingProgramUuid) {
+        OpeningProgram program = openingProgramRepository.findByUuid(openingProgramUuid).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Opening program not found")
+        );
+        return enrollmentRepository.findAllByOpeningProgramAndIsInterviewedAndIsAchievedAndIsPassed(program,true, false,true ).stream().map(
+                enrollmentMapper::fromEnrollment
+        ).toList();
+    }
+
+    @Override
+    public List<EnrollmentResponse> getAllAchievedEnrollmentsByOpeningProgramUuid(String openingProgramUuid) {
+        OpeningProgram program = openingProgramRepository.findByUuid(openingProgramUuid).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Opening program not found")
+        );
+        return enrollmentRepository.findAllByOpeningProgramAndIsAchieved(program, true).stream().map(
+                enrollmentMapper::fromEnrollment
+        ).toList();
+    }
 
     @Override
     public EnrollmentResponse updateEnrollment(String uuid, EnrollmentRequestUpdate enrollmentRequestUpdate) {
