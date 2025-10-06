@@ -71,4 +71,9 @@ public class ProgramController {
                 programService.hardDeleteProgram(uuid), HttpStatus.OK);
     }
 
+    @GetMapping("/opening-program/{openingProgramUuid}")
+    public ResponseEntity<?> getProgramByOpeningProgramUuid(@PathVariable String openingProgramUuid){
+        return new ResponseEntity<>(
+                programService.getProgramByOpeningProgramUuid(openingProgramUuid), HttpStatus.OK);
+    }
 }

@@ -33,7 +33,6 @@ public class CertificateServiceImpl implements CertificateService {
     private final CertificateMapper certificateMapper;
     private final OpeningProgramRepository openingProgramRepository;
 
-
     @Override
     public CertificateResponse generateCertificate(String programSlug,CertificateRequestDto request) {
         try {
@@ -138,7 +137,7 @@ public class CertificateServiceImpl implements CertificateService {
         Scholar scholar = scholarRepository.
                 findByUuid(scholarUuid).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Scholar not found"));
         OpeningProgram openingProgram = openingProgramRepository.findByUuid(openingProgramUuid)
-                .orElseThrow(() -> new IllegalArgumentException("Opening Program not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Opening Program not found"));
 
         List<Certificate> certificates = certificateRepository.findByScholarAndOpeningProgram(scholar, openingProgram)
                 .stream().toList();
@@ -147,6 +146,15 @@ public class CertificateServiceImpl implements CertificateService {
         }
         return certificates.stream().map(certificateMapper::toCertificateResponse).toList();
     }
+
+
+//    @Override
+//    public void removeTemplate(String uuid) {
+//        OpeningProgram o = openingProgramRepository.findByUuid(uuid)
+//                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Opening Program not found"));
+//        o.getTemplates().remove(0);
+//        openingProgramRepository.save(o);
+//    }
 
 //    @Override
 //    public BasedMessage deleteCertificateByScholarAndOpeningProgram(String scholarUuid, String openingProgramUuid) {
