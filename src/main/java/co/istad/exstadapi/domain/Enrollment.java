@@ -62,6 +62,10 @@ public class Enrollment {
     @ManyToOne
     private University university;
 
+    @ManyToOne
+    @JoinColumn(nullable = true)
+    private Class _class;
+
     @Column(nullable = false, length = 200)
     private String educationQualification;
 
