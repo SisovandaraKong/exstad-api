@@ -19,6 +19,7 @@ import java.util.List;
 public interface OpeningProgramService {
 
     List<OpeningProgramResponse> getAllOpeningPrograms();
+    List<OpeningProgramResponse> getAllOpeningProgramsByProgramSlug(String programSlug);
     OpeningProgramResponse getOpeningProgramByUuid(String uuid);
     OpeningProgramResponse getOpeningProgramBySlug(String slug);
     OpeningProgramResponse getOpeningProgramByTitle(String title);
