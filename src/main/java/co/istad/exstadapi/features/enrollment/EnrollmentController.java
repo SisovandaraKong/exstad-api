@@ -49,7 +49,7 @@ public class EnrollmentController {
         return ResponseEntity.ok(enrollmentService.getAllPassedEnrollments());
     }
 
-    @GetMapping("/{openingProgramUuid}/program")
+    @GetMapping("/{openingProgramUuid}/all")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> getAllEnrollmentsByOpeningProgram( @PathVariable String openingProgramUuid) {
         return new ResponseEntity<>(Map.of("enrollments",enrollmentService.getAllEnrollmentsByOpeningProgramUuid(openingProgramUuid)), HttpStatus.OK);
