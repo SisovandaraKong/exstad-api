@@ -49,6 +49,30 @@ public class EnrollmentController {
         return ResponseEntity.ok(enrollmentService.getAllPassedEnrollments());
     }
 
+    @GetMapping("/{openingProgramUuid}/program")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<?> getAllEnrollmentsByOpeningProgram( @PathVariable String openingProgramUuid) {
+        return new ResponseEntity<>(Map.of("enrollments",enrollmentService.getAllEnrollmentsByOpeningProgramUuid(openingProgramUuid)), HttpStatus.OK);
+    }
+
+    @GetMapping("/{openingProgramUuid}/interviewed")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<?> getAllInterviewedEnrollmentsByOpeningProgram( @PathVariable String openingProgramUuid) {
+        return ResponseEntity.ok(enrollmentService.getAllInterviewedEnrollmentsByOpeningProgramUuid(openingProgramUuid));
+    }
+
+    @GetMapping("/{openingProgramUuid}/achieved")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<?> getAllAchievedEnrollmentsByOpeningProgram( @PathVariable String openingProgramUuid) {
+        return ResponseEntity.ok(enrollmentService.getAllAchievedEnrollmentsByOpeningProgramUuid(openingProgramUuid));
+    }
+
+    @GetMapping("{openingProgramUuid}/passed")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<?> getAllPassedEnrollmentsByOpeningProgram( @PathVariable String openingProgramUuid) {
+        return ResponseEntity.ok(enrollmentService.getAllPassedEnrollmentsByOpeningProgramUuid(openingProgramUuid));
+    }
+
     @GetMapping("/{uuid}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> getEnrollment(@PathVariable String uuid) {
