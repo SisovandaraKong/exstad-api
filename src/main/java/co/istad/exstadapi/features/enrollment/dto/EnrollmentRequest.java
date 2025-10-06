@@ -55,7 +55,6 @@ public record EnrollmentRequest(
         @Size(min = 2, max = 100, message = "Education qualification must be between 2 and 100 characters")
         String educationQualification,
 
-        Map<String, String> extra
-//
-//        String classUuid
+        Map<String, String> extra,
+     String classUuid
 ) {}
