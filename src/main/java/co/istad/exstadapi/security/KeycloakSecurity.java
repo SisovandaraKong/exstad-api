@@ -36,7 +36,7 @@ public class KeycloakSecurity {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(endpoint -> endpoint
 //                // Register and Login can access by anyone
-//                .requestMatchers("/api/auth/**").permitAll()
+                .requestMatchers("*").permitAll()
 //                // User and create into our db and keycloak
 //                .requestMatchers("/api/v1/users/register").hasAnyRole("ADMIN","INSTRUCTOR1")
 //                .requestMatchers("/api/v1/users/login").permitAll()
@@ -144,7 +144,7 @@ public class KeycloakSecurity {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOriginPatterns(List.of("http://localhost:3000")); // your frontend
+        configuration.setAllowedOriginPatterns(List.of("http://localhost:3000", "http://localhost:*")); // your frontend
         configuration.setAllowedMethods(List.of("GET","POST","PUT","PATCH","DELETE","OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);
