@@ -13,9 +13,8 @@ public interface EnrollmentMapper {
     @Mapping(source = "currentAddress", target = "currentAddress", qualifiedByName = "toCurrentAddress")
     @Mapping(source = "province", target = "province", qualifiedByName = "toProvince")
     @Mapping(source = "openingProgramUuid", target = "openingProgram", qualifiedByName = "toOpeningProgramByUuid")
-    @Mapping(source = "classUuid", target = "_class", qualifiedByName = "toClassByUuid")
+    @Mapping(source = "classUuid", target = "_class", qualifiedByName = "toClassByUuid", conditionExpression = "java(enrollmentRequest.classUuid() != null)")
     Enrollment toEnrollment(EnrollmentRequest enrollmentRequest);
-
 
     @Mapping(source = "university.englishName", target = "university")
     @Mapping(source = "province.englishName", target = "province")
