@@ -19,6 +19,7 @@ import co.istad.exstadapi.features.openingProgram.timeline.dto.TimelineSetUp;
 import co.istad.exstadapi.features.program.ProgramRepository;
 import co.istad.exstadapi.features.scholar.ScholarRepository;
 import co.istad.exstadapi.features.scholar.ScholarService;
+import co.istad.exstadapi.features.scholar.dto.ScholarResponse;
 import co.istad.exstadapi.features.scholarClass.ScholarClassRepository;
 import co.istad.exstadapi.features.scholarClass.ScholarClassService;
 import co.istad.exstadapi.mapper.OpeningProgramMapper;

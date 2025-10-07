@@ -24,7 +24,7 @@ public class OpeningProgramController {
     }
 
     @GetMapping("/program/{slug}")
-    public ResponseEntity<?> getAllOpeningProgramsByProgramUuid(@PathVariable String slug) {
+    public ResponseEntity<?> getAllOpeningProgramsByProgramSlug(@PathVariable String slug) {
         return new ResponseEntity<>(Map.of(
                 "opening-programs",openingProgramService.getAllOpeningProgramsByProgramSlug(slug)), HttpStatus.OK);
     }
