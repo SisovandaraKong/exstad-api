@@ -10,7 +10,7 @@ import java.util.List;
 public enum DocumentType {
     CERTIFICATE( "certificate","certificates", List.of("pdf","png","jpg")),
     TRANSCRIPT("transcript","transcripts", List.of("pdf")),
-    ACTIVITY( "activity","activities", List.of("pdf")),
+    ACTIVITY( "activity","activities", List.of("jpeg", "jpg", "png", "webp")),
     POSTER("poster","images/posters", List.of("jpeg", "jpg", "png", "webp")),
     THUMBNAIL( "thumbnail","images/thumbnails", List.of("jpeg", "jpg", "png", "webp")),
     AVATAR( "avatar","images/avatars", List.of("jpeg", "jpg", "png", "webp")),

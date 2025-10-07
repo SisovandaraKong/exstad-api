@@ -13,12 +13,14 @@ import co.istad.exstadapi.features.openingProgram.learningOutcome.dto.OPLearning
 import co.istad.exstadapi.features.openingProgram.requirement.dto.OPRequirementSetUp;
 import co.istad.exstadapi.features.openingProgram.roadmap.dto.OPRoadmapSetUp;
 import co.istad.exstadapi.features.openingProgram.timeline.dto.TimelineSetUp;
+import co.istad.exstadapi.features.scholar.dto.ScholarResponse;
 
 import java.util.List;
 
 public interface OpeningProgramService {
 
     List<OpeningProgramResponse> getAllOpeningPrograms();
+    List<OpeningProgramResponse> getAllOpeningProgramsByProgramSlug(String programSlug);
     OpeningProgramResponse getOpeningProgramByUuid(String uuid);
     OpeningProgramResponse getOpeningProgramBySlug(String slug);
     OpeningProgramResponse getOpeningProgramByTitle(String title);
