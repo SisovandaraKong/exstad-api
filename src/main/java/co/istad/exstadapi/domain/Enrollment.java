@@ -9,6 +9,7 @@ import lombok.Setter;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Map;
 
@@ -62,12 +63,19 @@ public class Enrollment {
     @ManyToOne
     private University university;
 
+    @ManyToOne
+    @JoinColumn(nullable = true)
+    private Class _class;
+
     @Column(nullable = false, length = 200)
     private String educationQualification;
 
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(columnDefinition = "jsonb")
     private Map<String, String> extra;
+
+    @Column(nullable = false, precision = 10, scale = 2)
+    private BigDecimal amount;
 
     @Column(nullable = false)
     private Boolean isInterviewed;
