@@ -74,6 +74,9 @@ public class Enrollment {
     @Column(columnDefinition = "jsonb")
     private Map<String, String> extra;
 
+    @Column(nullable = false, precision = 10, scale = 2)
+    private BigDecimal amount;
+
     @Column(nullable = false)
     private Boolean isInterviewed;
 
