@@ -3,6 +3,7 @@ package co.istad.exstadapi.features.scholar.dto;
 import co.istad.exstadapi.audit.AuditableDto;
 import co.istad.exstadapi.enums.Gender;
 import co.istad.exstadapi.enums.Role;
+import co.istad.exstadapi.enums.ScholarStatus;
 import co.istad.exstadapi.features.scholarBadge.dto.ScholarBadgeForScholarResponse;
 
 import java.time.LocalDate;
@@ -35,6 +36,8 @@ public record ScholarResponse(
 
         String bio,
 
+        String major,
+
         String avatar,
 
         String phoneFamilyNumber,
@@ -44,6 +47,10 @@ public record ScholarResponse(
         AuditableDto audit,
 
         Boolean isPublic,
+
+        Boolean isAbroad,
+
+        ScholarStatus status,
 
         List<ScholarBadgeForScholarResponse> badges
 ) {

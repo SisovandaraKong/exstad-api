@@ -32,6 +32,13 @@ public class ClassController {
         return new ResponseEntity<>(classService.getClassByName(name), HttpStatus.OK);
     }
 
+    @GetMapping("/opening-program/{openingProgramTitle}")
+    public ResponseEntity<?> getClassesByOpeningProgramTitle(@PathVariable String openingProgramTitle) {
+        return new ResponseEntity<>(
+                Map.of("classes",classService.getClassByOpeningProgramTitle(openingProgramTitle)), HttpStatus.OK);
+    }
+
+
     @PostMapping
     public ResponseEntity<?> createClass(@RequestBody @Valid ClassRequest classRequest) {
         return new ResponseEntity<>(classService.createClass(classRequest), HttpStatus.CREATED);

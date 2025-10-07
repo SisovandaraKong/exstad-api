@@ -7,6 +7,8 @@ import java.util.Map;
 
 public record EnrollmentResponse(
         String uuid,
+//        String classRoom,
+//        String classShift,
         String englishName,
         String khmerName,
         String program,
@@ -21,7 +23,7 @@ public record EnrollmentResponse(
         String educationQualification,
         Map<String, String> extra,
         Boolean isPaid,
-        Boolean isAccepted,
+        Boolean isInterviewed,
         Boolean isAchieved,
         Boolean isPassed
 

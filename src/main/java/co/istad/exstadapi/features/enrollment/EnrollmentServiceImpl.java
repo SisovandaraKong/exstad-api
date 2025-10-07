@@ -1,6 +1,8 @@
 package co.istad.exstadapi.features.enrollment;
 
+import co.istad.exstadapi.domain.Class;
 import co.istad.exstadapi.domain.Enrollment;
+import co.istad.exstadapi.features.classes.ClassRepository;
 import co.istad.exstadapi.features.enrollment.dto.EnrollmentRequest;
 import co.istad.exstadapi.features.enrollment.dto.EnrollmentRequestUpdate;
 import co.istad.exstadapi.features.enrollment.dto.EnrollmentResponse;
@@ -18,14 +20,18 @@ import java.util.UUID;
 public class EnrollmentServiceImpl implements EnrollmentService {
 
     private final EnrollmentRepository enrollmentRepository;
+    private final ClassRepository classRepository;
     private final EnrollmentMapper enrollmentMapper;
 
 
     @Override
     public EnrollmentResponse createEnrollment(EnrollmentRequest enrollmentRequest) {
+//        if (!classRepository.existsByUuid(enrollmentRequest.classUuid())){
+//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Class not found");
+//        }
         Enrollment enrollment = enrollmentMapper.toEnrollment(enrollmentRequest);
         enrollment.setUuid(UUID.randomUUID().toString());
-        enrollment.setIsAccepted(false);
+        enrollment.setIsInterviewed(false);
         enrollment.setIsAchieved(false);
         enrollment.setIsPaid(false);
         enrollment.setIsPassed(false);
@@ -35,21 +41,21 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 
     @Override
     public List<EnrollmentResponse> getAllEnrollments() {
-        return enrollmentRepository.findAllByIsAcceptedAndIsAchievedAndIsPassed(false, false, false).stream().map(
+        return enrollmentRepository.findAllByIsInterviewedAndIsAchievedAndIsPassed(false, false, false).stream().map(
                 enrollmentMapper::fromEnrollment
         ).toList();
     }
 
     @Override
-    public List<EnrollmentResponse> getAllAcceptedEnrollments() {
-        return enrollmentRepository.findAllByIsAcceptedAndIsAchievedAndIsPassed(true, false,false ).stream().map(
+    public List<EnrollmentResponse> getAllInterviewedEnrollments() {
+        return enrollmentRepository.findAllByIsInterviewedAndIsAchievedAndIsPassed(true, false,false ).stream().map(
                 enrollmentMapper::fromEnrollment
         ).toList();
     }
 
     @Override
     public List<EnrollmentResponse> getAllPassedEnrollments() {
-        return enrollmentRepository.findAllByIsAcceptedAndIsAchievedAndIsPassed(true, false,true ).stream().map(
+        return enrollmentRepository.findAllByIsInterviewedAndIsAchievedAndIsPassed(true, false,true ).stream().map(
                 enrollmentMapper::fromEnrollment
         ).toList();
     }

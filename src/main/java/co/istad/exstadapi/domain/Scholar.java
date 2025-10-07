@@ -2,6 +2,7 @@ package co.istad.exstadapi.domain;
 
 import co.istad.exstadapi.audit.Auditable;
 import co.istad.exstadapi.domain.vo.SocialLink;
+import co.istad.exstadapi.enums.ScholarStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -53,6 +54,9 @@ public class Scholar extends Auditable {
     @Column(columnDefinition = "TEXT")
     private String bio;
 
+    @Column(length = 50)
+    private String major;
+
     @Column(length = 500)
     private String avatar;
 
@@ -62,11 +66,17 @@ public class Scholar extends Auditable {
     @Column(length = 20, unique = true, nullable = false)
     private String phoneNumber;
 
+    @Enumerated(EnumType.STRING)
+    ScholarStatus status;
+
     @Column(length = 20)
     private String phoneFamilyNumber;
 
     @Column(nullable = false)
     private Boolean isPublic;
+
+    @Column(nullable = false)
+    private Boolean isAbroad;
 
     @Column(columnDefinition = "TEXT")
     private String quote;

@@ -1,6 +1,7 @@
 package co.istad.exstadapi.features.scholar;
 
 import co.istad.exstadapi.domain.Scholar;
+import co.istad.exstadapi.enums.ScholarStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -14,6 +15,8 @@ public interface ScholarRepository extends JpaRepository<Scholar, Integer> {
     List<Scholar> findAllByIsDeletedFalse();
 
     boolean existsByUuid(String uuid);
+
+    boolean existsByPhoneNumber(String phoneNumber);
 
     void deleteByUuid(String uuid);
 
@@ -31,4 +34,8 @@ public interface ScholarRepository extends JpaRepository<Scholar, Integer> {
            "JOIN c.openingProgram op " +
            "WHERE op.uuid = :openingProgramUuid AND s.isDeleted = false AND sc.isDeleted = false")
     List<Scholar> findAllByOpeningProgramUuid(String openingProgramUuid);
+
+    List<Scholar> findAllByStatusAndIsDeletedFalse(ScholarStatus status);
+    List<Scholar> findAllByIsAbroadTrueAndIsDeletedFalse();
+
 }

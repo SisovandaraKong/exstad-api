@@ -16,6 +16,7 @@ public interface ProgramRepository extends JpaRepository<Program, Integer> {
     Optional<Program> findByTitleIgnoreCase(String title);
     boolean existsByUuid(String uuid);
     List<Program> findAllByIsDeletedFalse();
+    Optional<Program> findByOpeningPrograms(OpeningProgram openingProgram);
 
     @Modifying
     @Query("UPDATE Program p SET p.isDeleted = true WHERE p.uuid = ?1")
@@ -28,5 +29,4 @@ public interface ProgramRepository extends JpaRepository<Program, Integer> {
     void deleteByUuid(String uuid);
 
     Optional<Program> findBySlugAndIsDeletedFalse(String slug);
-    Optional<Program> findByOpeningPrograms(OpeningProgram openingProgram);
 }
