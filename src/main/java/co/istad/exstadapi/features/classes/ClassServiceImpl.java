@@ -54,6 +54,14 @@ public class ClassServiceImpl implements ClassService {
         return classRepository.findAllByOpeningProgramAndIsDeletedFalse(openingProgram).stream().map(classMapper::toClassResponse).toList();
     }
 
+    @Override
+    public List<ClassResponse> getAllClassesByOpeningProgramUuid(String openingProgramUuid) {
+        OpeningProgram openingProgram = openingProgramRepository.findByUuid(openingProgramUuid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Opening Program with UUID " + openingProgramUuid + " not found"));
+        List<Class> classes = classRepository.findAllByOpeningProgramAndIsDeletedFalse(openingProgram);
+        return classes.stream().map(classMapper::toClassResponse).toList();
+    }
+
 
     @Override
     public ClassResponse createClass(ClassRequest classRequest) {

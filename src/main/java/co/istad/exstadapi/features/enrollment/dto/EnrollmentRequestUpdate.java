@@ -1,10 +1,9 @@
 package co.istad.exstadapi.features.enrollment.dto;
 
 import co.istad.exstadapi.enums.Gender;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Past;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public record EnrollmentRequestUpdate(
@@ -20,6 +19,9 @@ public record EnrollmentRequestUpdate(
         String email,
         @Size(max = 255, message = "Avtar URL must be at most 255 characters")
         String avtar,
+        @DecimalMin(value = "0.0", message = "Amount must be zero or positive")
+        @Digits(integer = 8, fraction = 2, message = "Amount must have at most 8 integer digits and 2 decimal places")
+        BigDecimal amount,
         @Size(min = 2, max = 50, message = "Province must be between 2 and 50 characters")
         String province,
         @Size(min = 5, max = 200, message = "Current address must be between 5 and 200 characters")

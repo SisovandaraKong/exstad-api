@@ -16,7 +16,6 @@ public interface EnrollmentMapper {
     @Mapping(source = "classUuid", target = "_class", qualifiedByName = "toClassByUuid", conditionExpression = "java(enrollmentRequest.classUuid() != null)")
     Enrollment toEnrollment(EnrollmentRequest enrollmentRequest);
 
-
     @Mapping(source = "university.englishName", target = "university")
     @Mapping(source = "province.englishName", target = "province")
     @Mapping(source = "currentAddress.englishName", target = "currentAddress")

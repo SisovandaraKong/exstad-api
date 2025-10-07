@@ -3,6 +3,7 @@ package co.istad.exstadapi.features.enrollment.dto;
 import co.istad.exstadapi.enums.Gender;
 import co.istad.exstadapi.features.classes.dto.ClassResponse;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Map;
 
@@ -11,6 +12,7 @@ public record EnrollmentResponse(
         String englishName,
         String khmerName,
         String program,
+        BigDecimal amount,
         ClassResponse _class,
         Gender gender,
         LocalDate dob,

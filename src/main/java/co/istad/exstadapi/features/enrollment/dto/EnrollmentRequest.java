@@ -2,6 +2,8 @@ package co.istad.exstadapi.features.enrollment.dto;
 
 import co.istad.exstadapi.enums.Gender;
 import jakarta.validation.constraints.*;
+
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Map;
 
@@ -56,5 +58,10 @@ public record EnrollmentRequest(
         String educationQualification,
 
         Map<String, String> extra,
-     String classUuid
+
+        String classUuid,
+
+        @DecimalMin(value = "0.0", message = "Amount must be zero or positive")
+        @Digits(integer = 8, fraction = 2, message = "Amount must have at most 8 integer digits and 2 decimal places")
+        BigDecimal amount
 ) {}

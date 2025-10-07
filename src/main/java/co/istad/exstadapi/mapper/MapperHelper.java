@@ -11,6 +11,7 @@ import co.istad.exstadapi.features.program.ProgramRepository;
 import co.istad.exstadapi.features.province.ProvinceRepository;
 import co.istad.exstadapi.features.scholar.ScholarRepository;
 import co.istad.exstadapi.features.university.UniversityRepository;
+import co.istad.exstadapi.features.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.mapstruct.Named;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,6 +34,7 @@ public class MapperHelper {
     private final ProgramRepository programRepository;
     private final AchievementRepository achievementRepository;
     private final ClassRepository classRepository;
+    private final UserRepository userRepository;
 
     @Value("${server.public-access}")
     private String publicAccess;
@@ -118,11 +120,10 @@ public class MapperHelper {
         );
     }
 
-//    @Named("toClassListByUuid")
-//    public List<Class> toClassListByUuid(final String classUuid) {
-//        Class clazz = classRepository.findByUuid(classUuid).orElseThrow(
-//                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Class not found")
-//        );
-//        return List.of(clazz);
-//    }
+    @Named("toInstructorByUuid")
+    public User toInstructorByUuid(final String instructorUuid) {
+        return userRepository.findByUuid(instructorUuid).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Instructor not found")
+        );
+    }
 }

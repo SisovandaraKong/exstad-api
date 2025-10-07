@@ -5,11 +5,18 @@ import co.istad.exstadapi.domain.Class;
 import co.istad.exstadapi.domain.Scholar;
 import co.istad.exstadapi.domain.ScholarClass;
 import co.istad.exstadapi.features.classes.ClassRepository;
+import co.istad.exstadapi.features.classes.dto.ClassResponse;
 import co.istad.exstadapi.features.scholar.ScholarRepository;
+import co.istad.exstadapi.features.scholar.dto.ScholarResponse;
 import co.istad.exstadapi.features.scholarClass.dto.ScholarClassRequest;
 import co.istad.exstadapi.features.scholarClass.dto.ScholarClassResponse;
 import co.istad.exstadapi.features.scholarClass.dto.ScholarClassUpdate;
+import co.istad.exstadapi.features.user.UserRepository;
+import co.istad.exstadapi.features.user.dto.UserResponse;
+import co.istad.exstadapi.mapper.ClassMapper;
 import co.istad.exstadapi.mapper.ScholarClassMapper;
+import co.istad.exstadapi.mapper.ScholarMapper;
+import co.istad.exstadapi.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -26,9 +33,17 @@ public class ScholarClassServiceImpl implements ScholarClassService{
     private final ScholarRepository scholarRepository;
     private final ClassRepository classRepository;
     private final ScholarClassMapper scholarClassMapper;
+    private final ScholarMapper scholarMapper;
+    private final ClassMapper classMapper;
 
     @Override
     public ScholarClassResponse createScholarIntoClass(ScholarClassRequest scholarClassRequest) {
+        if (!scholarRepository.existsByUuid(scholarClassRequest.scholarUuid())){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Scholar with UUID "+ scholarClassRequest.scholarUuid() +" not found");
+        }
+        if (!classRepository.existsByUuid(scholarClassRequest.classUuid())){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Class with UUID "+ scholarClassRequest.classUuid() +" not found");
+        }
         ScholarClass scholarClass = scholarClassMapper.toScholarClassRequest(scholarClassRequest);
         scholarClass.setUuid(UUID.randomUUID().toString());
         scholarClass.setIsDeleted(false);
@@ -92,21 +107,36 @@ public class ScholarClassServiceImpl implements ScholarClassService{
     }
 
     @Override
-    public List<ScholarClassResponse> getAllClassesByOneScholarUuid(String scholarUuid) {
+    public List<ClassResponse> getAllClassesByOneScholarUuid(String scholarUuid) {
         Scholar scholar = scholarRepository.findByUuid(scholarUuid)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Scholar with UUID "+ scholarUuid +" not found"));
-        return scholarClassRepository.findAllByScholar(scholar).stream()
-                .map(scholarClassMapper::toScholarClassResponse)
+        List<ScholarClass> scholarClasses = scholarClassRepository.findAllByScholar(scholar);
+        List<Class> classes = scholarClasses
+                .stream()
+                .filter(scholarClass -> !scholarClass.getIsDeleted())
+                .map(ScholarClass::get_class)
+                .toList();
+        return classes
+                .stream()
+                .filter(aClass -> !aClass.getIsDeleted())
+                .map(classMapper::toClassResponse)
                 .toList();
     }
 
     @Override
-    public List<ScholarClassResponse> getAllScholarsByOneClassUuid(String classUuid) {
+    public List<ScholarResponse> getAllScholarsByOneClassUuid(String classUuid) {
         Class aClass = classRepository.findByUuid(classUuid)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Class with UUID "+ classUuid +" not found"));
-        return scholarClassRepository.findAllBy_class(aClass)
+        List<ScholarClass> scholarClasses = scholarClassRepository.findAllBy_class(aClass);
+        List<Scholar> scholars = scholarClasses
                 .stream()
-                .map(scholarClassMapper::toScholarClassResponse)
+                .filter(scholarClass -> !scholarClass.getIsDeleted())
+                .map(ScholarClass::getScholar)
+                .toList();
+        return scholars
+                .stream()
+                .filter(scholar -> !scholar.getIsDeleted())
+                .map(scholarMapper::fromScholar)
                 .toList();
     }
 
