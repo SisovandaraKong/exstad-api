@@ -15,7 +15,10 @@ public interface EnrollmentService {
     List<EnrollmentResponse> getAllPassedEnrollments();
     List<EnrollmentResponse> getAllAchievedEnrollments();
     EnrollmentResponse getEnrollment(String uuid);
-
+    List<EnrollmentResponse> getAllEnrollmentsByOpeningProgramUuid(String openingProgramUuid);
+    List<EnrollmentResponse> getAllInterviewedEnrollmentsByOpeningProgramUuid(String openingProgramUuid);
+    List<EnrollmentResponse> getAllPassedEnrollmentsByOpeningProgramUuid(String openingProgramUuid);
+    List<EnrollmentResponse> getAllAchievedEnrollmentsByOpeningProgramUuid(String openingProgramUuid);
     EnrollmentResponse updateEnrollment(String uuid, EnrollmentRequestUpdate enrollmentRequestUpdate);
 
 

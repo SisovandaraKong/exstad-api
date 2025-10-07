@@ -66,4 +66,7 @@ public class Class extends Auditable {
 
     @OneToMany(mappedBy = "_class")
     private List<ScholarClass> scholarClasses;
+
+    @OneToMany(mappedBy = "_class")
+    private List<Enrollment> enrollments;
 }
