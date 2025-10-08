@@ -56,7 +56,7 @@ public class Scholar extends Auditable {
     private String bio;
 
     @JdbcTypeCode(SqlTypes.JSON)
-    @Column(columnDefinition = "jsonb", nullable = false)
+    @Column(columnDefinition = "jsonb")
     private List<Specialist> specialist;
 
     @Column(length = 500)
