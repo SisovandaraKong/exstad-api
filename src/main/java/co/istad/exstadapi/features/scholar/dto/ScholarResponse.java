@@ -1,6 +1,7 @@
 package co.istad.exstadapi.features.scholar.dto;
 
 import co.istad.exstadapi.audit.AuditableDto;
+import co.istad.exstadapi.domain.vo.Specialist;
 import co.istad.exstadapi.enums.Gender;
 import co.istad.exstadapi.enums.Role;
 import co.istad.exstadapi.enums.ScholarStatus;
@@ -36,7 +37,7 @@ public record ScholarResponse(
 
         String bio,
 
-        String major,
+        List<Specialist> specialist,
 
         String avatar,
 

@@ -159,13 +159,13 @@ public class ScholarController {
     @GetMapping("/class-room/{classRoomName}")
     public ResponseEntity<?> getAllScholarsByClassRoomName(@PathVariable String classRoomName) {
         return new ResponseEntity<>(
-                Map.of("class-room-scholars", scholarService.getAllScholarsByClassRoomName(classRoomName)), HttpStatus.OK);
+                scholarService.getAllScholarsByClassRoomName(classRoomName), HttpStatus.OK);
     }
 
     @GetMapping("/program/{programUuid}")
     public ResponseEntity<?> getAllScholarsByProgramUuid(@PathVariable String programUuid) {
         return new ResponseEntity<>(
-                Map.of("program-scholars", scholarService.getAllScholarsByProgramUuid(programUuid)), HttpStatus.OK);
+                scholarService.getAllScholarsByProgramUuid(programUuid), HttpStatus.OK);
     }
 
 }
