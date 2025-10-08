@@ -149,9 +149,6 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 
     @Override
     public EnrollmentResponse updateEnrollment(String uuid, EnrollmentRequestUpdate enrollmentRequestUpdate) {
-        if (enrollmentRepository.existsByEmail(uuid)){
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Email is already taken");
-        }
         Enrollment enrollment = getEnrollmentByUuid(uuid);
         enrollmentMapper.toEnrollmentPartially(enrollmentRequestUpdate, enrollment);
         enrollment = enrollmentRepository.save(enrollment);
