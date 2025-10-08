@@ -50,6 +50,8 @@ public record ScholarResponse(
 
         Boolean isAbroad,
 
+        Boolean isEmployed,
+
         ScholarStatus status,
 
         List<ScholarBadgeForScholarResponse> badges
