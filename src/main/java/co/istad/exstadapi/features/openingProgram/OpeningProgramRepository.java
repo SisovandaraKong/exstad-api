@@ -15,6 +15,8 @@ public interface OpeningProgramRepository extends JpaRepository<OpeningProgram, 
     Optional<OpeningProgram> findBySlug(String slug);
     Optional<OpeningProgram> findByClasses_Uuid(String classUuid);
     boolean existsByUuid(String uuid);
+    Optional<OpeningProgram> findByProgram(Program program);
+    List<OpeningProgram> findAllByProgram(Program program);
     List<OpeningProgram> findAllByIsDeletedFalse();
 
     Optional<OpeningProgram> findByTitleIgnoreCase(String title);

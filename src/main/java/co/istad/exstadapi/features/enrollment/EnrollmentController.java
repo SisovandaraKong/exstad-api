@@ -2,6 +2,7 @@ package co.istad.exstadapi.features.enrollment;
 
 import co.istad.exstadapi.features.enrollment.dto.EnrollmentRequest;
 import co.istad.exstadapi.features.enrollment.dto.EnrollmentRequestUpdate;
+import co.istad.exstadapi.features.enrollment.dto.SetScoreExamScholar;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -65,6 +66,16 @@ public class EnrollmentController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> getAllAchievedEnrollmentsByOpeningProgram( @PathVariable String openingProgramUuid) {
         return ResponseEntity.ok(enrollmentService.getAllAchievedEnrollmentsByOpeningProgramUuid(openingProgramUuid));
+    }
+
+    @PutMapping("/{uuid}/is-scholar")
+    public ResponseEntity<?> markIsScholar(@PathVariable String uuid) {
+        return new ResponseEntity<>(enrollmentService.markIsScholar(uuid), HttpStatus.OK);
+    }
+
+    @PutMapping("/{uuid}/score-exam")
+    public ResponseEntity<?> setScoreExamScholar(@PathVariable String uuid, @RequestBody @Valid SetScoreExamScholar setScoreExamScholar){
+        return new ResponseEntity<>(enrollmentService.setScoreExamScholar(uuid, setScoreExamScholar), HttpStatus.OK);
     }
 
     @GetMapping("{openingProgramUuid}/passed")
