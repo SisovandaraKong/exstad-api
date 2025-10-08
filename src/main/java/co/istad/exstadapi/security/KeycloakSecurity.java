@@ -92,6 +92,7 @@ public class KeycloakSecurity {
 //                .requestMatchers(HttpMethod.GET,"/api/v1/enrollments/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
 //                .requestMatchers(HttpMethod.POST,"/api/v1/enrollments/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
 //                .requestMatchers(HttpMethod.PATCH,"/api/v1/enrollments/**").hasAnyRole("ADMIN","INSTRUCTOR1")
+//                .requestMatchers(HttpMethod.PUT,"/api/v1/enrollments/**").hasAnyRole("ADMIN","INSTRUCTOR1")
 //                // Achievement
 //                .requestMatchers(HttpMethod.GET,"/api/v1/achievements/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
 //                .requestMatchers(HttpMethod.POST,"/api/v1/achievements/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")

@@ -27,7 +27,8 @@ public record EnrollmentResponse(
         Boolean isPaid,
         Boolean isInterviewed,
         Boolean isAchieved,
-        Boolean isPassed
-
+        Boolean isPassed,
+        Boolean isScholar,
+        BigDecimal score
 ) {
 }

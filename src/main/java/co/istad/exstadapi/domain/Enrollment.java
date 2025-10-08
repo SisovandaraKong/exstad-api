@@ -45,10 +45,10 @@ public class Enrollment {
     @Column(nullable = false)
     private LocalDate dob;
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false, length = 100, unique = true)
     private String phoneNumber;
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false, length = 100, unique = true)
     private String email;
 
     @Column(length = 500)
@@ -77,6 +77,8 @@ public class Enrollment {
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal amount;
 
+    private Boolean isScholar;
+
     @Column(nullable = false)
     private Boolean isInterviewed;
 
@@ -88,6 +90,9 @@ public class Enrollment {
 
     @Column(nullable = false)
     private Boolean isPassed;
+
+    @Column(precision = 10, scale = 2)
+    private BigDecimal score;
 
     @OneToOne(mappedBy = "enrollment", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn

@@ -80,6 +80,12 @@ public class ProgramServiceImpl implements ProgramService {
 
     @Override
     public ProgramResponse createProgram(ProgramRequest programRequest) {
+        if (programRepository.existsBySlug(programRequest.slug())){
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Slug already exists");
+        }
+        if (programRepository.existsByTitleIgnoreCase(programRequest.title())){
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Title already exists");
+        }
         Program program = programMapper.fromProgramRequest(programRequest);
         program.setHighlights(null);
         program.setProgramOverviews(null);
@@ -96,6 +102,12 @@ public class ProgramServiceImpl implements ProgramService {
 
     @Override
     public ProgramResponse updateProgram(String uuid, ProgramUpdate programUpdate) {
+        if (programRepository.existsByTitleIgnoreCase(programUpdate.title())){
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Title already exists");
+        }
+        if (programRepository.existsBySlug(programUpdate.slug())){
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Slug already exists");
+        }
         Program program = programRepository.findByUuid(uuid)
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND, "Program not found"
