@@ -102,12 +102,6 @@ public class ProgramServiceImpl implements ProgramService {
 
     @Override
     public ProgramResponse updateProgram(String uuid, ProgramUpdate programUpdate) {
-        if (programRepository.existsByTitleIgnoreCase(programUpdate.title())){
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Title already exists");
-        }
-        if (programRepository.existsBySlug(programUpdate.slug())){
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Slug already exists");
-        }
         Program program = programRepository.findByUuid(uuid)
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND, "Program not found"
