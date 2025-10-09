@@ -88,11 +88,6 @@ public class ScholarController {
         return scholarService.updateScholar(uuid, scholarRequestUpdate);
     }
 
-    @PutMapping("/set-major/{uuid}")
-    public ScholarResponse setMajorToAlumniScholar(@PathVariable String uuid, @RequestBody @Valid SetMajorToAlumniScholar setMajorToAlumniScholar){
-        return scholarService.setMajorToAlumniScholar(setMajorToAlumniScholar, uuid);
-    }
-
     @GetMapping("/me")
     @ResponseStatus(HttpStatus.OK)
     public ScholarResponse getMe() {
@@ -130,15 +125,12 @@ public class ScholarController {
         scholarService.deleteSocialLink(scholarUuid, socialLinkUuid);
         return new BasedMessage("Scholar deleted successfully");
     }
-
-
-
+    
     @PutMapping("/{uuid}/soft-delete")
     @ResponseStatus(HttpStatus.OK)
     public BasedMessage softDeleteScholar(@PathVariable String uuid) {
         return scholarService.softDeleteScholarByUuid(uuid);
     }
-
 
     @PutMapping("/{uuid}/restore")
     @ResponseStatus(HttpStatus.OK)
@@ -157,5 +149,24 @@ public class ScholarController {
         return new ResponseEntity<>(
                 Map.of("opening-program-scholars", scholarService.getAllScholarsByOpeningProgramUuid(uuid)), HttpStatus.OK);
     }
+
+    @PutMapping("/{uuid}/is-employed")
+    public ResponseEntity<?> isEmployedScholar(@PathVariable String uuid) {
+        return new ResponseEntity<>(
+                scholarService.markIsEmployed(uuid), HttpStatus.OK);
+    }
+
+    @GetMapping("/class-room/{classRoomName}")
+    public ResponseEntity<?> getAllScholarsByClassRoomName(@PathVariable String classRoomName) {
+        return new ResponseEntity<>(
+                scholarService.getAllScholarsByClassRoomName(classRoomName), HttpStatus.OK);
+    }
+
+    @GetMapping("/program/{programUuid}")
+    public ResponseEntity<?> getAllScholarsByProgramUuid(@PathVariable String programUuid) {
+        return new ResponseEntity<>(
+                scholarService.getAllScholarsByProgramUuid(programUuid), HttpStatus.OK);
+    }
+
 }
 

@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,6 +14,7 @@ import java.util.Optional;
 public interface ClassRepository extends JpaRepository<Class,Integer> {
 
     Optional<Class> findByUuid(String uuid);
+    Optional<Class> findByRoom(String room);
     Optional<Class> findByOpeningProgram(OpeningProgram openingProgram);
     List<Class> findAllByIsDeletedFalse();
     Optional<Class> findByRoomIgnoreCase(String room);
@@ -46,4 +48,6 @@ public interface ClassRepository extends JpaRepository<Class,Integer> {
     @Modifying
     @Query("UPDATE Class c SET c.isWeekend = false WHERE c.uuid = ?1")
     void setToWeekdayByUuid(String uuid);
+
+    List<Class> findAllByOpeningProgram(OpeningProgram openingProgram);
 }
