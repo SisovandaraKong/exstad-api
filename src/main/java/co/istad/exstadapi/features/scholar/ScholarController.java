@@ -168,5 +168,16 @@ public class ScholarController {
                 scholarService.getAllScholarsByProgramUuid(programUuid), HttpStatus.OK);
     }
 
+    @PutMapping("/{scholarUuid}/completed-course/{openingProgramUuid}")
+    public ResponseEntity<?> markCompletedCourse(@PathVariable String scholarUuid, @PathVariable String openingProgramUuid) {
+        return new ResponseEntity<>(
+                scholarService.markCompletedCourse(scholarUuid, openingProgramUuid), HttpStatus.OK);
+    }
+
+    @GetMapping("/{scholarUuid}/completed-courses")
+    public ResponseEntity<?> getAllCompletedCoursesByScholarUuid(@PathVariable String scholarUuid) {
+        return new ResponseEntity<>(
+                Map.of("completed-courses", scholarService.getAllCompletedCoursesByScholarUuid(scholarUuid)), HttpStatus.OK);
+    }
 }
 
