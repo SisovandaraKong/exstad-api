@@ -3,6 +3,7 @@ package co.istad.exstadapi.features.scholar;
 import co.istad.exstadapi.base.BasedMessage;
 import co.istad.exstadapi.domain.*;
 import co.istad.exstadapi.domain.Class;
+import co.istad.exstadapi.domain.vo.Career;
 import co.istad.exstadapi.domain.vo.SocialLink;
 import co.istad.exstadapi.domain.vo.Specialist;
 import co.istad.exstadapi.enums.Role;
@@ -10,6 +11,7 @@ import co.istad.exstadapi.enums.ScholarStatus;
 import co.istad.exstadapi.features.classes.ClassRepository;
 import co.istad.exstadapi.features.openingProgram.OpeningProgramRepository;
 import co.istad.exstadapi.features.program.ProgramRepository;
+import co.istad.exstadapi.features.scholar.career.dto.CareerSetup;
 import co.istad.exstadapi.features.scholar.dto.*;
 import co.istad.exstadapi.features.scholar.specialist.dto.SpecialistSetup;
 import co.istad.exstadapi.features.scholarClass.ScholarClassRepository;
@@ -75,6 +77,8 @@ public class ScholarServiceImpl implements ScholarService {
         Scholar scholar = scholarMapper.toScholar(scholarRequest);
         scholar.setIsEmployed(false);
         scholar.setSpecialist(null);
+        scholar.setCareers(null);
+        scholar.setCompletedCourses(new ArrayList<>());
         scholar.setUser(user);
         scholar.setUuid(user.getUuid());
         scholar.setIsDeleted(false);
@@ -327,6 +331,35 @@ public class ScholarServiceImpl implements ScholarService {
     }
 
     @Override
+    public ScholarResponse setUpCareer(String uuid, List<CareerSetup> careerSetups) {
+        Scholar scholar = scholarRepository.findByUuid(uuid).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Scholar not found")
+        );
+        List<Career> careers = careerSetups.stream()
+                .map(careerSetup -> {
+                    Career career = new Career();
+                    career.setUuid(UUID.randomUUID().toString());
+                    career.setCompany(careerSetup.company());
+                    career.setInterest(careerSetup.interest());
+                    career.setSalary(careerSetup.salary());
+                    career.setCompanyType(careerSetup.companyType());
+                    career.setPosition(careerSetup.position());
+                    return career;
+                }).toList();
+        scholar.setCareers(careers);
+        scholar = scholarRepository.save(scholar);
+        return scholarMapper.fromScholar(scholar);
+    }
+
+    @Override
+    public List<Career> getCareers(String uuid) {
+        Scholar scholar = scholarRepository.findByUuid(uuid).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Scholar not found")
+        );
+        return scholar.getCareers();
+    }
+
+    @Override
     public List<ScholarResponse> getAllScholarsByClassRoomName(String classRoomName) {
         Class _class = classRepository.findByRoom(classRoomName).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Class not found")
@@ -366,6 +399,27 @@ public class ScholarServiceImpl implements ScholarService {
         return scholars.stream()
                 .map(scholarMapper::fromScholar)
                 .toList();
+    }
+
+    @Override
+    public ScholarResponse markCompletedCourse(String uuid, String openingProgramUuid) {
+        Scholar scholar = scholarRepository.findByUuid(uuid).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Scholar not found")
+        );
+        OpeningProgram openingProgram = openingProgramRepository.findByUuid(openingProgramUuid).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Opening Program not found")
+        );
+        scholar.getCompletedCourses().add(openingProgram.getUuid());
+        scholar = scholarRepository.save(scholar);
+        return scholarMapper.fromScholar(scholar);
+    }
+
+    @Override
+    public List<String> getAllCompletedCoursesByScholarUuid(String uuid) {
+        Scholar scholar = scholarRepository.findByUuid(uuid).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Scholar not found")
+        );
+        return scholar.getCompletedCourses();
     }
 
     @Override

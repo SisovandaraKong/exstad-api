@@ -7,6 +7,7 @@ import co.istad.exstadapi.features.badge.BadgeRepository;
 import co.istad.exstadapi.features.classes.ClassRepository;
 import co.istad.exstadapi.features.currentAddress.CurrentAddressRepository;
 import co.istad.exstadapi.features.openingProgram.OpeningProgramRepository;
+import co.istad.exstadapi.features.openingProgram.dto.OpeningProgramResponse;
 import co.istad.exstadapi.features.program.ProgramRepository;
 import co.istad.exstadapi.features.province.ProvinceRepository;
 import co.istad.exstadapi.features.scholar.ScholarRepository;
@@ -18,8 +19,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -35,6 +34,7 @@ public class MapperHelper {
     private final AchievementRepository achievementRepository;
     private final ClassRepository classRepository;
     private final UserRepository userRepository;
+//    private final OpeningProgramMapper openingProgramMapper;
 
     @Value("${server.public-access}")
     private String publicAccess;
@@ -126,4 +126,17 @@ public class MapperHelper {
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Instructor not found")
         );
     }
+
+//    @Named("toOpeningProgramList")
+//    public List<OpeningProgramResponse> toOpeningProgramList(List<String> completedCourses) {
+//        if (completedCourses == null) {
+//            return List.of();
+//        }
+//
+//        return completedCourses.stream()
+//                .map(uuid -> openingProgramRepository.findByUuid(uuid).orElse(null))
+//                .filter(Objects::nonNull)
+//                .map(openingProgramMapper::toOpeningProgramResponse)
+//                .collect(Collectors.toList());
+//    }
 }

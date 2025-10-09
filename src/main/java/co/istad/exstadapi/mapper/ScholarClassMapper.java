@@ -16,9 +16,7 @@ import org.mapstruct.MappingTarget;
 public interface ScholarClassMapper {
 
     @Mapping(target = "audit", source = "scholarClass")
-    @Mapping(target = "scholarUuid", source = "scholar.uuid")
     @Mapping(target = "classUuid", source = "_class.uuid")
-    @Mapping(target = "scholarName", source = "scholar.user.englishName")
     @Mapping(target = "room", source = "_class.room")
     ScholarClassResponse toScholarClassResponse(ScholarClass scholarClass);
 
