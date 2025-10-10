@@ -1,6 +1,5 @@
 package co.istad.exstadapi.domain.vo;
 
-import co.istad.exstadapi.domain.vo.FaqSection;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
