@@ -1,7 +1,10 @@
 package co.istad.exstadapi.features.scholar;
 
 import co.istad.exstadapi.base.BasedMessage;
+import co.istad.exstadapi.domain.vo.Specialist;
+import co.istad.exstadapi.enums.ScholarStatus;
 import co.istad.exstadapi.features.scholar.dto.*;
+import co.istad.exstadapi.features.scholar.specialist.dto.SpecialistSetup;
 
 import java.util.List;
 
@@ -22,9 +25,11 @@ public interface ScholarService {
     BasedMessage softDeleteScholarByUuid(String uuid);
     BasedMessage restoreScholarByUuid(String uuid);
     BasedMessage hardDeleteScholarByUuid(String uuid);
+    BasedMessage markIsEmployed(String uuid);
 
     List<ScholarResponse> getAllScholarsByOpeningProgramUuid(String openingProgramUuid);
-
+    List<ScholarResponse> getAllScholarsByStatus(ScholarStatus scholarStatus);
+    List<ScholarResponse> getAllAbroadScholars();
     ScholarResponse getCurrentScholar();
     ScholarResponse updateCurrentScholar(ScholarRequestUpdate scholarRequestUpdate);
 
@@ -32,4 +37,10 @@ public interface ScholarService {
     List<SocialLinkResponse> getScholarSocialLink(String uuid);
     SocialLinkResponse updateSocialLinkStatus(String scholarUuid, String socialLinkUuid, boolean status);
     void deleteSocialLink(String scholarUuid, String socialLinkUuid);
+
+    ScholarResponse setUpSpecialist(String uuid, List<SpecialistSetup> specialistSetups);
+    List<Specialist> getSpecialistSetups(String uuid);
+
+    List<ScholarResponse> getAllScholarsByClassRoomName(String classRoomName);
+    List<ScholarResponse> getAllScholarsByProgramUuid(String programUuid);
 }

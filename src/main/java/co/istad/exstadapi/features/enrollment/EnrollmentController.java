@@ -2,6 +2,7 @@ package co.istad.exstadapi.features.enrollment;
 
 import co.istad.exstadapi.features.enrollment.dto.EnrollmentRequest;
 import co.istad.exstadapi.features.enrollment.dto.EnrollmentRequestUpdate;
+import co.istad.exstadapi.features.enrollment.dto.SetScoreExamScholar;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -31,10 +32,10 @@ public class EnrollmentController {
         return new ResponseEntity<>(Map.of("enrollments",enrollmentService.getAllEnrollments()), HttpStatus.OK);
     }
 
-    @GetMapping("/accepted")
+    @GetMapping("/interviewed")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<?> getAllAcceptedEnrollments() {
-        return ResponseEntity.ok(enrollmentService.getAllAcceptedEnrollments());
+    public ResponseEntity<?> getAllInterviewedEnrollments() {
+        return ResponseEntity.ok(enrollmentService.getAllInterviewedEnrollments());
     }
 
     @GetMapping("/achieved")
@@ -47,6 +48,40 @@ public class EnrollmentController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> getAllPassedEnrollments() {
         return ResponseEntity.ok(enrollmentService.getAllPassedEnrollments());
+    }
+
+    @GetMapping("/{openingProgramUuid}/all")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<?> getAllEnrollmentsByOpeningProgram( @PathVariable String openingProgramUuid) {
+        return new ResponseEntity<>(Map.of("enrollments",enrollmentService.getAllEnrollmentsByOpeningProgramUuid(openingProgramUuid)), HttpStatus.OK);
+    }
+
+    @GetMapping("/{openingProgramUuid}/interviewed")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<?> getAllInterviewedEnrollmentsByOpeningProgram( @PathVariable String openingProgramUuid) {
+        return ResponseEntity.ok(enrollmentService.getAllInterviewedEnrollmentsByOpeningProgramUuid(openingProgramUuid));
+    }
+
+    @GetMapping("/{openingProgramUuid}/achieved")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<?> getAllAchievedEnrollmentsByOpeningProgram( @PathVariable String openingProgramUuid) {
+        return ResponseEntity.ok(enrollmentService.getAllAchievedEnrollmentsByOpeningProgramUuid(openingProgramUuid));
+    }
+
+    @PutMapping("/{uuid}/is-scholar")
+    public ResponseEntity<?> markIsScholar(@PathVariable String uuid) {
+        return new ResponseEntity<>(enrollmentService.markIsScholar(uuid), HttpStatus.OK);
+    }
+
+    @PutMapping("/{uuid}/score-exam")
+    public ResponseEntity<?> setScoreExamScholar(@PathVariable String uuid, @RequestBody @Valid SetScoreExamScholar setScoreExamScholar){
+        return new ResponseEntity<>(enrollmentService.setScoreExamScholar(uuid, setScoreExamScholar), HttpStatus.OK);
+    }
+
+    @GetMapping("{openingProgramUuid}/passed")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<?> getAllPassedEnrollmentsByOpeningProgram( @PathVariable String openingProgramUuid) {
+        return ResponseEntity.ok(enrollmentService.getAllPassedEnrollmentsByOpeningProgramUuid(openingProgramUuid));
     }
 
     @GetMapping("/{uuid}")

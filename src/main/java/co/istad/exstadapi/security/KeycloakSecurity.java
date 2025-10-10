@@ -24,6 +24,90 @@ public class KeycloakSecurity {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http.authorizeHttpRequests(endpoint -> endpoint
+//                // Register and Login can access by anyone
+//                .requestMatchers("/api/auth/**").permitAll()
+//                // User and create into our db and keycloak
+//                .requestMatchers("/api/v1/users/register").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
+//                .requestMatchers("/api/v1/users/login").permitAll()
+//                .requestMatchers(HttpMethod.POST,"/api/v1/users/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
+//                .requestMatchers(HttpMethod.GET,"/api/v1/users/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
+//                // Province
+//                .requestMatchers(HttpMethod.GET,"/api/v1/provinces/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
+//                // University
+//                .requestMatchers(HttpMethod.POST,"/api/v1/universities/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
+//                .requestMatchers(HttpMethod.PATCH,"/api/v1/universities/**").hasAnyRole("ADMIN","INSTRUCTOR1")
+//                .requestMatchers(HttpMethod.GET,"/api/v1/universities/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
+//                .requestMatchers(HttpMethod.DELETE,"/api/v1/universities/**").hasAnyRole("ADMIN")
+//                // Program
+//                .requestMatchers(HttpMethod.GET,"/api/v1/programs/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
+//                .requestMatchers(HttpMethod.POST,"/api/v1/programs/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
+//                .requestMatchers(HttpMethod.PUT,"/api/v1/programs/**").hasAnyRole("ADMIN","INSTRUCTOR1")
+//                .requestMatchers(HttpMethod.DELETE,"/api/v1/programs/**").hasAnyRole("ADMIN")
+//                // Badge
+//                .requestMatchers(HttpMethod.GET,"/api/v1/badges/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
+//                .requestMatchers(HttpMethod.POST,"/api/v1/badges/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
+//                .requestMatchers(HttpMethod.PUT,"/api/v1/badges/**").hasAnyRole("ADMIN","INSTRUCTOR1")
+//                .requestMatchers(HttpMethod.DELETE,"/api/v1/badges/**").hasAnyRole("ADMIN")
+//                // Upload file
+//                .requestMatchers("/api/v1/documents/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
+//                .requestMatchers("/documents/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
+//                // Current Address
+//                .requestMatchers(HttpMethod.GET,"/api/v1/current-addresses/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
+//                .requestMatchers(HttpMethod.POST,"/api/v1/current-addresses/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
+//                .requestMatchers(HttpMethod.PUT,"/api/v1/current-addresses/**").hasAnyRole("ADMIN","INSTRUCTOR1")
+//                .requestMatchers(HttpMethod.DELETE,"/api/v1/current-addresses/**").hasAnyRole("ADMIN")
+//                // Scholar
+//                .requestMatchers(HttpMethod.GET,"/api/v1/scholars/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
+//                .requestMatchers(HttpMethod.POST,"/api/v1/scholars/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
+//                .requestMatchers(HttpMethod.PUT,"/api/v1/scholars/**").hasAnyRole("ADMIN","INSTRUCTOR1")
+//                .requestMatchers(HttpMethod.PATCH,"/api/v1/scholars/**").hasAnyRole("ADMIN","INSTRUCTOR1")
+//                .requestMatchers(HttpMethod.DELETE,"/api/v1/scholars/**").hasAnyRole("ADMIN")
+//                // Scholar Badge
+//                .requestMatchers(HttpMethod.GET,"/api/v1/scholars/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
+//                .requestMatchers(HttpMethod.POST,"/api/v1/scholars/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
+//                .requestMatchers(HttpMethod.PATCH,"/api/v1/scholars/**").hasAnyRole("ADMIN","INSTRUCTOR1")
+//                .requestMatchers(HttpMethod.DELETE,"/api/v1/scholars/**").hasAnyRole("ADMIN")
+//                // Opening Program
+//                .requestMatchers(HttpMethod.GET,"/api/v1/opening-programs/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
+//                .requestMatchers(HttpMethod.POST,"/api/v1/opening-programs/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
+//                .requestMatchers(HttpMethod.PUT,"/api/v1/opening-programs/**").hasAnyRole("ADMIN","INSTRUCTOR1")
+//                .requestMatchers(HttpMethod.DELETE,"/api/v1/opening-programs/**").hasAnyRole("ADMIN")
+//                // Class
+//                .requestMatchers(HttpMethod.GET,"/api/v1/classes/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
+//                .requestMatchers(HttpMethod.POST,"/api/v1/classes/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
+//                .requestMatchers(HttpMethod.PUT,"/api/v1/classes/**").hasAnyRole("ADMIN","INSTRUCTOR1")
+//                .requestMatchers(HttpMethod.DELETE,"/api/v1/classes/**").hasAnyRole("ADMIN")
+//                // Enrollment
+//                .requestMatchers(HttpMethod.GET,"/api/v1/enrollments/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
+//                .requestMatchers(HttpMethod.POST,"/api/v1/enrollments/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
+//                .requestMatchers(HttpMethod.PATCH,"/api/v1/enrollments/**").hasAnyRole("ADMIN","INSTRUCTOR1")
+//                .requestMatchers(HttpMethod.PUT,"/api/v1/enrollments/**").hasAnyRole("ADMIN","INSTRUCTOR1")
+//                // Achievement
+//                .requestMatchers(HttpMethod.GET,"/api/v1/achievements/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
+//                .requestMatchers(HttpMethod.POST,"/api/v1/achievements/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
+//                .requestMatchers(HttpMethod.PATCH,"/api/v1/achievements/**").hasAnyRole("ADMIN","INSTRUCTOR1")
+//                .requestMatchers(HttpMethod.DELETE,"/api/v1/achievements/**").hasAnyRole("ADMIN")
+//                // Scholar Achievement
+//                .requestMatchers(HttpMethod.GET,"/api/v1/scholars-achievements/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
+//                .requestMatchers(HttpMethod.POST,"/api/v1/scholars-achievements/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
+//                .requestMatchers(HttpMethod.DELETE,"/api/v1/scholars-achievements/**").hasAnyRole("ADMIN")
+//                // Scholar Class
+//                .requestMatchers(HttpMethod.GET,"/api/v1/scholars-classes/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
+//                .requestMatchers(HttpMethod.POST,"/api/v1/scholars-classes/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
+//                .requestMatchers(HttpMethod.PUT,"/api/v1/scholars-classes/**").hasAnyRole("ADMIN","INSTRUCTOR1")
+//                .requestMatchers(HttpMethod.DELETE,"/api/v1/scholars-classes/**").hasAnyRole("ADMIN")
+//                // Certificate
+//                .requestMatchers(HttpMethod.GET,"/api/v1/certificates/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
+//                .requestMatchers(HttpMethod.POST,"/api/v1/certificates/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
+//                .requestMatchers(HttpMethod.PUT,"/api/v1/certificates/**").hasAnyRole("ADMIN","INSTRUCTOR1")
+//                // Instructor Class
+//                .requestMatchers(HttpMethod.GET,"/api/v1/instructors-classes/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
+//                .requestMatchers(HttpMethod.POST,"/api/v1/instructors-classes/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
+//                .requestMatchers(HttpMethod.PUT,"/api/v1/instructors-classes/**").hasAnyRole("ADMIN","INSTRUCTOR1")
+//                .requestMatchers(HttpMethod.DELETE,"/api/v1/instructors-classes/**").hasAnyRole("ADMIN")
+                .anyRequest().permitAll()
+        );
 
         // Common: CORS & CSRF
         http.csrf(AbstractHttpConfigurer::disable)

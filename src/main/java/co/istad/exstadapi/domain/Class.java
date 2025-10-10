@@ -40,9 +40,6 @@ public class Class extends Auditable {
     @Column(length = 60, nullable = false)
     private String room;
 
-    @Column(length = 60)
-    private String instructor;
-
     @Column(length = 20, nullable = false, unique = true)
     private String classCode;
 
@@ -69,4 +66,7 @@ public class Class extends Auditable {
 
     @OneToMany(mappedBy = "_class")
     private List<ScholarClass> scholarClasses;
+
+    @OneToMany(mappedBy = "_class")
+    private List<Enrollment> enrollments;
 }

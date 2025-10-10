@@ -1,10 +1,12 @@
 package co.istad.exstadapi.features.classes;
 
 import co.istad.exstadapi.domain.Class;
+import co.istad.exstadapi.domain.OpeningProgram;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,9 +14,14 @@ import java.util.Optional;
 public interface ClassRepository extends JpaRepository<Class,Integer> {
 
     Optional<Class> findByUuid(String uuid);
+    Optional<Class> findByRoom(String room);
+    Optional<Class> findByOpeningProgram(OpeningProgram openingProgram);
     List<Class> findAllByIsDeletedFalse();
     Optional<Class> findByRoomIgnoreCase(String room);
     boolean existsByUuid(String uuid);
+    boolean existsByClassCode(String classCode);
+    List<Class> findAllByOpeningProgramAndIsDeletedFalse(OpeningProgram openingProgram);
+
 
     @Modifying
     @Query("UPDATE Class c SET c.isDeleted = true WHERE c.uuid = ?1")
@@ -41,4 +48,6 @@ public interface ClassRepository extends JpaRepository<Class,Integer> {
     @Modifying
     @Query("UPDATE Class c SET c.isWeekend = false WHERE c.uuid = ?1")
     void setToWeekdayByUuid(String uuid);
+
+    List<Class> findAllByOpeningProgram(OpeningProgram openingProgram);
 }

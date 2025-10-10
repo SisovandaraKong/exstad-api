@@ -2,9 +2,11 @@ package co.istad.exstadapi.features.classes;
 
 import co.istad.exstadapi.base.BasedMessage;
 import co.istad.exstadapi.domain.Class;
+import co.istad.exstadapi.domain.OpeningProgram;
 import co.istad.exstadapi.features.classes.dto.ClassRequest;
 import co.istad.exstadapi.features.classes.dto.ClassResponse;
 import co.istad.exstadapi.features.classes.dto.ClassUpdate;
+import co.istad.exstadapi.features.openingProgram.OpeningProgramRepository;
 import co.istad.exstadapi.mapper.ClassMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,6 +21,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ClassServiceImpl implements ClassService {
     private final ClassRepository classRepository;
+    private final OpeningProgramRepository openingProgramRepository;
     private final ClassMapper classMapper;
 
     @Override
@@ -45,7 +48,26 @@ public class ClassServiceImpl implements ClassService {
     }
 
     @Override
+    public List<ClassResponse> getClassByOpeningProgramTitle(String openingProgramTitle) {
+        OpeningProgram openingProgram = openingProgramRepository.findByTitleIgnoreCase(openingProgramTitle)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Opening Program with title " + openingProgramTitle + " not found"));
+        return classRepository.findAllByOpeningProgramAndIsDeletedFalse(openingProgram).stream().map(classMapper::toClassResponse).toList();
+    }
+
+    @Override
+    public List<ClassResponse> getAllClassesByOpeningProgramUuid(String openingProgramUuid) {
+        OpeningProgram openingProgram = openingProgramRepository.findByUuid(openingProgramUuid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Opening Program with UUID " + openingProgramUuid + " not found"));
+        List<Class> classes = classRepository.findAllByOpeningProgramAndIsDeletedFalse(openingProgram);
+        return classes.stream().map(classMapper::toClassResponse).toList();
+    }
+
+
+    @Override
     public ClassResponse createClass(ClassRequest classRequest) {
+        if (classRepository.existsByClassCode(classRequest.classCode())){
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Class code already exists");
+        }
         Class aClass = classMapper.fromClassRequest(classRequest);
         aClass.setUuid(UUID.randomUUID().toString());
         aClass.setIsDeleted(false);

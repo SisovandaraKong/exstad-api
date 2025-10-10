@@ -23,9 +23,20 @@ public class OpeningProgramController {
                 "opening-programs",openingProgramService.getAllOpeningPrograms()), HttpStatus.OK);
     }
 
+    @GetMapping("/program/{slug}")
+    public ResponseEntity<?> getAllOpeningProgramsByProgramSlug(@PathVariable String slug) {
+        return new ResponseEntity<>(Map.of(
+                "opening-programs",openingProgramService.getAllOpeningProgramsByProgramSlug(slug)), HttpStatus.OK);
+    }
+
     @GetMapping("/{uuid}")
     public ResponseEntity<?> getOpeningProgramByUuid(@PathVariable String uuid) {
         return new ResponseEntity<>(openingProgramService.getOpeningProgramByUuid(uuid), HttpStatus.OK);
+    }
+
+    @GetMapping("/scholar/{uuid}")
+    public ResponseEntity<?> getAllOpeningProgramByScholarUuid(@PathVariable String uuid) {
+        return new ResponseEntity<>(openingProgramService.getAllOpeningProgramByScholarUuid(uuid), HttpStatus.OK);
     }
 
     @GetMapping("/slug/{slug}")

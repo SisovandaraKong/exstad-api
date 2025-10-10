@@ -11,12 +11,15 @@ import co.istad.exstadapi.features.program.ProgramRepository;
 import co.istad.exstadapi.features.province.ProvinceRepository;
 import co.istad.exstadapi.features.scholar.ScholarRepository;
 import co.istad.exstadapi.features.university.UniversityRepository;
+import co.istad.exstadapi.features.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.mapstruct.Named;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -31,6 +34,7 @@ public class MapperHelper {
     private final ProgramRepository programRepository;
     private final AchievementRepository achievementRepository;
     private final ClassRepository classRepository;
+    private final UserRepository userRepository;
 
     @Value("${server.public-access}")
     private String publicAccess;
@@ -101,6 +105,7 @@ public class MapperHelper {
         );
     }
 
+
     @Named("toAchievementByUuid")
     public Achievement toAchievementByUuid(final String achievementUuid) {
         return achievementRepository.findByUuid(achievementUuid).orElseThrow(
@@ -112,6 +117,13 @@ public class MapperHelper {
     public Class toClassByUuid(final String classUuid) {
         return classRepository.findByUuid(classUuid).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Class not found")
+        );
+    }
+
+    @Named("toInstructorByUuid")
+    public User toInstructorByUuid(final String instructorUuid) {
+        return userRepository.findByUuid(instructorUuid).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Instructor not found")
         );
     }
 }

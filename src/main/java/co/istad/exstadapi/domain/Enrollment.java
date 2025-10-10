@@ -9,6 +9,7 @@ import lombok.Setter;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Map;
 
@@ -44,10 +45,10 @@ public class Enrollment {
     @Column(nullable = false)
     private LocalDate dob;
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false, length = 100, unique = true)
     private String phoneNumber;
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false, length = 100, unique = true)
     private String email;
 
     @Column(length = 500)
@@ -62,6 +63,10 @@ public class Enrollment {
     @ManyToOne
     private University university;
 
+    @ManyToOne
+    @JoinColumn(nullable = true)
+    private Class _class;
+
     @Column(nullable = false, length = 200)
     private String educationQualification;
 
@@ -69,8 +74,13 @@ public class Enrollment {
     @Column(columnDefinition = "jsonb")
     private Map<String, String> extra;
 
+    @Column(nullable = false, precision = 10, scale = 2)
+    private BigDecimal amount;
+
+    private Boolean isScholar;
+
     @Column(nullable = false)
-    private Boolean isAccepted;
+    private Boolean isInterviewed;
 
     @Column(nullable = false)
     private Boolean isAchieved;
@@ -80,6 +90,9 @@ public class Enrollment {
 
     @Column(nullable = false)
     private Boolean isPassed;
+
+    @Column(precision = 10, scale = 2)
+    private BigDecimal score;
 
     @OneToOne(mappedBy = "enrollment", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn

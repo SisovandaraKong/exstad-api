@@ -17,6 +17,10 @@ public record OpeningProgramRequest(
         @Size(max = 500, message = "Thumbnail URL must not exceed 500 characters")
         String thumbnail,
 
+        @NotBlank(message = "Poster URL is required")
+        @Size(max = 255, message = "Poster URL must not exceed 255 characters")
+        String posterUrl,
+
         @NotBlank(message = "Title is required")
         @Size(min = 3, max = 60, message = "Title must be between 3 and 60 characters")
         String title,
@@ -24,6 +28,10 @@ public record OpeningProgramRequest(
         @Pattern(regexp = "^[a-z0-9]+(?:-[a-z0-9]+)*$", message = "Slug must be lowercase alphanumeric with hyphens")
         @Size(min = 3, max = 100, message = "Slug must be between 3 and 100 characters")
         String slug,
+
+        @NotBlank(message = "Deadline is required")
+        @Size(min = 1, max = 30, message = "Deadline must be between 1 and 30 characters")
+        String deadline,
 
         @NotNull(message = "Total slot is required")
         @Min(value = 1, message = "Total slot must be at least 1")

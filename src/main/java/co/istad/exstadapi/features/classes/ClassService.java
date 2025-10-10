@@ -11,6 +11,8 @@ public interface ClassService {
     List<ClassResponse> getAllClasses();
     ClassResponse getClassByUuid(String uuid);
     ClassResponse getClassByName(String name);
+    List<ClassResponse> getClassByOpeningProgramTitle(String openingProgramTitle);
+    List<ClassResponse> getAllClassesByOpeningProgramUuid(String openingProgramUuid);
     ClassResponse createClass(ClassRequest classRequest);
     ClassResponse updateClass(String uuid, ClassUpdate classUpdate);
     BasedMessage softDeleteClass(String uuid);

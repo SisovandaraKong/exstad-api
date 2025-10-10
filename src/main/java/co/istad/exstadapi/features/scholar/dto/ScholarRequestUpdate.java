@@ -1,5 +1,6 @@
 package co.istad.exstadapi.features.scholar.dto;
 
+import co.istad.exstadapi.enums.ScholarStatus;
 import jakarta.validation.constraints.Size;
 
 public record ScholarRequestUpdate (
@@ -27,6 +28,8 @@ public record ScholarRequestUpdate (
         Boolean isPublic,
 
         @Size(max = 300, message = "Quote must not exceed 300 characters")
-        String quote
+        String quote,
+
+        ScholarStatus status
 ){
 }

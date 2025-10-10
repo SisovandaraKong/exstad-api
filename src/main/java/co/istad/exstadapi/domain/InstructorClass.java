@@ -1,5 +1,6 @@
 package co.istad.exstadapi.domain;
 
+import co.istad.exstadapi.audit.Auditable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,11 +13,14 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "instructors_classes")
-public class InstructorClass {
+public class InstructorClass extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column(nullable = false, unique = true)
+    private String uuid;
 
     @ManyToOne
     @JoinColumn(name = "instructor_id")
@@ -25,4 +29,7 @@ public class InstructorClass {
     @ManyToOne
     @JoinColumn(name = "class_id")
     private Class _class;
+
+    @Column(nullable = false)
+    private Boolean isDeleted;
 }

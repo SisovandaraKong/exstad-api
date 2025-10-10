@@ -1,8 +1,10 @@
 package co.istad.exstadapi.features.openingProgram;
 
 import co.istad.exstadapi.base.BasedMessage;
-import co.istad.exstadapi.domain.OpeningProgram;
+import co.istad.exstadapi.domain.*;
+import co.istad.exstadapi.domain.Class;
 import co.istad.exstadapi.domain.vo.*;
+import co.istad.exstadapi.features.classes.ClassRepository;
 import co.istad.exstadapi.features.openingProgram.activity.dto.ActivitySetUp;
 import co.istad.exstadapi.features.openingProgram.curriculum.dto.OPCurriculumSetUp;
 import co.istad.exstadapi.features.openingProgram.detail.dto.DetailSetUp;
@@ -15,6 +17,11 @@ import co.istad.exstadapi.features.openingProgram.requirement.dto.OPRequirementS
 import co.istad.exstadapi.features.openingProgram.roadmap.dto.OPRoadmapSetUp;
 import co.istad.exstadapi.features.openingProgram.timeline.dto.TimelineSetUp;
 import co.istad.exstadapi.features.program.ProgramRepository;
+import co.istad.exstadapi.features.scholar.ScholarRepository;
+import co.istad.exstadapi.features.scholar.ScholarService;
+import co.istad.exstadapi.features.scholar.dto.ScholarResponse;
+import co.istad.exstadapi.features.scholarClass.ScholarClassRepository;
+import co.istad.exstadapi.features.scholarClass.ScholarClassService;
 import co.istad.exstadapi.mapper.OpeningProgramMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -30,12 +37,25 @@ import java.util.UUID;
 public class OpeningProgramServiceImpl implements OpeningProgramService {
     private final OpeningProgramRepository openingProgramRepository;
     private final OpeningProgramMapper openingProgramMapper;
+    private final ScholarRepository scholarRepository;
+    private final ScholarClassRepository scholarClassRepository;
     private final ProgramRepository programRepository;
 
     @Override
     public List<OpeningProgramResponse> getAllOpeningPrograms() {
         List<OpeningProgram> openingPrograms = openingProgramRepository.findAllByIsDeletedFalse();
         return openingPrograms.
+                stream()
+                .map(openingProgramMapper::toOpeningProgramResponse)
+                .toList();
+    }
+
+    @Override
+    public List<OpeningProgramResponse> getAllOpeningProgramsByProgramSlug(String programSlug) {
+        Program program = programRepository.findBySlug(programSlug).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Program not found")
+        );
+        return openingProgramRepository.findAllByProgramAndIsDeletedFalse(program).
                 stream()
                 .map(openingProgramMapper::toOpeningProgramResponse)
                 .toList();
@@ -164,7 +184,8 @@ public class OpeningProgramServiceImpl implements OpeningProgramService {
                 .map(timelineSetUp -> {
                     Timeline timeline = new Timeline();
                     timeline.setTitle(timelineSetUp.title());
-                    timeline.setDate(timelineSetUp.date());
+                    timeline.setStartDate(timelineSetUp.startDate());
+                    timeline.setEndDate(timelineSetUp.endDate());
                     return timeline;
                 }).toList();
         openingProgram.setTimelines(timelines);
@@ -276,6 +297,25 @@ public class OpeningProgramServiceImpl implements OpeningProgramService {
         openingProgram.setDetails(details);
         openingProgram = openingProgramRepository.save(openingProgram);
         return openingProgramMapper.toOpeningProgramResponse(openingProgram);
+    }
+
+    @Override
+    public List<OpeningProgramResponse> getAllOpeningProgramByScholarUuid(String scholarUuid) {
+        Scholar scholar = scholarRepository.findByUuid(scholarUuid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Scholar not found"));
+        List<ScholarClass> scholarClasses = scholarClassRepository.findAllByScholar(scholar)
+                .stream()
+                .filter(scholarClass -> !scholarClass.getIsDeleted())
+                .toList();
+        List<Class> classes = scholarClasses.stream()
+                .map(ScholarClass::get_class)
+                .toList();
+        List<OpeningProgram> openingPrograms = classes.stream()
+                .map(Class::getOpeningProgram)
+                .toList();
+        return openingPrograms.stream()
+                .map(openingProgramMapper::toOpeningProgramResponse)
+                .toList();
     }
 
     @Override

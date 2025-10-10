@@ -35,6 +35,12 @@ public class ProgramController {
                 programService.getProgramBySlug(slug), HttpStatus.OK);
     }
 
+    @GetMapping("/opening-program/{openingProgramUuid}")
+    public ResponseEntity<?> getProgramByOpeningProgramUuid(@PathVariable String openingProgramUuid){
+        return new ResponseEntity<>(
+                programService.getProgramByOpeningProgramUuid(openingProgramUuid), HttpStatus.OK);
+    }
+
     @GetMapping("/title/{title}")
     public ResponseEntity<?> getProgramByTitle(@PathVariable String title) {
         return new ResponseEntity<>(
