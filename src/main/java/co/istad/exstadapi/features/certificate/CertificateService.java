@@ -18,4 +18,5 @@ public interface CertificateService {
     List<CertificateResponse> getCertificateByScholarAndOpeningProgram(String scholarUuid, String openingProgramUuid);
 
 //    BasedMessage deleteCertificateByScholarAndOpeningProgram(String scholarUuid, String openingProgramUuid);
+//    void removeTemplate(String uuid);
 }

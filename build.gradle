@@ -50,7 +50,9 @@ dependencies {
     implementation 'net.sf.jasperreports:jasperreports-pdf:7.0.3'
     implementation 'org.apache.pdfbox:pdfbox:2.0.30'
 
-
+    implementation 'kh.gov.nbc.bakong_khqr:sdk-java:1.0.0.11'
+    implementation 'com.google.zxing:core:3.5.3'
+    implementation 'com.google.zxing:javase:3.5.3'
 }
 
 tasks.named('test') {

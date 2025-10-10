@@ -349,6 +349,4 @@ public class ProgramServiceImpl implements ProgramService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Program not found"));
         return program.getCurricula();
     }
-
-
 }

@@ -20,7 +20,6 @@ public interface ProgramRepository extends JpaRepository<Program, Integer> {
     List<Program> findAllByIsDeletedFalse();
     Optional<Program> findByOpeningPrograms(OpeningProgram openingProgram);
 
-
     @Modifying
     @Query("UPDATE Program p SET p.isDeleted = true WHERE p.uuid = ?1")
     void softDeleteByUuid(String uuid);

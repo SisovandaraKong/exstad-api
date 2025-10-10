@@ -56,4 +56,10 @@ public class CertificateController {
     public ResponseEntity<?> getAllCertificates(){
         return ResponseEntity.ok(certificateService.getAllCertificates());
     }
+
+//    @PutMapping("/certificates/{uuid}")
+//    void removeTemplateByOpeningProgramUuid(@PathVariable String uuid){
+//        certificateService.removeTemplate(uuid);
+//    }
+
 }
