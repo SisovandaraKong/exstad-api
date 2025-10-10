@@ -80,6 +80,12 @@ public class ProgramServiceImpl implements ProgramService {
 
     @Override
     public ProgramResponse createProgram(ProgramRequest programRequest) {
+        if (programRepository.existsBySlug(programRequest.slug())){
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Slug already exists");
+        }
+        if (programRepository.existsByTitleIgnoreCase(programRequest.title())){
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Title already exists");
+        }
         Program program = programMapper.fromProgramRequest(programRequest);
         program.setHighlights(null);
         program.setProgramOverviews(null);

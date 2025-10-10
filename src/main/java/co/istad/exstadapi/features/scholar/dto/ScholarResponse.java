@@ -1,9 +1,13 @@
 package co.istad.exstadapi.features.scholar.dto;
 
 import co.istad.exstadapi.audit.AuditableDto;
+import co.istad.exstadapi.domain.OpeningProgram;
+import co.istad.exstadapi.domain.vo.Career;
+import co.istad.exstadapi.domain.vo.Specialist;
 import co.istad.exstadapi.enums.Gender;
 import co.istad.exstadapi.enums.Role;
 import co.istad.exstadapi.enums.ScholarStatus;
+import co.istad.exstadapi.features.openingProgram.dto.OpeningProgramResponse;
 import co.istad.exstadapi.features.scholarBadge.dto.ScholarBadgeForScholarResponse;
 
 import java.time.LocalDate;
@@ -36,7 +40,11 @@ public record ScholarResponse(
 
         String bio,
 
-        String major,
+        List<Specialist> specialist,
+
+        List<Career> careers,
+
+        List<String> completedCourses,
 
         String avatar,
 
@@ -49,6 +57,8 @@ public record ScholarResponse(
         Boolean isPublic,
 
         Boolean isAbroad,
+
+        Boolean isEmployed,
 
         ScholarStatus status,
 

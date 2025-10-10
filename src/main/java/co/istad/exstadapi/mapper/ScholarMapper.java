@@ -7,7 +7,7 @@ import co.istad.exstadapi.features.scholar.dto.ScholarRequestUpdate;
 import co.istad.exstadapi.features.scholar.dto.ScholarResponse;
 import org.mapstruct.*;
 
-@Mapper(componentModel = "spring", uses = {MapperHelper.class, AuditableMapper.class, ScholarBadgeMapper.class})
+@Mapper(componentModel = "spring", uses = {MapperHelper.class, AuditableMapper.class, ScholarBadgeMapper.class, OpeningProgramMapper.class})
 public interface ScholarMapper {
 
     @Mapping(source = "university.englishName", target = "university")
@@ -22,6 +22,7 @@ public interface ScholarMapper {
     @Mapping(source = "user.role", target = "role")
     @Mapping(source = "scholarsBadges", target = "badges")
     @Mapping(source = ".", target = "audit")
+//    @Mapping(source = "completedCourses", target = "completedCourses", qualifiedByName = "toOpeningProgramList")
     ScholarResponse fromScholar(Scholar scholar);
 
     @Mapping(source = "university", target = "university", qualifiedByName = "toUniversity")

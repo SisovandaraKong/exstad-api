@@ -18,5 +18,4 @@ public interface AuthService {
     Optional<KeycloakUserResponse> findByEmail(String email);
     Optional<KeycloakUserResponse> findByUsername(String username);
 
-
 }

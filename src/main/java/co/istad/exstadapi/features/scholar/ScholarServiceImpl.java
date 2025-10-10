@@ -1,14 +1,20 @@
 package co.istad.exstadapi.features.scholar;
 
 import co.istad.exstadapi.base.BasedMessage;
-import co.istad.exstadapi.domain.OpeningProgram;
-import co.istad.exstadapi.domain.Scholar;
-import co.istad.exstadapi.domain.User;
+import co.istad.exstadapi.domain.*;
+import co.istad.exstadapi.domain.Class;
+import co.istad.exstadapi.domain.vo.Career;
 import co.istad.exstadapi.domain.vo.SocialLink;
+import co.istad.exstadapi.domain.vo.Specialist;
 import co.istad.exstadapi.enums.Role;
 import co.istad.exstadapi.enums.ScholarStatus;
+import co.istad.exstadapi.features.classes.ClassRepository;
 import co.istad.exstadapi.features.openingProgram.OpeningProgramRepository;
+import co.istad.exstadapi.features.program.ProgramRepository;
+import co.istad.exstadapi.features.scholar.career.dto.CareerSetup;
 import co.istad.exstadapi.features.scholar.dto.*;
+import co.istad.exstadapi.features.scholar.specialist.dto.SpecialistSetup;
+import co.istad.exstadapi.features.scholarClass.ScholarClassRepository;
 import co.istad.exstadapi.features.user.UserRepository;
 import co.istad.exstadapi.features.user.UserService;
 import co.istad.exstadapi.features.user.dto.UserRequest;
@@ -33,6 +39,9 @@ public class ScholarServiceImpl implements ScholarService {
     private final UserService userService;
     private final UserRepository userRepository;
     private final OpeningProgramRepository openingProgramRepository;
+    private final ClassRepository classRepository;
+    private final ProgramRepository programRepository;
+    private final ScholarClassRepository scholarClassRepository;
 
     @Override
     public ScholarResponse createScholar(ScholarRequest scholarRequest) {
@@ -66,7 +75,10 @@ public class ScholarServiceImpl implements ScholarService {
         );
 
         Scholar scholar = scholarMapper.toScholar(scholarRequest);
-        scholar.setMajor(null);
+        scholar.setIsEmployed(false);
+        scholar.setSpecialist(null);
+        scholar.setCareers(null);
+        scholar.setCompletedCourses(new ArrayList<>());
         scholar.setUser(user);
         scholar.setUuid(user.getUuid());
         scholar.setIsDeleted(false);
@@ -74,16 +86,6 @@ public class ScholarServiceImpl implements ScholarService {
         scholar.setIsAbroad(false);
         scholar.setSocialLink(List.of());
         return scholarMapper.fromScholar(scholarRepository.save(scholar));
-    }
-
-    @Override
-    public ScholarResponse setMajorToAlumniScholar(SetMajorToAlumniScholar setMajorToAlumniScholar, String uuid) {
-        Scholar scholar = scholarRepository.findByUuid(uuid).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Scholar not found")
-        );
-        scholar.setMajor(setMajorToAlumniScholar.major());
-        scholar = scholarRepository.save(scholar);
-        return scholarMapper.fromScholar(scholar);
     }
 
     @Override
@@ -176,6 +178,16 @@ public class ScholarServiceImpl implements ScholarService {
         }
             scholarRepository.deleteByUuid(uuid);
             return new BasedMessage("Scholar hard deleted successfully");
+    }
+
+    @Override
+    public BasedMessage markIsEmployed(String uuid) {
+        Scholar scholar = scholarRepository.findByUuid(uuid).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Scholar not found")
+        );
+        scholar.setIsEmployed(true);
+        scholarRepository.save(scholar);
+        return new BasedMessage("Scholar marked as employed");
     }
 
     @Override
@@ -287,6 +299,127 @@ public class ScholarServiceImpl implements ScholarService {
         );
         socialLink.setIsActive(true);
         scholarRepository.save(scholar);
+    }
+
+    @Override
+    public ScholarResponse setUpSpecialist(String uuid, List<SpecialistSetup> specialistSetups) {
+        Scholar scholar = scholarRepository.findByUuid(uuid).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Scholar not found")
+        );
+        List<Specialist> specialists = specialistSetups.stream()
+                .map(specialistSetup -> {
+                    Specialist specialist = new Specialist();
+                    specialist.setUuid(UUID.randomUUID().toString());
+                    specialist.setCountry(specialistSetup.country());
+                    specialist.setSpecialist(specialistSetup.specialist());
+                    specialist.setUniversityName(specialistSetup.universityName());
+                    specialist.setAbout(specialistSetup.about());
+                    specialist.setDegreeType(specialistSetup.degreeType());
+                    return specialist;
+                }).toList();
+        scholar.setSpecialist(specialists);
+        scholar = scholarRepository.save(scholar);
+        return scholarMapper.fromScholar(scholar);
+    }
+
+    @Override
+    public List<Specialist> getSpecialistSetups(String uuid) {
+        Scholar scholar = scholarRepository.findByUuid(uuid).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Scholar not found")
+        );
+        return scholar.getSpecialist();
+    }
+
+    @Override
+    public ScholarResponse setUpCareer(String uuid, List<CareerSetup> careerSetups) {
+        Scholar scholar = scholarRepository.findByUuid(uuid).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Scholar not found")
+        );
+        List<Career> careers = careerSetups.stream()
+                .map(careerSetup -> {
+                    Career career = new Career();
+                    career.setUuid(UUID.randomUUID().toString());
+                    career.setCompany(careerSetup.company());
+                    career.setInterest(careerSetup.interest());
+                    career.setSalary(careerSetup.salary());
+                    career.setCompanyType(careerSetup.companyType());
+                    career.setPosition(careerSetup.position());
+                    return career;
+                }).toList();
+        scholar.setCareers(careers);
+        scholar = scholarRepository.save(scholar);
+        return scholarMapper.fromScholar(scholar);
+    }
+
+    @Override
+    public List<Career> getCareers(String uuid) {
+        Scholar scholar = scholarRepository.findByUuid(uuid).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Scholar not found")
+        );
+        return scholar.getCareers();
+    }
+
+    @Override
+    public List<ScholarResponse> getAllScholarsByClassRoomName(String classRoomName) {
+        Class _class = classRepository.findByRoom(classRoomName).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Class not found")
+        );
+        List<ScholarClass> scholarClasses = scholarClassRepository.findAllBy_class(_class);
+        List<Scholar> scholars = scholarClasses.stream()
+                .filter(scholarClass -> !scholarClass.getIsDeleted())
+                .map(ScholarClass::getScholar)
+                .toList();
+        return scholars.stream()
+                .map(scholarMapper::fromScholar)
+                .toList();
+    }
+
+    @Override
+    public List<ScholarResponse> getAllScholarsByProgramUuid(String programUuid) {
+        Program program = programRepository.findByUuid(programUuid).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Program not found")
+        );
+        List<OpeningProgram> openingPrograms = openingProgramRepository.findAllByProgram(program)
+                .stream()
+                .filter(openingProgram -> !openingProgram.getIsDeleted())
+                .toList();
+        List<Class> classes = openingPrograms.stream()
+                .filter(openingProgram -> !openingProgram.getIsDeleted())
+                .flatMap(openingProgram -> openingProgram.getClasses().stream())
+                .toList();
+        List<ScholarClass> scholarClasses = classes.stream()
+                .filter(aClass -> !aClass.getIsDeleted())
+                .flatMap(aClass -> scholarClassRepository.findAllBy_class(aClass).stream())
+                .filter(scholarClass -> !scholarClass.getIsDeleted())
+                .toList();
+        List<Scholar> scholars = scholarClasses.stream()
+                .map(ScholarClass::getScholar)
+                .toList();
+
+        return scholars.stream()
+                .map(scholarMapper::fromScholar)
+                .toList();
+    }
+
+    @Override
+    public ScholarResponse markCompletedCourse(String uuid, String openingProgramUuid) {
+        Scholar scholar = scholarRepository.findByUuid(uuid).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Scholar not found")
+        );
+        OpeningProgram openingProgram = openingProgramRepository.findByUuid(openingProgramUuid).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Opening Program not found")
+        );
+        scholar.getCompletedCourses().add(openingProgram.getUuid());
+        scholar = scholarRepository.save(scholar);
+        return scholarMapper.fromScholar(scholar);
+    }
+
+    @Override
+    public List<String> getAllCompletedCoursesByScholarUuid(String uuid) {
+        Scholar scholar = scholarRepository.findByUuid(uuid).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Scholar not found")
+        );
+        return scholar.getCompletedCourses();
     }
 
     @Override

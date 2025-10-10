@@ -15,6 +15,8 @@ public interface ProgramRepository extends JpaRepository<Program, Integer> {
     Optional<Program> findBySlug(String slug);
     Optional<Program> findByTitleIgnoreCase(String title);
     boolean existsByUuid(String uuid);
+    boolean existsBySlug(String slug);
+    boolean existsByTitleIgnoreCase(String title);
     List<Program> findAllByIsDeletedFalse();
     Optional<Program> findByOpeningPrograms(OpeningProgram openingProgram);
 

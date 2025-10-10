@@ -1,12 +1,15 @@
 package co.istad.exstadapi.features.enrollment;
 
+import co.istad.exstadapi.base.BasedMessage;
 import co.istad.exstadapi.domain.Class;
 import co.istad.exstadapi.domain.Enrollment;
 import co.istad.exstadapi.domain.OpeningProgram;
+import co.istad.exstadapi.domain.Scholar;
 import co.istad.exstadapi.features.classes.ClassRepository;
 import co.istad.exstadapi.features.enrollment.dto.EnrollmentRequest;
 import co.istad.exstadapi.features.enrollment.dto.EnrollmentRequestUpdate;
 import co.istad.exstadapi.features.enrollment.dto.EnrollmentResponse;
+import co.istad.exstadapi.features.enrollment.dto.SetScoreExamScholar;
 import co.istad.exstadapi.features.openingProgram.OpeningProgramRepository;
 import co.istad.exstadapi.mapper.EnrollmentMapper;
 import lombok.RequiredArgsConstructor;
@@ -29,12 +32,20 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 
     @Override
     public EnrollmentResponse createEnrollment(EnrollmentRequest enrollmentRequest) {
+        if (enrollmentRepository.existsByEmail(enrollmentRequest.email())){
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Email is already taken");
+        }
+        if (enrollmentRepository.existsByPhoneNumber(enrollmentRequest.phoneNumber())){
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Phone number is already taken");
+        }
         Enrollment enrollment = enrollmentMapper.toEnrollment(enrollmentRequest);
         if (enrollmentRequest.amount()==null){
             enrollment.setAmount(BigDecimal.ZERO);
         } else {
             enrollment.setAmount(enrollmentRequest.amount());
         }
+        enrollment.setScore(BigDecimal.ZERO);
+        enrollment.setIsScholar(false);
         enrollment.setUuid(UUID.randomUUID().toString());
         enrollment.setIsInterviewed(false);
         enrollment.setIsAchieved(false);
@@ -76,6 +87,24 @@ public class EnrollmentServiceImpl implements EnrollmentService {
     @Override
     public EnrollmentResponse getEnrollment(String uuid) {
         return enrollmentMapper.fromEnrollment(getEnrollmentByUuid(uuid));
+    }
+
+    @Override
+    public BasedMessage markIsScholar(String uuid) {
+        Enrollment enrollment = enrollmentRepository.findByUuid(uuid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Enrollment not found"));
+        enrollment.setIsScholar(true);
+        enrollmentRepository.save(enrollment);
+        return new BasedMessage("Enrollment has been marked as scholar");
+    }
+
+    @Override
+    public EnrollmentResponse setScoreExamScholar(String uuid, SetScoreExamScholar setScoreExamScholar) {
+        Enrollment enrollment = enrollmentRepository.findByUuid(uuid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Enrollment not found"));
+        enrollment.setScore(setScoreExamScholar.score());
+        enrollment = enrollmentRepository.save(enrollment);
+        return enrollmentMapper.fromEnrollment(enrollment);
     }
 
     @Override

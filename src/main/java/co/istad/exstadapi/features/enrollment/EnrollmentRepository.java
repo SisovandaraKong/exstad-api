@@ -11,6 +11,8 @@ import java.util.Optional;
 public interface EnrollmentRepository extends JpaRepository<Enrollment, Integer> {
 
     List<Enrollment> findAllByIsAchieved(Boolean isAchieved);
+    boolean existsByEmail(String email);
+    boolean existsByPhoneNumber(String phoneNumber);
     List<Enrollment> findAllByOpeningProgramAndIsAchieved(OpeningProgram openingProgram,Boolean isAchieved);
 
     Optional<Enrollment> findByUuid(String uuid);

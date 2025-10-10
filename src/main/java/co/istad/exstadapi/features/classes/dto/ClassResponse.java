@@ -9,7 +9,6 @@ import java.time.LocalTime;
 public record ClassResponse(
         String room,
         String uuid,
-        String instructor,
         String classCode,
         String telegram,
         String openingProgramName,
