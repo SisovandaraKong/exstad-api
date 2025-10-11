@@ -23,4 +23,3 @@ public interface OpeningProgramMapper {
     void updateOpeningProgramFromRequest(OpeningProgramUpdate openingProgramUpdate,
                                          @MappingTarget OpeningProgram openingProgram);
 }
-
