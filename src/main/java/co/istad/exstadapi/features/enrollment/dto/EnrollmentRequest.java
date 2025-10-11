@@ -62,6 +62,5 @@ public record EnrollmentRequest(
         String classUuid,
 
         @DecimalMin(value = "0.0", message = "Amount must be zero or positive")
-        @Digits(integer = 8, fraction = 2, message = "Amount must have at most 8 integer digits and 2 decimal places")
         BigDecimal amount
 ) {}
