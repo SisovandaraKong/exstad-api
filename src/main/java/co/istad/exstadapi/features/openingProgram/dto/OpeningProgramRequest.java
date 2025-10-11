@@ -40,17 +40,14 @@ public record OpeningProgramRequest(
 
         @NotNull(message = "Original fee is required")
         @DecimalMin(value = "0.0", message = "Original fee must be zero or positive")
-        @Digits(integer = 8, fraction = 2, message = "Original fee must have at most 8 integer digits and 2 decimal places")
         BigDecimal originalFee,
 
         @NotNull(message = "Scholarship is required")
         @DecimalMin(value = "0.0", message = "Scholarship must be zero or positive")
-        @Digits(integer = 3, fraction = 2, message = "Scholarship must have at most 3 integer digits and 2 decimal places")
         BigDecimal scholarship,
 
         @NotNull(message = "Price is required")
         @DecimalMin(value = "0.0", message = "Price must be zero or positive")
-        @Digits(integer = 8, fraction = 2, message = "Price must have at most 8 integer digits and 2 decimal places")
         BigDecimal price,
 
         @Size(max = 200, message = "Telegram group must not exceed 200 characters")

@@ -7,7 +7,6 @@ import java.math.BigDecimal;
 
 public record SetScoreExamScholar(
         @DecimalMin(value = "0.0", message = "Original fee must be zero or positive")
-        @Digits(integer = 8, fraction = 2, message = "Original fee must have at most 8 integer digits and 2 decimal places")
         BigDecimal score
 ) {
 }

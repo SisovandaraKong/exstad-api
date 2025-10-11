@@ -7,7 +7,6 @@ public record CareerSetup(
 
         @NotNull(message = "Salary is required")
         @DecimalMin(value = "0.0", inclusive = false, message = "Salary must be greater than 0")
-        @Digits(integer = 10, fraction = 2, message = "Salary must have at most 10 digits and 2 decimal places")
         BigDecimal salary,
 
         @NotBlank(message = "Company name is required")
