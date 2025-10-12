@@ -44,8 +44,12 @@ public class EnrollmentServiceImpl implements EnrollmentService {
         } else {
             enrollment.setAmount(enrollmentRequest.amount());
         }
+        if (enrollmentRequest.isScholar()==null){
+            enrollment.setIsScholar(false);
+        } else {
+            enrollment.setIsScholar(enrollmentRequest.isScholar());
+        }
         enrollment.setScore(BigDecimal.ZERO);
-        enrollment.setIsScholar(false);
         enrollment.setUuid(UUID.randomUUID().toString());
         enrollment.setIsInterviewed(false);
         enrollment.setIsAchieved(false);

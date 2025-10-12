@@ -21,6 +21,7 @@ public record EnrollmentRequestUpdate(
         String avtar,
         @DecimalMin(value = "0.0", message = "Amount must be zero or positive")
         BigDecimal amount,
+        Boolean isScholar,
         @Size(min = 2, max = 50, message = "Province must be between 2 and 50 characters")
         String province,
         @Size(min = 5, max = 200, message = "Current address must be between 5 and 200 characters")
