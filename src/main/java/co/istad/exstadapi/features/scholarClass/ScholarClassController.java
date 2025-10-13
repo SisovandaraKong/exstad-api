@@ -62,6 +62,11 @@ public class ScholarClassController {
         return new ResponseEntity<>(scholarClassService.getAllScholarsByOneClassUuid(classUuid), HttpStatus.OK);
     }
 
+    @GetMapping("/classes/{classUuid}/scholar-classes")
+    public ResponseEntity<?> getAllScholarsClassesByOneClass(@PathVariable String classUuid) {
+        return new ResponseEntity<>(scholarClassService.getAllScholarsClassesByOneClassUuid(classUuid), HttpStatus.OK);
+    }
+
     @PutMapping("/{uuid}/mark-as-paid")
     public ResponseEntity<?> markAsPaid(@PathVariable String uuid) {
         return new ResponseEntity<>(scholarClassService.markAsPaid(uuid), HttpStatus.OK);

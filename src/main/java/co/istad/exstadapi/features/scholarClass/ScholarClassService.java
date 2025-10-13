@@ -22,6 +22,7 @@ public interface ScholarClassService {
 
     List<ClassResponse> getAllClassesByOneScholarUuid(String scholarUuid);
     List<ScholarResponse> getAllScholarsByOneClassUuid(String classUuid);
+    List<ScholarClassResponse> getAllScholarsClassesByOneClassUuid(String classUuid);
 
     BasedMessage markAsPaid(String uuid);
     BasedMessage markAsUnpaid(String uuid);

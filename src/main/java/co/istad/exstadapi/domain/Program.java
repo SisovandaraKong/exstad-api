@@ -36,17 +36,14 @@ public class Program extends Auditable {
     @Column(length = 60, nullable = false, unique = true)
     private String title;
 
-    @Column(length = 60, nullable = false)
+    @Column(length = 150, nullable = false)
     private String subtitle;
 
     @Column(columnDefinition = "TEXT")
     private String description;
 
     @Column(length = 500)
-    private String posterUrl;
-
-    @Column(length = 500)
-    private String thumbnailUrl;
+    private String logoUrl;
 
     @Column(length = 100)
     private String bgColor;

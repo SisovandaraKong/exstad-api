@@ -140,6 +140,17 @@ public class ScholarClassServiceImpl implements ScholarClassService{
                 .toList();
     }
 
+    @Override
+    public List<ScholarClassResponse> getAllScholarsClassesByOneClassUuid(String classUuid) {
+        Class _class = classRepository.findByUuid(classUuid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Class with UUID "+ classUuid +" not found"));
+        List<ScholarClass> scholarClasses = scholarClassRepository.findAllBy_class(_class);
+        return scholarClasses.stream()
+                .filter(scholarClass -> !scholarClass.getIsDeleted())
+                .map(scholarClassMapper::toScholarClassResponse)
+                .toList();
+    }
+
     @Transactional
     @Override
     public BasedMessage markAsPaid(String uuid) {

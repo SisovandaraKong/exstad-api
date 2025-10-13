@@ -20,8 +20,8 @@ public record EnrollmentRequestUpdate(
         @Size(max = 255, message = "Avtar URL must be at most 255 characters")
         String avtar,
         @DecimalMin(value = "0.0", message = "Amount must be zero or positive")
-        @Digits(integer = 8, fraction = 2, message = "Amount must have at most 8 integer digits and 2 decimal places")
         BigDecimal amount,
+        Boolean isScholar,
         @Size(min = 2, max = 50, message = "Province must be between 2 and 50 characters")
         String province,
         @Size(min = 5, max = 200, message = "Current address must be between 5 and 200 characters")
