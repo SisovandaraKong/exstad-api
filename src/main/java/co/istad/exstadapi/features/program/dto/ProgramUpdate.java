@@ -29,12 +29,9 @@ public record ProgramUpdate(
         @Size(min = 5, max = 1000, message = "Description must be between 5 and 1000 characters")
         String description,
 
-        @Size(max = 255, message = "Thumbnail URL must be max 255 characters")
-        String thumbnailUrl,
-
-        @NotBlank(message = "Poster URL is required")
-        @Size(max = 255, message = "Poster URL must not exceed 255 characters")
-        String posterUrl,
+        @NotBlank(message = "Logo URL is required")
+        @Size(max = 255, message = "Logo URL must not exceed 255 characters")
+        String logoUrl,
 
         @Size(max = 100, min = 4, message = "Background color must be min 4 and max 100 characters")
         String bgColor,

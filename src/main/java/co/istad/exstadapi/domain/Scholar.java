@@ -1,6 +1,7 @@
 package co.istad.exstadapi.domain;
 
 import co.istad.exstadapi.audit.Auditable;
+import co.istad.exstadapi.domain.vo.Career;
 import co.istad.exstadapi.domain.vo.SocialLink;
 import co.istad.exstadapi.domain.vo.Specialist;
 import co.istad.exstadapi.enums.ScholarStatus;
@@ -58,6 +59,14 @@ public class Scholar extends Auditable {
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(columnDefinition = "jsonb")
     private List<Specialist> specialist;
+
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(columnDefinition = "jsonb")
+    private List<Career> careers;
+
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(columnDefinition = "jsonb")
+    private List<String> completedCourses;
 
     @Column(length = 500)
     private String avatar;

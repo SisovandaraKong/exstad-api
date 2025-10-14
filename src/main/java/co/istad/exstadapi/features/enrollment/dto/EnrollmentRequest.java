@@ -45,6 +45,8 @@ public record EnrollmentRequest(
         @Size(min = 2, max = 50, message = "Province must be between 2 and 50 characters")
         String province,
 
+        Boolean isScholar,
+
         @NotBlank(message = "Current address is required")
         @Size(min = 3, max = 200, message = "Current address must be between 3 and 200 characters")
         String currentAddress,
@@ -62,6 +64,5 @@ public record EnrollmentRequest(
         String classUuid,
 
         @DecimalMin(value = "0.0", message = "Amount must be zero or positive")
-        @Digits(integer = 8, fraction = 2, message = "Amount must have at most 8 integer digits and 2 decimal places")
         BigDecimal amount
 ) {}

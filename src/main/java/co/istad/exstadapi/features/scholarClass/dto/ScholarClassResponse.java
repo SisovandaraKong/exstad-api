@@ -1,11 +1,11 @@
 package co.istad.exstadapi.features.scholarClass.dto;
 
 import co.istad.exstadapi.audit.AuditableDto;
+import co.istad.exstadapi.features.scholar.dto.ScholarResponse;
 
 public record ScholarClassResponse(
         String uuid,
-        String scholarUuid,
-        String scholarName,
+        ScholarResponse scholar,
         String classUuid,
         String room,
         Boolean isReminded,
