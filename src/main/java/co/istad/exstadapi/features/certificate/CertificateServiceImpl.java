@@ -83,7 +83,6 @@ public class CertificateServiceImpl implements CertificateService {
 
             String certiFilename = scholar.getUser().getEnglishName().replaceAll(" ", "_").toLowerCase()
                     + "_" + openingProgram.getTitle().toLowerCase().replace(" ", "_") + "_gen" +openingProgram.getGeneration() + "_certificate";
-            // upload certificate to minio
             DocumentResponse documentResponse = documentService.uploadDocument(
                     programSlug,
                     openingProgram.getGeneration(),
@@ -103,7 +102,7 @@ public class CertificateServiceImpl implements CertificateService {
             certificate.setIsDeleted(false);
             certificate.setIsVerified(false);
             certificate.setVerifiedAt(null);
-            // Set certificateUrl to null beacause it's not verified yet
+            // Set certificateUrl to null because it's not verified yet
             certificate.setCertificateUrl(null);
             certificateRepository.save(certificate);
 
@@ -149,6 +148,22 @@ public class CertificateServiceImpl implements CertificateService {
         if(certificates.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Certificate not found");
         }
+        return certificates.stream().map(certificateMapper::toCertificateResponse).toList();
+    }
+
+    @Override
+    public List<CertificateResponse> getCertificateByScholar(String scholarUuid) {
+        Scholar scholar = scholarRepository.
+                findByUuid(scholarUuid).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Scholar not found"));
+        List<Certificate> certificates = certificateRepository.findByScholar(scholar);
+        return certificates.stream().map(certificateMapper::toCertificateResponse).toList();
+    }
+
+    @Override
+    public List<CertificateResponse> getCertificateByOpeningProgram(String openingProgramUuid) {
+        OpeningProgram openingProgram = openingProgramRepository.findByUuid(openingProgramUuid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Opening Program not found"));
+        List<Certificate> certificates = certificateRepository.findByOpeningProgram(openingProgram);
         return certificates.stream().map(certificateMapper::toCertificateResponse).toList();
     }
 

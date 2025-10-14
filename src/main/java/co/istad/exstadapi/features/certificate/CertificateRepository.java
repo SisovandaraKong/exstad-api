@@ -22,6 +22,7 @@ public interface CertificateRepository extends JpaRepository<Certificate, Intege
             @Param("scholar") Scholar scholar,
             @Param("openingProgram") OpeningProgram openingProgram);
     Optional<Certificate> findByUuid(String uuid);
+    List<Certificate> findByScholar(Scholar scholar);
 
     @Query("SELECT c FROM Certificate c " +
             "WHERE c.openingProgram = :openingProgram")
