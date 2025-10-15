@@ -18,6 +18,7 @@ public record OpeningProgramResponse(
         String posterUrl,
         Integer totalSlot,
         BigDecimal originalFee,
+        BigDecimal registerFee,
         Float scholarship,
         Float price,
         String telegramGroup,
