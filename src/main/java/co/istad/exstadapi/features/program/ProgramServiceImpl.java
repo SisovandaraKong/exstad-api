@@ -192,7 +192,7 @@ public class ProgramServiceImpl implements ProgramService {
                 .map(roadmapSetUp -> {
                     Roadmap roadmap = new Roadmap();
                     roadmap.setEdges(roadmapSetUp.edges().stream()
-                    .map(edgeSetUp -> {
+                            .map(edgeSetUp -> {
                                 Roadmap.Edge edge = new Roadmap.Edge();
                                 edge.setId(edgeSetUp.id());
                                 edge.setAnimated(edgeSetUp.animated());
@@ -224,6 +224,7 @@ public class ProgramServiceImpl implements ProgramService {
         return programMapper.toProgramResponse(program);
     }
 
+
     @Override
     public ProgramResponse setUpFaqs(String uuid, List<FaqSetUp> faqSetUps) {
         Program program = programRepository.findByUuid(uuid)
@@ -254,13 +255,13 @@ public class ProgramServiceImpl implements ProgramService {
         Program program = programRepository.findByUuid(uuid)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Program not found"));
         List<Requirement> requirements = requirementSetUps.stream()
-                        .map(requirementSetUp -> {
-                            Requirement requirement = new Requirement();
-                            requirement.setTitle(requirementSetUp.title());
-                            requirement.setSubtitle(requirementSetUp.subtitle());
-                            requirement.setDescription(requirementSetUp.description());
-                            return requirement;
-                        }).toList();
+                .map(requirementSetUp -> {
+                    Requirement requirement = new Requirement();
+                    requirement.setTitle(requirementSetUp.title());
+                    requirement.setSubtitle(requirementSetUp.subtitle());
+                    requirement.setDescription(requirementSetUp.description());
+                    return requirement;
+                }).toList();
         program.setRequirements(requirements);
         program = programRepository.save(program);
         return programMapper.toProgramResponse(program);
@@ -271,17 +272,18 @@ public class ProgramServiceImpl implements ProgramService {
         Program program = programRepository.findByUuid(uuid)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Program not found"));
         List<LearningOutcome> learningOutcomes = learningOutcomeSetUps.stream()
-                        .map(learningOutcomeSetUp -> {
-                            LearningOutcome learningOutcome = new LearningOutcome();
-                            learningOutcome.setTitle(learningOutcomeSetUp.title());
-                            learningOutcome.setDescription(learningOutcomeSetUp.description());
-                            learningOutcome.setSubtitle(learningOutcomeSetUp.subtitle());
-                            return learningOutcome;
-                        }).toList();
+                .map(learningOutcomeSetUp -> {
+                    LearningOutcome learningOutcome = new LearningOutcome();
+                    learningOutcome.setTitle(learningOutcomeSetUp.title());
+                    learningOutcome.setDescription(learningOutcomeSetUp.description());
+                    learningOutcome.setSubtitle(learningOutcomeSetUp.subtitle());
+                    return learningOutcome;
+                }).toList();
         program.setLearningOutcomes(learningOutcomes);
         program = programRepository.save(program);
         return programMapper.toProgramResponse(program);
     }
+
 
     @Override
     public ProgramResponse setUpCurricula(String uuid, List<CurriculumSetUp> curriculumSetUps) {

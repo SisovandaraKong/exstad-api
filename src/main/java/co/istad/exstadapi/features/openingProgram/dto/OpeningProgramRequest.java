@@ -42,6 +42,10 @@ public record OpeningProgramRequest(
         @DecimalMin(value = "0.0", message = "Original fee must be zero or positive")
         BigDecimal originalFee,
 
+        @NotNull(message = "Original fee is required")
+        @DecimalMin(value = "0.0", message = "Original fee must be zero or positive")
+        BigDecimal registerFee,
+
         @NotNull(message = "Scholarship is required")
         @DecimalMin(value = "0.0", message = "Scholarship must be zero or positive")
         BigDecimal scholarship,

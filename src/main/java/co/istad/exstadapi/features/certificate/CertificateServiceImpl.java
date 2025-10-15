@@ -1,6 +1,5 @@
 package co.istad.exstadapi.features.certificate;
 
-import co.istad.exstadapi.base.BasedMessage;
 import co.istad.exstadapi.domain.Certificate;
 import co.istad.exstadapi.domain.OpeningProgram;
 import co.istad.exstadapi.domain.Scholar;
@@ -14,6 +13,7 @@ import co.istad.exstadapi.mapper.CertificateMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.util.JRLoader;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -33,32 +33,34 @@ public class CertificateServiceImpl implements CertificateService {
     private final CertificateMapper certificateMapper;
     private final OpeningProgramRepository openingProgramRepository;
 
-
     @Override
     public CertificateResponse generateCertificate(String programSlug,CertificateRequestDto request) {
         try {
             if (request.scholarUuid() == null || request.scholarUuid().isEmpty()) {
-                throw new IllegalArgumentException("At least one student name is required.");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"At least one student name is required.");
             }
             if (request.bgImage() == null || request.bgImage().trim().isEmpty()) {
-                throw new IllegalArgumentException("Template filename is required.");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Template filename is required.");
             }
 
-            InputStream reportStream = getClass().getResourceAsStream("/generates/certificate.jrxml");
-            JasperReport jasperReport = JasperCompileManager.compileReport(reportStream);
+            // Use JasperReports that is already compiled (.jasper file)
+            InputStream reportStream = getClass().getResourceAsStream("/generates/certificate.jasper");
+            JasperReport jasperReport = (JasperReport) JRLoader.loadObject(reportStream);
 
             OpeningProgram openingProgram = openingProgramRepository.findByUuid(request.openingProgramUuid())
-                    .orElseThrow(() -> new IllegalArgumentException("Opening Program not found"));
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Opening Program not found"));
 
-            Optional<Scholar> scholar = scholarRepository.findByUuid(request.scholarUuid());
+            Scholar scholar = scholarRepository.findByUuid(request.scholarUuid()).orElseThrow(
+                    () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Scholar not found")
+            );
 
             // Prepare parameters (data) for JasperReports
             Map<String, Object> parameters = new HashMap<>();
-            if(scholar.get().getUser().getGender().equals("Male")){
-                parameters.put("studentName", "Mr. "+scholar.get().getUser().getEnglishName().toUpperCase());
+            if(scholar.getUser().getGender().equals("Male")){
+                parameters.put("studentName", "Mr. "+scholar.getUser().getEnglishName().toUpperCase());
             }
-            else if(scholar.get().getUser().getGender().equals("Female")){
-                parameters.put("studentName", "Ms. "+scholar.get().getUser().getEnglishName().toUpperCase());
+            else if(scholar.getUser().getGender().equals("Female")){
+                parameters.put("studentName", "Ms. "+scholar.getUser().getEnglishName().toUpperCase());
             }
             parameters.put("bgImage", request.bgImage());
 
@@ -79,19 +81,20 @@ public class CertificateServiceImpl implements CertificateService {
                     pdfBytes              // content
             );
 
-            // upload certificate to minio
+            String certiFilename = scholar.getUser().getEnglishName().replaceAll(" ", "_").toLowerCase()
+                    + "_" + openingProgram.getTitle().toLowerCase().replace(" ", "_") + "_gen" +openingProgram.getGeneration() + "_certificate";
             DocumentResponse documentResponse = documentService.uploadDocument(
                     programSlug,
                     openingProgram.getGeneration(),
                     "certificate",
-                    "null",
+                    certiFilename,
                     multipartFile
             );
 
             // Save certificate info to database
             Certificate certificate = new Certificate();
             certificate.setUuid(UUID.randomUUID().toString());
-            certificate.setScholar(scholar.orElse(null));
+            certificate.setScholar(scholar);
             certificate.setOpeningProgram(openingProgram);
             certificate.setTempCertificateUrl(documentResponse.uri());
             certificate.setFileName(documentResponse.name());
@@ -99,7 +102,7 @@ public class CertificateServiceImpl implements CertificateService {
             certificate.setIsDeleted(false);
             certificate.setIsVerified(false);
             certificate.setVerifiedAt(null);
-            // Set certificateUrl to null beacause it's not verified yet
+            // Set certificateUrl to null because it's not verified yet
             certificate.setCertificateUrl(null);
             certificateRepository.save(certificate);
 
@@ -138,7 +141,7 @@ public class CertificateServiceImpl implements CertificateService {
         Scholar scholar = scholarRepository.
                 findByUuid(scholarUuid).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Scholar not found"));
         OpeningProgram openingProgram = openingProgramRepository.findByUuid(openingProgramUuid)
-                .orElseThrow(() -> new IllegalArgumentException("Opening Program not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Opening Program not found"));
 
         List<Certificate> certificates = certificateRepository.findByScholarAndOpeningProgram(scholar, openingProgram)
                 .stream().toList();
@@ -147,6 +150,31 @@ public class CertificateServiceImpl implements CertificateService {
         }
         return certificates.stream().map(certificateMapper::toCertificateResponse).toList();
     }
+
+    @Override
+    public List<CertificateResponse> getCertificateByScholar(String scholarUuid) {
+        Scholar scholar = scholarRepository.
+                findByUuid(scholarUuid).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Scholar not found"));
+        List<Certificate> certificates = certificateRepository.findByScholar(scholar);
+        return certificates.stream().map(certificateMapper::toCertificateResponse).toList();
+    }
+
+    @Override
+    public List<CertificateResponse> getCertificateByOpeningProgram(String openingProgramUuid) {
+        OpeningProgram openingProgram = openingProgramRepository.findByUuid(openingProgramUuid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Opening Program not found"));
+        List<Certificate> certificates = certificateRepository.findByOpeningProgram(openingProgram);
+        return certificates.stream().map(certificateMapper::toCertificateResponse).toList();
+    }
+
+
+//    @Override
+//    public void removeTemplate(String uuid) {
+//        OpeningProgram o = openingProgramRepository.findByUuid(uuid)
+//                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Opening Program not found"));
+//        o.getTemplates().remove(0);
+//        openingProgramRepository.save(o);
+//    }
 
 //    @Override
 //    public BasedMessage deleteCertificateByScholarAndOpeningProgram(String scholarUuid, String openingProgramUuid) {

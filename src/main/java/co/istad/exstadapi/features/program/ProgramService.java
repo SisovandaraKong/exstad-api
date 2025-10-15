@@ -40,4 +40,5 @@ public interface ProgramService {
     List<Requirement> getRequirements(String uuid);
     List<LearningOutcome> getLearningOutcomes(String uuid);
     List<Curriculum> getCurricula(String uuid);
+//    ProgramResponse getProgramByOpeningProgramUuid(String openingProgramUuid);
 }
