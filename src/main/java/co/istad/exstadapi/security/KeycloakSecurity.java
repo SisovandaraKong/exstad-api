@@ -21,7 +21,6 @@ import java.util.List;
 @Configuration
 @RequiredArgsConstructor
 public class KeycloakSecurity {
-
     private final Environment env; // check active profile
 
     @Bean
