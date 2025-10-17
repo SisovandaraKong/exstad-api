@@ -29,6 +29,7 @@ import java.util.stream.Collectors;
 @Configuration
 @RequiredArgsConstructor
 public class KeycloakSecurity {
+
     private final CorsConfigurationSource corsConfigurationSource;
 
     @Bean
