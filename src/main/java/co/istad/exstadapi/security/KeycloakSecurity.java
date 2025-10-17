@@ -119,7 +119,6 @@ public class KeycloakSecurity {
                         .anyRequest().permitAll()
         );
 
-
         http.formLogin(AbstractHttpConfigurer::disable);
         http.cors(httpSecurityCorsConfigurer -> {
             httpSecurityCorsConfigurer.configurationSource(corsConfigurationSource);
