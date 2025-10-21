@@ -60,6 +60,18 @@ public class InstructorClassServiceImpl implements InstructorClassService{
     }
 
     @Override
+    public List<InstructorClassResponse> getAllInstructorsClassesByClassUuid(String classUuid) {
+        Class _class = classRepository.findByUuid(classUuid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Class not found"));
+        List<InstructorClass> instructorClasses = instructorClassRepository.findAllBy_class(_class);
+        return instructorClasses
+                .stream()
+                .filter(instructorClass -> !instructorClass.getIsDeleted())
+                .map(instructorClassMapper::toInstructorClassResponse)
+                .toList();
+    }
+
+    @Override
     public InstructorClassResponse getInstructorClassByUuid(String uuid) {
         InstructorClass instructorClass = instructorClassRepository.findByUuid(uuid)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Instructor-Class not found"));

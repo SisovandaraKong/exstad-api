@@ -14,6 +14,7 @@ public interface ScholarClassService {
 
     ScholarClassResponse createScholarIntoClass(ScholarClassRequest scholarClassRequest);
     List<ScholarClassResponse> getAllScholarClasses();
+    List<ScholarClassResponse> getAllScholarClassesByClassCode(String classCode);
     ScholarClassResponse getScholarClassByUuid(String uuid);
     ScholarClassResponse updateScholarClassByUuid(String uuid, ScholarClassUpdate scholarClassUpdate);
     BasedMessage softDeleteScholarClassByUuid(String uuid);
