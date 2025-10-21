@@ -21,6 +21,7 @@ public interface ClassRepository extends JpaRepository<Class,Integer> {
     boolean existsByUuid(String uuid);
     boolean existsByClassCode(String classCode);
     List<Class> findAllByOpeningProgramAndIsDeletedFalse(OpeningProgram openingProgram);
+    Optional<Class> findByClassCodeIgnoreCase(String classCode);
 
 
     @Modifying

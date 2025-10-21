@@ -61,6 +61,18 @@ public class ScholarClassServiceImpl implements ScholarClassService{
     }
 
     @Override
+    public List<ScholarClassResponse> getAllScholarClassesByClassCode(String classCode) {
+        Class _class = classRepository.findByClassCodeIgnoreCase(classCode)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Class with code "+ classCode +" not found"));
+        List<ScholarClass> scholarClasses = scholarClassRepository.findAllBy_class(_class);
+        return scholarClasses
+                .stream()
+                .filter(scholarClass -> !scholarClass.getIsDeleted())
+                .map(scholarClassMapper::toScholarClassResponse)
+                .toList();
+    }
+
+    @Override
     public ScholarClassResponse getScholarClassByUuid(String uuid) {
         ScholarClass scholarClass = scholarClassRepository.findByUuid(uuid)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ScholarClass with UUID "+ uuid +" not found"));
