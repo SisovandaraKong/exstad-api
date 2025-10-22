@@ -283,8 +283,8 @@ public class KeycloakSecurity {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        // Allow requests from the frontend running on localhost:3000
-        configuration.setAllowedOriginPatterns(List.of("http://localhost:3000"));
+        // Allow requests from the frontend running on every origin
+        configuration.setAllowedOriginPatterns(List.of("*"));
 
         // Allow common HTTP methods
         configuration.setAllowedMethods(List.of("GET","POST","PUT","PATCH","DELETE","OPTIONS"));
