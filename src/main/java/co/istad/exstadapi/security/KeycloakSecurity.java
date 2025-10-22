@@ -161,6 +161,7 @@ public class KeycloakSecurity {
                 .requestMatchers(HttpMethod.PATCH,"/api/v1/enrollments/**").permitAll()
                 // Updating enrollments requires ADMIN or INSTRUCTOR1
                 .requestMatchers(HttpMethod.PUT,"/api/v1/enrollments/**").permitAll()
+                .requestMatchers("/api/v1/enrollments/**").permitAll()
 
                 // Achievement endpoints
                 // Viewing achievements requires any instructor or admin role
