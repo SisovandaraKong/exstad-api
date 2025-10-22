@@ -210,6 +210,7 @@ public class KeycloakSecurity {
 
                 // Bakong endpoints - public access
                 .requestMatchers("/api/v1/bakong/**").permitAll()
+                .requestMatchers("/api/bakong/**").permitAll()
 
                 .requestMatchers("/swagger-ui.html").permitAll()
                 .requestMatchers("/swagger-ui/**").permitAll()
