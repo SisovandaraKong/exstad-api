@@ -18,7 +18,7 @@ public record EnrollmentRequestUpdate(
         @Size(max = 100, message = "Email must be at most 100 characters")
         String email,
         @Size(max = 255, message = "Avtar URL must be at most 255 characters")
-        String avtar,
+        String avatar,
         @DecimalMin(value = "0.0", message = "Amount must be zero or positive")
         BigDecimal amount,
         Boolean isScholar,
