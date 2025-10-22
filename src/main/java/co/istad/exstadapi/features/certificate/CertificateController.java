@@ -56,4 +56,20 @@ public class CertificateController {
     public ResponseEntity<?> getAllCertificates(){
         return ResponseEntity.ok(certificateService.getAllCertificates());
     }
+
+//    @PutMapping("/certificates/{uuid}")
+//    void removeTemplateByOpeningProgramUuid(@PathVariable String uuid){
+//        certificateService.removeTemplate(uuid);
+//    }
+
+    @GetMapping("/certificates/scholars/{scholarUuid}")
+    public ResponseEntity<?> getCertificateByScholar(@PathVariable String scholarUuid){
+        return ResponseEntity.ok(certificateService.getCertificateByScholar(scholarUuid));
+    }
+
+    @GetMapping("/certificates/opening-programs/{openingProgramUuid}")
+    public ResponseEntity<?> getCertificateByOpeningProgram(@PathVariable String openingProgramUuid) {
+        return ResponseEntity.ok(certificateService.getCertificateByOpeningProgram(openingProgramUuid));
+    }
+
 }

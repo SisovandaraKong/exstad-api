@@ -56,6 +56,9 @@ public class OpeningProgram extends Auditable {
     private Integer totalSlot;
 
     @Column(nullable = false, precision = 10, scale = 2)
+    private BigDecimal registerFee;
+
+    @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal originalFee;
 
     @Column(nullable = false, precision = 5, scale = 2)

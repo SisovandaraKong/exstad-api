@@ -31,6 +31,9 @@ public record OpeningProgramUpdate(
         @DecimalMin(value = "0.0", message = "Original fee must be zero or positive")
         BigDecimal originalFee,
 
+        @DecimalMin(value = "0.0", message = "Register fee must be zero or positive")
+        BigDecimal registerFee,
+
         @DecimalMin(value = "0.0", message = "Scholarship must be zero or positive")
         BigDecimal scholarship,
 
