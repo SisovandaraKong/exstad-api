@@ -96,9 +96,9 @@ public class KeycloakSecurity {
                 // Deleting badges requires ADMIN only
                 .requestMatchers(HttpMethod.DELETE,"/api/v1/badges/**").hasAnyRole("ADMIN")
 
-                // File upload endpoints - require any instructor or admin role
-                .requestMatchers("/api/v1/documents/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
-                .requestMatchers("/documents/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
+                // File upload endpoints
+                .requestMatchers("/api/v1/documents/**").permitAll()
+                .requestMatchers("/documents/**").permitAll()
 
                 // Current Address endpoints
                 // Viewing addresses is publicly accessible
@@ -210,6 +210,12 @@ public class KeycloakSecurity {
 
                 // Bakong endpoints - public access
                 .requestMatchers("/api/v1/bakong/**").permitAll()
+
+                .requestMatchers("/swagger-ui.html").permitAll()
+                .requestMatchers("/swagger-ui/**").permitAll()
+                .requestMatchers("/v3/api-docs/**").permitAll()
+
+
 
                 // All other requests require authentication
                 .anyRequest().authenticated()

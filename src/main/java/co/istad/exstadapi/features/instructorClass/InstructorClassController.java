@@ -23,6 +23,12 @@ public class InstructorClassController {
                 Map.of("instructors-classes",instructorClassService.getAllInstructorsClasses()), HttpStatus.OK);
     }
 
+    @GetMapping("/instructors")
+    public ResponseEntity<?> getAllInstructor() {
+        return new ResponseEntity<>(
+                Map.of("instructors",instructorClassService.getAllInstructors()), HttpStatus.OK);
+    }
+
     @GetMapping("/by-class-uuid/{classUuid}")
     public ResponseEntity<?> getAllInstructorClassesByClassUuid(@PathVariable String classUuid) {
         return new ResponseEntity<>(
