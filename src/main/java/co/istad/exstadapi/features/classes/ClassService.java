@@ -13,6 +13,7 @@ public interface ClassService {
     ClassResponse getClassByName(String name);
     List<ClassResponse> getClassByOpeningProgramTitle(String openingProgramTitle);
     List<ClassResponse> getAllClassesByOpeningProgramUuid(String openingProgramUuid);
+    ClassResponse getClassByClassCode(String classCode);
     ClassResponse createClass(ClassRequest classRequest);
     ClassResponse updateClass(String uuid, ClassUpdate classUpdate);
     BasedMessage softDeleteClass(String uuid);
