@@ -18,7 +18,7 @@ public record EnrollmentResponse(
         LocalDate dob,
         String phoneNumber,
         String email,
-        String avtar,
+        String avatar,
         String province,
         String currentAddress,
         String university,

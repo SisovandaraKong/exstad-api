@@ -7,12 +7,15 @@ import co.istad.exstadapi.domain.vo.Specialist;
 import co.istad.exstadapi.enums.Gender;
 import co.istad.exstadapi.enums.Role;
 import co.istad.exstadapi.enums.ScholarStatus;
+import co.istad.exstadapi.features.openingProgram.dto.CompletedCourseResponse;
 import co.istad.exstadapi.features.openingProgram.dto.OpeningProgramResponse;
 import co.istad.exstadapi.features.scholarBadge.dto.ScholarBadgeForScholarResponse;
+import lombok.Builder;
 
 import java.time.LocalDate;
 import java.util.List;
 
+@Builder
 public record ScholarResponse(
         String uuid,
 
@@ -44,7 +47,7 @@ public record ScholarResponse(
 
         List<Career> careers,
 
-        List<String> completedCourses,
+        List<CompletedCourseResponse> completedCourses,
 
         String avatar,
 

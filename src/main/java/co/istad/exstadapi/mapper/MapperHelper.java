@@ -7,6 +7,7 @@ import co.istad.exstadapi.features.badge.BadgeRepository;
 import co.istad.exstadapi.features.classes.ClassRepository;
 import co.istad.exstadapi.features.currentAddress.CurrentAddressRepository;
 import co.istad.exstadapi.features.openingProgram.OpeningProgramRepository;
+import co.istad.exstadapi.features.openingProgram.dto.CompletedCourseResponse;
 import co.istad.exstadapi.features.openingProgram.dto.OpeningProgramResponse;
 import co.istad.exstadapi.features.program.ProgramRepository;
 import co.istad.exstadapi.features.province.ProvinceRepository;
@@ -19,6 +20,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -34,7 +37,6 @@ public class MapperHelper {
     private final AchievementRepository achievementRepository;
     private final ClassRepository classRepository;
     private final UserRepository userRepository;
-//    private final OpeningProgramMapper openingProgramMapper;
 
     @Value("${server.public-access}")
     private String publicAccess;
@@ -127,16 +129,25 @@ public class MapperHelper {
         );
     }
 
-//    @Named("toOpeningProgramList")
-//    public List<OpeningProgramResponse> toOpeningProgramList(List<String> completedCourses) {
-//        if (completedCourses == null) {
-//            return List.of();
-//        }
-//
-//        return completedCourses.stream()
-//                .map(uuid -> openingProgramRepository.findByUuid(uuid).orElse(null))
-//                .filter(Objects::nonNull)
-//                .map(openingProgramMapper::toOpeningProgramResponse)
-//                .collect(Collectors.toList());
-//    }
+    @Named("toCompletedProgramResponseList")
+    public List<CompletedCourseResponse> toCompletedProgramResponseList(List<String> completedCourses) {
+        if (completedCourses == null || completedCourses.isEmpty()) {
+            return List.of();
+        }
+
+        return completedCourses.stream()
+                .map(uuid -> openingProgramRepository.findByUuid(uuid).orElse(null))
+                .filter(java.util.Objects::nonNull)
+                .map(openingProgram -> CompletedCourseResponse.builder()
+                        .uuid(openingProgram.getUuid())
+                        .title(openingProgram.getTitle())
+                        .slug(openingProgram.getSlug())
+                        .thumbnail(openingProgram.getThumbnail())
+                        .posterUrl(openingProgram.getPosterUrl())
+                        .generation(openingProgram.getGeneration())
+                        .programName(openingProgram.getProgram().getTitle())
+                        .scholarship(openingProgram.getScholarship())
+                        .build())
+                .toList();
+    }
 }
