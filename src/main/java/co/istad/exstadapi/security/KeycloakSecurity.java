@@ -292,8 +292,11 @@ public class KeycloakSecurity {
         // Methods
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
 
-        // Headers — not origins!
-        configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "Accept", "Origin", "X-Requested-With"));
+        // Allow all headers (simpler and works)
+        configuration.setAllowedHeaders(List.of("*"));
+
+        // Expose headers for the frontend to read
+        configuration.setExposedHeaders(List.of("Authorization", "Content-Type"));
 
         // Allow cookies, auth headers, etc.
         configuration.setAllowCredentials(true);
