@@ -1,6 +1,7 @@
 package co.istad.exstadapi.features.BakongKHQR;
 
 import co.istad.exstadapi.features.BakongKHQR.dto.BakongDataRequest;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.WriterException;
@@ -13,20 +14,25 @@ import kh.gov.nbc.bakong_khqr.model.KHQRCurrency;
 import kh.gov.nbc.bakong_khqr.model.KHQRData;
 import kh.gov.nbc.bakong_khqr.model.KHQRResponse;
 import kh.gov.nbc.bakong_khqr.model.MerchantInfo;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.ResourceAccessException;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import static org.keycloak.util.JsonSerialization.mapper;
+
 @Service
+@RequiredArgsConstructor
 public class BakongServiceImpl implements BakongService{
 
     @Value("${bakong.account-id}")
@@ -39,6 +45,12 @@ public class BakongServiceImpl implements BakongService{
     private String mobileNumber;
     @Value("${bakong.store-label}")
     private String storeLabel;
+    @Value("${bakong.base-url}")
+    private String baseUrl;
+    @Value("${bakong.bearer-token}")
+    private String bearerToken;
+
+    private final RestTemplate restTemplate;
 
     // Generate QR for Merchant
     @Override
@@ -103,6 +115,67 @@ public class BakongServiceImpl implements BakongService{
             // Fallback for any unexpected error
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("An unexpected error occurred".getBytes(StandardCharsets.UTF_8));
+        }
+    }
+
+    @Override
+    public ResponseEntity<?> checkTransactionByMD5(String md5) {
+        try {
+            // Validation
+            if (md5 == null || md5.isBlank()) {
+                return ResponseEntity.badRequest().body(Map.of("message", "md5 is required"));
+            }
+//            if (!md5Pattern.matcher(md5).matches()) {
+//                return ResponseEntity.badRequest().body(Map.of("message", "md5 must be a 32-character hex string"));
+//            }
+
+//            String baseUrl = baseUrl;
+//            String bearerToken = config.getBearerToken();
+
+            if (baseUrl == null || bearerToken == null) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .body(Map.of("message", "Bakong is not configured"));
+            }
+
+            // Prepare headers
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.setAccept(List.of(MediaType.APPLICATION_JSON));
+            headers.setBearerAuth(bearerToken);
+            headers.set("User-Agent", "exstad-backend/1.0");
+
+            // Request body
+            Map<String, String> requestBody = Map.of("md5", md5);
+            HttpEntity<Map<String, String>> entity = new HttpEntity<>(requestBody, headers);
+
+            String url = baseUrl.replaceAll("/+$", "") + "/v1/check_transaction_by_md5";
+
+            // Execute request
+            ResponseEntity<String> upstreamResponse = restTemplate.exchange(
+                    url,
+                    HttpMethod.POST,
+                    entity,
+                    String.class
+            );
+
+            // Dynamic JSON parsing
+            try {
+                JsonNode json = mapper.readTree(upstreamResponse.getBody());
+                return ResponseEntity.status(upstreamResponse.getStatusCode()).body(json);
+            } catch (Exception e) {
+                return ResponseEntity.status(upstreamResponse.getStatusCode())
+                        .body(Map.of("message", upstreamResponse.getBody()));
+            }
+
+        } catch (HttpClientErrorException.Forbidden e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(Map.of("message", "Bakong returned 403 Forbidden"));
+        } catch (ResourceAccessException e) {
+            return ResponseEntity.status(HttpStatus.GATEWAY_TIMEOUT)
+                    .body(Map.of("message", "Upstream timeout"));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_GATEWAY)
+                    .body(Map.of("message", "Upstream error: " + e.getMessage()));
         }
     }
 }
