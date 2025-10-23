@@ -15,6 +15,7 @@ public class CorsConfig implements WebMvcConfigurer {
                 registry.addMapping("/**")
                         .allowedOrigins("https://www.exstad.tech", "http://localhost:3000", "https://admin.exstad.tech")
                         .allowedMethods("GET","POST","PUT","PATCH","DELETE","OPTIONS")
+                        .allowCredentials(true)
                         .allowedHeaders("*");
             }
         };
