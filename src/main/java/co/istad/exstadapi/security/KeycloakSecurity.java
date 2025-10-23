@@ -283,12 +283,7 @@ public class KeycloakSecurity {
         CorsConfiguration configuration = new CorsConfiguration();
 
         // Origins (frontend URLs)
-        configuration.setAllowedOriginPatterns(List.of(
-//                "https://www.exstad.tech",
-//                "http://localhost:3000",
-//                "https://admin.exstad.tech"
-                "*"
-        ));
+        configuration.setAllowedOriginPatterns(List.of("*"));
 
         // Methods
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
