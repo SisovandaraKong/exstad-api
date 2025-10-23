@@ -142,7 +142,7 @@ public class BakongServiceImpl implements BakongService{
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.setAccept(List.of(MediaType.APPLICATION_JSON));
             headers.setBearerAuth(bearerToken);
-            headers.set("User-Agent", "exstad-backend/1.0");
+//            headers.set("User-Agent", "exstad-backend/1.0");
 
             // Request body
             Map<String, String> requestBody = Map.of("md5", md5);
