@@ -20,6 +20,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import java.io.InputStream;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Service
@@ -81,8 +83,12 @@ public class CertificateServiceImpl implements CertificateService {
                     pdfBytes              // content
             );
 
-            String certiFilename = scholar.getUser().getEnglishName().replaceAll(" ", "_").toLowerCase()
-                    + "_" + openingProgram.getTitle().toLowerCase().replace(" ", "_") + "_gen" +openingProgram.getGeneration() + "_certificate";
+            String certiFilename =
+                    scholar.getUser().getEnglishName().replaceAll("\\s+", "_").toLowerCase() + "_" +
+                            openingProgram.getTitle().replaceAll("\\s+", "_").toLowerCase() + "_gen" +
+                            openingProgram.getGeneration() + "_certificate_" +
+                            DateTimeFormatter.ofPattern("yyyyMMddHHmmss").format(LocalDateTime.now()) + "_" +
+                            UUID.randomUUID().toString().substring(0, 8);
             DocumentResponse documentResponse = documentService.uploadDocument(
                     programSlug,
                     openingProgram.getGeneration(),
