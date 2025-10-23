@@ -168,6 +168,9 @@ public class BakongServiceImpl implements BakongService{
             }
 
         } catch (HttpClientErrorException.Forbidden e) {
+            System.out.println("Bakong returned 403 Forbidden: " + e.getStatusCode());
+            System.out.println("Bakong returned 403 Forbidden: " + e.getMessage());
+            System.out.println("Bakong returned 403 Forbidden: " + e.getResponseBodyAsString());
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
                     .body(Map.of("message", "Bakong returned 403 Forbidden"));
         } catch (ResourceAccessException e) {
