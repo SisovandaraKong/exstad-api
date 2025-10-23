@@ -282,21 +282,25 @@ public class KeycloakSecurity {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        // Allow requests from the frontend running on every origin
-        configuration.setAllowedOriginPatterns(List.of("https://www.exstad.tech", "http://localhost:3000", "https://admin.exstad.tech"));
+        // Origins (frontend URLs)
+        configuration.setAllowedOriginPatterns(List.of(
+                "https://www.exstad.tech",
+                "http://localhost:3000",
+                "https://admin.exstad.tech"
+        ));
 
-        // Allow common HTTP methods
-        configuration.setAllowedMethods(List.of("GET","POST","PUT","PATCH","DELETE","OPTIONS"));
+        // Methods
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
 
-        // Allow all headers in requests
-        configuration.setAllowedHeaders(List.of("https://www.exstad.tech", "http://localhost:3000", "https://admin.exstad.tech"));
+        // Headers — not origins!
+        configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "Accept", "Origin", "X-Requested-With"));
 
-        // Allow credentials (cookies, authorization headers, etc.)
+        // Allow cookies, auth headers, etc.
         configuration.setAllowCredentials(true);
 
-        // Register CORS configuration for all paths
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
+
     }
 }
