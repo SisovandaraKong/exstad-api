@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/v1/bakong")
 @RequiredArgsConstructor
@@ -22,5 +24,11 @@ public class BakongController {
     @PostMapping("/get-qr-image")
     public ResponseEntity<byte[]> getQRImage(@RequestBody KHQRData qr) {
         return service.getQRImage(qr);
+    }
+
+    @PostMapping("/check-transaction")
+    public ResponseEntity<?> checkTransaction(@RequestBody Map<String, String> body) {
+        String md5 = body.get("md5");
+        return service.checkTransactionByMD5(md5);
     }
 }
