@@ -284,9 +284,10 @@ public class KeycloakSecurity {
 
         // Origins (frontend URLs)
         configuration.setAllowedOriginPatterns(List.of(
-                "https://www.exstad.tech",
-                "http://localhost:3000",
-                "https://admin.exstad.tech"
+//                "https://www.exstad.tech",
+//                "http://localhost:3000",
+//                "https://admin.exstad.tech"
+                "*"
         ));
 
         // Methods
