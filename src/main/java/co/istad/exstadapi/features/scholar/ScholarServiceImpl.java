@@ -191,6 +191,36 @@ public class ScholarServiceImpl implements ScholarService {
     }
 
     @Override
+    public BasedMessage unmarkIsEmployed(String uuid) {
+        Scholar scholar = scholarRepository.findByUuid(uuid).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Scholar not found")
+        );
+        scholar.setIsEmployed(false);
+        scholarRepository.save(scholar);
+        return new BasedMessage("Scholar unmarked as employed");
+    }
+
+    @Override
+    public BasedMessage markIsAbroad(String uuid) {
+        Scholar scholar = scholarRepository.findByUuid(uuid).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Scholar not found")
+        );
+        scholar.setIsAbroad(true);
+        scholarRepository.save(scholar);
+        return new BasedMessage("Scholar marked as abroad");
+    }
+
+    @Override
+    public BasedMessage unmarkIsAbroad(String uuid) {
+        Scholar scholar = scholarRepository.findByUuid(uuid).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Scholar not found")
+        );
+        scholar.setIsAbroad(false);
+        scholarRepository.save(scholar);
+        return new BasedMessage("Scholar unmarked as abroad");
+    }
+
+    @Override
     public List<ScholarResponse> getAllScholarsByOpeningProgramUuid(String openingProgramUuid) {
         openingProgramRepository.findByUuid(openingProgramUuid).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Opening Program not found")
@@ -410,6 +440,19 @@ public class ScholarServiceImpl implements ScholarService {
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Opening Program not found")
         );
         scholar.getCompletedCourses().add(openingProgram.getUuid());
+        scholar = scholarRepository.save(scholar);
+        return scholarMapper.fromScholar(scholar);
+    }
+
+    @Override
+    public ScholarResponse unmarkCompletedCourse(String uuid, String openingProgramUuid) {
+        Scholar scholar = scholarRepository.findByUuid(uuid).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Scholar not found")
+        );
+        OpeningProgram openingProgram = openingProgramRepository.findByUuid(openingProgramUuid).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Opening Program not found")
+        );
+        scholar.getCompletedCourses().remove(openingProgram.getUuid());
         scholar = scholarRepository.save(scholar);
         return scholarMapper.fromScholar(scholar);
     }

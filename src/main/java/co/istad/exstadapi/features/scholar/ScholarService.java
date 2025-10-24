@@ -28,6 +28,9 @@ public interface ScholarService {
     BasedMessage restoreScholarByUuid(String uuid);
     BasedMessage hardDeleteScholarByUuid(String uuid);
     BasedMessage markIsEmployed(String uuid);
+    BasedMessage unmarkIsEmployed(String uuid);
+    BasedMessage markIsAbroad(String uuid);
+    BasedMessage unmarkIsAbroad(String uuid);
 
     List<ScholarResponse> getAllScholarsByOpeningProgramUuid(String openingProgramUuid);
     List<ScholarResponse> getAllScholarsByStatus(ScholarStatus scholarStatus);
@@ -50,5 +53,6 @@ public interface ScholarService {
     List<ScholarResponse> getAllScholarsByProgramUuid(String programUuid);
 
     ScholarResponse markCompletedCourse(String uuid, String openingProgramUuid);
+    ScholarResponse unmarkCompletedCourse(String uuid, String openingProgramUuid);
     List<String> getAllCompletedCoursesByScholarUuid(String uuid);
 }

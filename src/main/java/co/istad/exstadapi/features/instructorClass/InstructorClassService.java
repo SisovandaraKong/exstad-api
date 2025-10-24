@@ -13,6 +13,7 @@ public interface InstructorClassService {
 
     InstructorClassResponse addInstructorIntoClass(InstructorClassRequest instructorClassRequest);
     List<InstructorClassResponse> getAllInstructorsClasses();
+    List<InstructorClassResponse> getAllInstructorsClassesByClassUuid(String classUuid);
     InstructorClassResponse getInstructorClassByUuid(String uuid);
     InstructorClassResponse updateInstructorClassByUuid(String uuid, InstructorClassUpdate instructorClassUpdate);
     BasedMessage softDeleteInstructorClassByUuid(String uuid);
