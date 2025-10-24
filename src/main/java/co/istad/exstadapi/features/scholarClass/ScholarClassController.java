@@ -22,6 +22,12 @@ public class ScholarClassController {
                 Map.of("scholar-classes",scholarClassService.getAllScholarClasses()), HttpStatus.OK);
     }
 
+    @GetMapping("/by-class-code/{classCode}")
+    public ResponseEntity<?> getAllScholarClassesByClassCode(@PathVariable String classCode) {
+        return new ResponseEntity<>(
+                Map.of("scholar-classes",scholarClassService.getAllScholarClassesByClassCode(classCode)), HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<?> createScholarClass(@Valid @RequestBody ScholarClassRequest scholarClassRequest) {
         return new ResponseEntity<>(scholarClassService.createScholarIntoClass(scholarClassRequest), HttpStatus.CREATED);

@@ -156,6 +156,24 @@ public class ScholarController {
                 scholarService.markIsEmployed(uuid), HttpStatus.OK);
     }
 
+    @PutMapping("/{uuid}/is-unemployed")
+    public ResponseEntity<?> isUnemployedScholar(@PathVariable String uuid) {
+        return new ResponseEntity<>(
+                scholarService.unmarkIsEmployed(uuid), HttpStatus.OK);
+    }
+
+    @PutMapping("/{uuid}/is-abroad")
+    public ResponseEntity<?> isAbroadScholar(@PathVariable String uuid) {
+        return new ResponseEntity<>(
+                scholarService.markIsAbroad(uuid), HttpStatus.OK);
+    }
+
+    @PutMapping("/{uuid}/is-not-abroad")
+    public ResponseEntity<?> isNotAbroadScholar(@PathVariable String uuid) {
+        return new ResponseEntity<>(
+                scholarService.unmarkIsAbroad(uuid), HttpStatus.OK);
+    }
+
     @GetMapping("/class-room/{classRoomName}")
     public ResponseEntity<?> getAllScholarsByClassRoomName(@PathVariable String classRoomName) {
         return new ResponseEntity<>(
@@ -172,6 +190,12 @@ public class ScholarController {
     public ResponseEntity<?> markCompletedCourse(@PathVariable String scholarUuid, @PathVariable String openingProgramUuid) {
         return new ResponseEntity<>(
                 scholarService.markCompletedCourse(scholarUuid, openingProgramUuid), HttpStatus.OK);
+    }
+
+    @PutMapping("/{scholarUuid}/remove-completed-course/{openingProgramUuid}")
+    public ResponseEntity<?> removeCompletedCourse(@PathVariable String scholarUuid, @PathVariable String openingProgramUuid) {
+        return new ResponseEntity<>(
+                scholarService.unmarkCompletedCourse(scholarUuid, openingProgramUuid), HttpStatus.OK);
     }
 
     @GetMapping("/{scholarUuid}/completed-courses")
