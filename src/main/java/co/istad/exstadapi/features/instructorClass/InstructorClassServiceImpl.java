@@ -4,6 +4,7 @@ import co.istad.exstadapi.base.BasedMessage;
 import co.istad.exstadapi.domain.Class;
 import co.istad.exstadapi.domain.InstructorClass;
 import co.istad.exstadapi.domain.User;
+import co.istad.exstadapi.enums.Role;
 import co.istad.exstadapi.features.classes.ClassRepository;
 import co.istad.exstadapi.features.classes.dto.ClassResponse;
 import co.istad.exstadapi.features.instructorClass.dto.InstructorClassRequest;
@@ -146,6 +147,16 @@ public class InstructorClassServiceImpl implements InstructorClassService{
         return instructors
                 .stream()
                 .filter(instructor -> !instructor.getIsDeleted())
+                .map(userMapper::fromUser)
+                .toList();
+    }
+
+    @Override
+    public List<UserResponse> getAllInstructors() {
+        return userRepository
+                .findAll()
+                .stream()
+                .filter(instructor -> instructor.getRole().equals(Role.INSTRUCTOR1) || instructor.getRole().equals(Role.INSTRUCTOR2))
                 .map(userMapper::fromUser)
                 .toList();
     }

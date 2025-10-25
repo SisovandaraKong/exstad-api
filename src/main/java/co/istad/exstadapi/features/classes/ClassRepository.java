@@ -14,6 +14,7 @@ import java.util.Optional;
 public interface ClassRepository extends JpaRepository<Class,Integer> {
 
     Optional<Class> findByUuid(String uuid);
+    Optional<Class> findByClassCode(String classCode);
     Optional<Class> findByRoom(String room);
     Optional<Class> findByOpeningProgram(OpeningProgram openingProgram);
     List<Class> findAllByIsDeletedFalse();

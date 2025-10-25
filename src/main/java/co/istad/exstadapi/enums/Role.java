@@ -4,5 +4,6 @@ public enum Role {
     ADMIN,
     SCHOLAR,
     INSTRUCTOR1,
-    INSTRUCTOR2
+    INSTRUCTOR2;
+
 }

@@ -3,10 +3,14 @@ package co.istad.exstadapi.features.openingProgram.dto;
 import co.istad.exstadapi.audit.AuditableDto;
 import co.istad.exstadapi.domain.vo.*;
 import co.istad.exstadapi.enums.Status;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import org.mapstruct.ap.internal.conversion.ConversionUtils;
 
 import java.math.BigDecimal;
 import java.util.List;
 
+@Builder
 public record OpeningProgramResponse(
         String programName,
         String uuid,

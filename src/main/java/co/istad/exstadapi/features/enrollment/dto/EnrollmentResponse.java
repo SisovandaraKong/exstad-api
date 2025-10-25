@@ -1,5 +1,6 @@
 package co.istad.exstadapi.features.enrollment.dto;
 
+import co.istad.exstadapi.audit.AuditableDto;
 import co.istad.exstadapi.enums.Gender;
 import co.istad.exstadapi.features.classes.dto.ClassResponse;
 
@@ -18,7 +19,7 @@ public record EnrollmentResponse(
         LocalDate dob,
         String phoneNumber,
         String email,
-        String avtar,
+        String avatar,
         String province,
         String currentAddress,
         String university,
@@ -29,6 +30,7 @@ public record EnrollmentResponse(
         Boolean isAchieved,
         Boolean isPassed,
         Boolean isScholar,
-        BigDecimal score
+        BigDecimal score,
+        AuditableDto audit
 ) {
 }

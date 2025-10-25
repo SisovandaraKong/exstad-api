@@ -62,6 +62,13 @@ public class ClassServiceImpl implements ClassService {
         return classes.stream().map(classMapper::toClassResponse).toList();
     }
 
+    @Override
+    public ClassResponse getClassByClassCode(String classCode) {
+        Class _class = classRepository.findByClassCode(classCode)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Class with class code " + classCode + " not found"));
+        return classMapper.toClassResponse(_class);
+    }
+
 
     @Override
     public ClassResponse createClass(ClassRequest classRequest) {

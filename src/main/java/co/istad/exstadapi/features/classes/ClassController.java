@@ -27,6 +27,11 @@ public class ClassController {
         return new ResponseEntity<>(classService.getClassByUuid(uuid), HttpStatus.OK);
     }
 
+    @GetMapping("/code/{code}")
+    public ResponseEntity<?> getClassByCode(@PathVariable String code) {
+        return new ResponseEntity<>(classService.getClassByClassCode(code), HttpStatus.OK);
+    }
+
     @GetMapping("/name/{name}")
     public ResponseEntity<?> getClassByName(@PathVariable String name) {
         return new ResponseEntity<>(classService.getClassByName(name), HttpStatus.OK);
