@@ -54,7 +54,7 @@ public class DocumentServiceImpl implements DocumentService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "File is empty");
         }
 
-        Program program = programRepository.findBySlugAndIsDeletedFalse(programSlug).orElseThrow(
+        Program program = programSlug.equals("null") ? null : programRepository.findBySlugAndIsDeletedFalse(programSlug).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Program not found")
         );
 
@@ -64,7 +64,7 @@ public class DocumentServiceImpl implements DocumentService {
 
         String extension = fileNameAndExtension.get(EXTENSION_KEY);
         String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMMdd-HHmmss"));
-        String filename = preferredFileName.equals("null") ? String.format("%s-%s", UUID.randomUUID().toString().replace("-", ""), timestamp) : preferredFileName;
+        String filename = preferredFileName.equals("null") ? String.format("%s-%s", UUID.randomUUID().toString().replace("-", ""), timestamp) : preferredFileName.toLowerCase();
 
         validateDocumentType(fileNameAndExtension.get(EXTENSION_KEY), fileDocumentType);
 
@@ -261,18 +261,20 @@ public class DocumentServiceImpl implements DocumentService {
 
     private void validateDocumentType(String extension, DocumentType documentType) {
         for (String file : documentType.getSupportedFiles()) {
-            if (extension.equals(file)) {
+            if (extension.toLowerCase().equals(file)) {
                 return;
             }
         }
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid document type");
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid document or file type");
     }
 
     private String getObjectPath(Program program, int gen, DocumentType documentType, String filename, String extension) {
+        String programPath = program == null ? "general" : program.getSlug();
+        String genPath = gen == 0 ? "general": "gen" + gen;
         return String.format(
                 "%s/%s/%s/%s.%s",
-                program.getSlug(),
-                "gen" + gen,
+                programPath,
+                genPath,
                 documentType.getFolderPath(),
                 filename,
                 extension.replace(".", "")
@@ -286,7 +288,7 @@ public class DocumentServiceImpl implements DocumentService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid filename");
         }
         String name = originalFileName.substring(0, lastDotIndex);
-        String extension = originalFileName.substring(lastDotIndex + 1);
+        String extension = originalFileName.substring(lastDotIndex + 1).toLowerCase();
         return Map.of(
                 FILENAME_KEY, name,
                 EXTENSION_KEY, extension
