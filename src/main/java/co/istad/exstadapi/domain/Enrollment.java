@@ -1,5 +1,6 @@
 package co.istad.exstadapi.domain;
 
+import co.istad.exstadapi.audit.Auditable;
 import co.istad.exstadapi.enums.Gender;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -19,7 +20,7 @@ import java.util.Map;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "enrollments")
-public class Enrollment {
+public class Enrollment extends Auditable {
 
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
