@@ -52,6 +52,7 @@ public record ScholarResponse(
         String avatar,
 
         String phoneFamilyNumber,
+        String phoneNumber,
 
         String quote,
 

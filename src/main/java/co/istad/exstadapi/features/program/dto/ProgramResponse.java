@@ -5,6 +5,7 @@ import co.istad.exstadapi.domain.vo.*;
 import co.istad.exstadapi.enums.ProgramLevel;
 import co.istad.exstadapi.enums.ProgramType;
 import co.istad.exstadapi.enums.Visibility;
+import co.istad.exstadapi.features.program.Technology.dto.TechnologySetup;
 
 import java.util.List;
 
@@ -29,6 +30,6 @@ public record ProgramResponse(
         ProgramType programType,
         List<Curriculum> curricula,
         ProgramLevel programLevel,
-        AuditableDto audit
-) {
+        AuditableDto audit,
+        List<TechnologySetup> technologies) {
 }

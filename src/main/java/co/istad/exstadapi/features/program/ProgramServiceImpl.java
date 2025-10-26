@@ -5,6 +5,7 @@ import co.istad.exstadapi.domain.OpeningProgram;
 import co.istad.exstadapi.domain.Program;
 import co.istad.exstadapi.domain.vo.*;
 import co.istad.exstadapi.features.openingProgram.OpeningProgramRepository;
+import co.istad.exstadapi.features.program.Technology.dto.TechnologySetup;
 import co.istad.exstadapi.features.program.curriculum.dto.CurriculumSetUp;
 import co.istad.exstadapi.features.program.dto.ProgramRequest;
 import co.istad.exstadapi.features.program.dto.ProgramResponse;
@@ -350,6 +351,31 @@ public class ProgramServiceImpl implements ProgramService {
         Program program = programRepository.findByUuid(uuid)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Program not found"));
         return program.getCurricula();
+    }
+
+    @Override
+    public List<Technology> getTechnologies(String uuid) {
+        Program program = programRepository.findByUuid(uuid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Program not found"));
+        return program.getTechnologies();
+    }
+
+    @Override
+    public ProgramResponse setUpTechnologies(String uuid, List<TechnologySetup> technologySetups) {
+        Program program = programRepository.findByUuid(uuid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Program not found"));
+        List<Technology> technologies = technologySetups.stream()
+                .map(technologySetup -> {
+                    Technology technology = new Technology();
+                    technology.setTitle(technologySetup.title());
+                    technology.setDescription(technologySetup.description());
+                    technology.setImage(technologySetup.image());
+                    return technology;
+                })
+                .toList();
+        program.setTechnologies(technologies);
+        program = programRepository.save(program);
+        return programMapper.toProgramResponse(program);
     }
 
 
