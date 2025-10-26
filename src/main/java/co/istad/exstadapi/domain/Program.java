@@ -98,4 +98,10 @@ public class Program extends Auditable {
 
     @OneToMany(mappedBy = "program")
     private List<OpeningProgram> openingPrograms;
+
+
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(columnDefinition = "jsonb")
+    private List<Technology> technologies;
+
 }
