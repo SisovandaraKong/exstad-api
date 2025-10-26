@@ -15,6 +15,7 @@ public record ProgramResponse(
         String slug,
         String description,
         String logoUrl,
+        String thumbnailUrl,
         String bgColor,
         Visibility visibility,
         List<Highlight> highlights,

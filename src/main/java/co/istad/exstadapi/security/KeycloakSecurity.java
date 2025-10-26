@@ -216,7 +216,7 @@ public class KeycloakSecurity {
 //                .requestMatchers("/swagger-ui.html").permitAll()
 //                .requestMatchers("/swagger-ui/**").permitAll()
 //                .requestMatchers("/v3/api-docs/**").permitAll()
-
+//
 
                 .anyRequest().permitAll()
         );
@@ -283,7 +283,13 @@ public class KeycloakSecurity {
         CorsConfiguration configuration = new CorsConfiguration();
 
         // Origins (frontend URLs)
-        configuration.setAllowedOriginPatterns(List.of("*"));
+        configuration.setAllowedOrigins(List.of(
+                "http://localhost:3000",
+                "http://localhost:3001",
+                "http://localhost:5173",
+                "https://admin.exstad.tech",
+                "https://www.exstad.tech"
+        ));
 
         // Methods
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));

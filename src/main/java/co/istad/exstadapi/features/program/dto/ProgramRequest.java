@@ -30,8 +30,11 @@ public record ProgramRequest(
         String description,
 
         @NotBlank(message = "Logo URL is required")
-        @Size(max = 255, message = "Logo URL must not exceed 255 characters")
+        @Size(max = 500, message = "Logo URL must not exceed 500 characters")
         String logoUrl,
+
+        @Size(max = 500, message = "Thumbnail URL must not exceed 500 characters")
+        String thumbnailUrl,
 
         @Size(max = 100, min = 4, message = "Background color must be min 4 and max 100 characters")
         String bgColor,
