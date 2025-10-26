@@ -33,6 +33,9 @@ public record ProgramUpdate(
         @Size(max = 255, message = "Logo URL must not exceed 255 characters")
         String logoUrl,
 
+        @Size(max = 500, message = "Thumbnail URL must not exceed 500 characters")
+        String thumbnailUrl,
+
         @Size(max = 100, min = 4, message = "Background color must be min 4 and max 100 characters")
         String bgColor,
 

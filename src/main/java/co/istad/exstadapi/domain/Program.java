@@ -45,6 +45,9 @@ public class Program extends Auditable {
     @Column(length = 500)
     private String logoUrl;
 
+    @Column(length = 500)
+    private String thumbnailUrl;
+
     @Column(length = 100)
     private String bgColor;
 
