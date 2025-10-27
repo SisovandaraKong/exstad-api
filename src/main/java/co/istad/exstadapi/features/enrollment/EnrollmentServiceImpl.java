@@ -32,12 +32,6 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 
     @Override
     public EnrollmentResponse createEnrollment(EnrollmentRequest enrollmentRequest) {
-        if (enrollmentRepository.existsByEmail(enrollmentRequest.email())){
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Email is already taken");
-        }
-        if (enrollmentRepository.existsByPhoneNumber(enrollmentRequest.phoneNumber())){
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Phone number is already taken");
-        }
         Enrollment enrollment = enrollmentMapper.toEnrollment(enrollmentRequest);
         if (enrollmentRequest.amount()==null){
             enrollment.setAmount(BigDecimal.ZERO);
