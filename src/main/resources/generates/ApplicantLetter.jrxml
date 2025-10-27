@@ -1,192 +1,190 @@
-<!--&lt;!&ndash; Created with Jaspersoft Studio version 7.0.3.final using JasperReports Library version 7.0.3-41034ca841d452f3305ba55b9042260aaa1ab5dd  &ndash;&gt;-->
-<!--<jasperReport name="Certificate" language="java" columnCount="1" pageWidth="595" pageHeight="420" orientation="Landscape" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="8ba2ebe5-71dd-403b-a7aa-141a826357f0">-->
-<!--    <property name="com.jaspersoft.studio.unit." value="pixel"/>-->
-<!--    <property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>-->
-<!--    <property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>-->
-<!--    <property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>-->
-<!--    <property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>-->
-<!--    <property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>-->
-<!--    <property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>-->
-<!--    <property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>-->
-<!--    <property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>-->
-<!--    <parameter name="khmerName" class="java.lang.String"/>-->
-<!--    <parameter name="englishName" class="java.lang.String"/>-->
-<!--    <parameter name="avatar" class="java.lang.String"/>-->
-<!--    <parameter name="gender" class="java.lang.String"/>-->
-<!--    <parameter name="national" class="java.lang.String"/>-->
-<!--    <parameter name="dob" class="java.lang.String"/>-->
-<!--    <parameter name="placeOfBirth" class="java.lang.String"/>-->
-<!--    <parameter name="university" class="java.lang.String"/>-->
-<!--    <parameter name="year" class="java.lang.String"/>-->
-<!--    <parameter name="major" class="java.lang.String"/>-->
-<!--    <parameter name="educationQualification" class="java.lang.String"/>-->
-<!--    <parameter name="currentAddress" class="java.lang.String"/>-->
-<!--    <parameter name="tableNumber" class="java.lang.String"/>-->
-<!--    <parameter name="number" class="java.lang.String"/>-->
-<!--    <parameter name="day" class="java.lang.String"/>-->
-<!--    <parameter name="month" class="java.lang.String"/>-->
-<!--    <parameter name="years" class="java.lang.String"/>-->
-<!--    <style name="KhmerStyle" fontName="Khmer OS Siemreap Regular" pdfFontName="Khmer OS Siemreap Regular" pdfEncoding="Identity-H"   pdfEmbedded="true"/>-->
-<!--    <style name="EnglishStyle" fontName="Inter" pdfFontName="Inter" pdfEncoding="Cp1252"   pdfEmbedded="true"/>-->
-<!--    <query language="sql"><![CDATA[]]></query>-->
-<!--    <detail>-->
-<!--        <band height="420" splitType="Stretch">-->
-<!--            <element kind="image" uuid="15cd0bdc-f81e-4f28-818f-a91b753cf28c" x="0" y="0" width="595" height="420">-->
-<!--                <expression><![CDATA["E:\\Applicant Letter Master Sample.png"]]></expression>-->
-<!--                <property name="com.jaspersoft.studio.unit.height" value="px"/>-->
-<!--                <property name="com.jaspersoft.studio.unit.width" value="px"/>-->
-<!--            </element>-->
-<!--            <element kind="textField" uuid="b08e0cce-15c6-4149-b156-d72036db6893" x="115" y="116" width="140" height="20"  hTextAlign="Center" vTextAlign="Middle">-->
-<!--                <styleExpression><![CDATA[$P{khmerName} != null && $P{khmerName}.matches(".*[\\u1780-\\u17FF]+.*")? "KhmerStyle": "EnglishStyle"]]></styleExpression>-->
-<!--                <expression><![CDATA[$P{khmerName}]]></expression>-->
-<!--                <property name="com.jaspersoft.studio.unit.height" value="px"/>-->
-<!--                <property name="com.jaspersoft.studio.unit.x" value="px"/>-->
-<!--                <property name="com.jaspersoft.studio.unit.y" value="px"/>-->
-<!--            </element>-->
-<!--            <element kind="textField" uuid="217f91d0-4434-4562-8682-3f3aa06a8f3f" x="340" y="116" width="120" height="20" fontName="Inter" hTextAlign="Center" vTextAlign="Middle">-->
-<!--                <expression><![CDATA[$P{englishName}]]></expression>-->
-<!--                <property name="com.jaspersoft.studio.unit.height" value="px"/>-->
-<!--                <property name="com.jaspersoft.studio.unit.x" value="px"/>-->
-<!--                <property name="com.jaspersoft.studio.unit.y" value="px"/>-->
-<!--            </element>-->
-<!--            <element kind="textField" uuid="32517449-bd8c-4b4e-8cd2-fc12f11fb771" x="55" y="144" width="50" height="20" hTextAlign="Center" vTextAlign="Middle">-->
-<!--                <styleExpression><![CDATA[$P{gender} != null && $P{gender}.matches(".*[\\u1780-\\u17FF]+.*")? "KhmerStyle": "EnglishStyle"]]></styleExpression>-->
-<!--                <expression><![CDATA[$P{gender}]]></expression>-->
-<!--                <property name="com.jaspersoft.studio.unit.height" value="px"/>-->
-<!--                <property name="com.jaspersoft.studio.unit.x" value="px"/>-->
-<!--                <property name="com.jaspersoft.studio.unit.y" value="px"/>-->
-<!--            </element>-->
-<!--            <element kind="textField" uuid="6734a483-3f47-4e4c-8f27-f56bb55a005f" x="145" y="144" width="50" height="20" hTextAlign="Center" vTextAlign="Middle">-->
-<!--                <styleExpression><![CDATA[$P{national} != null && $P{national}.matches(".*[\\u1780-\\u17FF]+.*")? "KhmerStyle": "EnglishStyle"]]></styleExpression>-->
-<!--                <expression><![CDATA[$P{national}]]></expression>-->
-<!--                <property name="com.jaspersoft.studio.unit.height" value="px"/>-->
-<!--                <property name="com.jaspersoft.studio.unit.x" value="px"/>-->
-<!--                <property name="com.jaspersoft.studio.unit.y" value="px"/>-->
-<!--            </element>-->
-<!--            <element kind="textField" uuid="6d3b706a-98dc-4883-b0d3-89b4568d4bfb" x="230" y="144" width="50" height="20" hTextAlign="Center" vTextAlign="Middle">-->
-<!--                <styleExpression><![CDATA[$P{national} != null && $P{national}.matches(".*[\\u1780-\\u17FF]+.*")? "KhmerStyle": "EnglishStyle"]]></styleExpression>-->
-<!--                <expression><![CDATA[$P{national}]]></expression>-->
-<!--                <property name="com.jaspersoft.studio.unit.height" value="px"/>-->
-<!--                <property name="com.jaspersoft.studio.unit.x" value="px"/>-->
-<!--                <property name="com.jaspersoft.studio.unit.y" value="px"/>-->
-<!--            </element>-->
-<!--            <element kind="textField" uuid="e1f68c42-638d-49a9-8e63-35d3423cade0" x="350" y="144" width="110" height="20" hTextAlign="Center" vTextAlign="Middle">-->
-<!--                <styleExpression><![CDATA[$P{dob} != null && $P{dob}.matches(".*[\\u1780-\\u17FF]+.*")? "KhmerStyle": "EnglishStyle"]]></styleExpression>-->
-<!--                <expression><![CDATA[$P{dob}]]></expression>-->
-<!--                <property name="com.jaspersoft.studio.unit.height" value="px"/>-->
-<!--                <property name="com.jaspersoft.studio.unit.x" value="px"/>-->
-<!--                <property name="com.jaspersoft.studio.unit.y" value="px"/>-->
-<!--            </element>-->
-<!--            <element kind="textField" uuid="ff94c534-9142-4421-a0ff-3b5d49445046" x="105" y="174" width="354" height="20" hTextAlign="Center" vTextAlign="Middle">-->
-<!--                <styleExpression><![CDATA[$P{placeOfBirth} != null && $P{placeOfBirth}.matches(".*[\\u1780-\\u17FF]+.*")? "KhmerStyle": "EnglishStyle"]]></styleExpression>-->
-<!--                <expression><![CDATA[$P{placeOfBirth}]]></expression>-->
-<!--                <property name="com.jaspersoft.studio.unit.height" value="px"/>-->
-<!--                <property name="com.jaspersoft.studio.unit.x" value="px"/>-->
-<!--                <property name="com.jaspersoft.studio.unit.y" value="px"/>-->
-<!--            </element>-->
-<!--            <element kind="textField" uuid="86b9c2cd-732b-4f3f-aef7-d03f3fd909dc" x="145" y="201" width="155" height="20" hTextAlign="Center" vTextAlign="Middle">-->
-<!--                <styleExpression><![CDATA[$P{university} != null && $P{university}.matches(".*[\\u1780-\\u17FF]+.*")? "KhmerStyle": "EnglishStyle"]]></styleExpression>-->
-<!--                <expression><![CDATA[$P{university}]]></expression>-->
-<!--                <property name="com.jaspersoft.studio.unit.height" value="px"/>-->
-<!--                <property name="com.jaspersoft.studio.unit.x" value="px"/>-->
-<!--                <property name="com.jaspersoft.studio.unit.y" value="px"/>-->
-<!--            </element>-->
-<!--            <element kind="textField" uuid="812201fd-c840-4935-8dde-bf7c8ade749d" x="400" y="201" width="145" height="20" hTextAlign="Center" vTextAlign="Middle">-->
-<!--                <styleExpression><![CDATA[$P{year} != null && $P{year}.matches(".*[\\u1780-\\u17FF]+.*")? "KhmerStyle": "EnglishStyle"]]></styleExpression>-->
-<!--                <expression><![CDATA[$P{year}]]></expression>-->
-<!--                <property name="com.jaspersoft.studio.unit.height" value="px"/>-->
-<!--                <property name="com.jaspersoft.studio.unit.x" value="px"/>-->
-<!--                <property name="com.jaspersoft.studio.unit.y" value="px"/>-->
-<!--            </element>-->
-<!--            <element kind="textField" uuid="738f0809-e3e8-47c6-a7e7-dee089de200c" x="90" y="228" width="210" height="20" hTextAlign="Center" vTextAlign="Middle">-->
-<!--                <styleExpression><![CDATA[$P{major} != null && $P{major}.matches(".*[\\u1780-\\u17FF]+.*")? "KhmerStyle": "EnglishStyle"]]></styleExpression>-->
-<!--                <expression><![CDATA[$P{major}]]></expression>-->
-<!--                <property name="com.jaspersoft.studio.unit.height" value="px"/>-->
-<!--                <property name="com.jaspersoft.studio.unit.x" value="px"/>-->
-<!--                <property name="com.jaspersoft.studio.unit.y" value="px"/>-->
-<!--            </element>-->
-<!--            <element kind="textField" uuid="deab799c-4919-4e40-9b79-1cac2ac6a584" x="400" y="228" width="145" height="20" hTextAlign="Center" vTextAlign="Middle">-->
-<!--                <styleExpression><![CDATA[$P{educationQualification} != null && $P{educationQualification}.matches(".*[\\u1780-\\u17FF]+.*")? "KhmerStyle": "EnglishStyle"]]></styleExpression>-->
-<!--                <expression><![CDATA[$P{educationQualification}]]></expression>-->
-<!--                <property name="com.jaspersoft.studio.unit.height" value="px"/>-->
-<!--                <property name="com.jaspersoft.studio.unit.x" value="px"/>-->
-<!--                <property name="com.jaspersoft.studio.unit.y" value="px"/>-->
-<!--            </element>-->
-<!--            <element kind="textField" uuid="08b1b259-da21-4380-b834-1b971bfdca58"-->
-<!--                     x="180" y="249" width="350" height="20"-->
-<!--                     hTextAlign="Center" vTextAlign="Bottom">-->
-<!--                <styleExpression><![CDATA[$P{currentAddress} != null && $P{currentAddress}.matches(".*[\\u1780-\\u17FF]+.*")? "KhmerStyle": "EnglishStyle"]]></styleExpression>-->
-<!--                <expression><![CDATA[$P{currentAddress}]]></expression>-->
-<!--            </element>-->
-<!--            <element kind="textField" uuid="7aaf063f-8323-4d57-9437-bbdc295a5208" x="120" y="304" width="30" height="20" hTextAlign="Center" vTextAlign="Middle">-->
-<!--                <styleExpression><![CDATA[$P{day} != null && $P{day}.matches(".*[\\u1780-\\u17FF]+.*")? "KhmerStyle": "EnglishStyle"]]></styleExpression>-->
-<!--                <expression><![CDATA[$P{day}]]></expression>-->
-<!--                <property name="com.jaspersoft.studio.unit.height" value="px"/>-->
-<!--                <property name="com.jaspersoft.studio.unit.x" value="px"/>-->
-<!--                <property name="com.jaspersoft.studio.unit.y" value="px"/>-->
-<!--            </element>-->
-<!--            <element kind="textField" uuid="af388af2-fbb0-46df-8d56-6bfe5a575cb3" x="162" y="304" width="35" height="20" hTextAlign="Center" vTextAlign="Middle">-->
-<!--                <styleExpression><![CDATA[$P{month} != null && $P{month}.matches(".*[\\u1780-\\u17FF]+.*")? "KhmerStyle": "EnglishStyle"]]></styleExpression>-->
-<!--                <expression><![CDATA[$P{month}]]></expression>-->
-<!--                <property name="com.jaspersoft.studio.unit.height" value="px"/>-->
-<!--                <property name="com.jaspersoft.studio.unit.x" value="px"/>-->
-<!--                <property name="com.jaspersoft.studio.unit.width" value="px"/>-->
-<!--                <property name="com.jaspersoft.studio.unit.y" value="px"/>-->
-<!--            </element>-->
-<!--            <element kind="textField" uuid="17d8d062-def3-4beb-bc74-5d62f8661851" x="208" y="304" width="37" height="20" hTextAlign="Center" vTextAlign="Middle">-->
-<!--                <styleExpression><![CDATA[$P{years} != null && $P{year}.matches(".*[\\u1780-\\u17FF]+.*")? "KhmerStyle": "EnglishStyle"]]></styleExpression>-->
-<!--                <expression><![CDATA[$P{years}]]></expression>-->
-<!--                <property name="com.jaspersoft.studio.unit.height" value="px"/>-->
-<!--                <property name="com.jaspersoft.studio.unit.width" value="px"/>-->
-<!--                <property name="com.jaspersoft.studio.unit.x" value="px"/>-->
-<!--                <property name="com.jaspersoft.studio.unit.y" value="px"/>-->
-<!--            </element>-->
-<!--            <element kind="textField" uuid="3c4d76e6-35b9-4333-a84b-72396fd419b6" x="420" y="292" width="30" height="20" hTextAlign="Center" vTextAlign="Middle">-->
-<!--                <styleExpression><![CDATA[$P{day} != null && $P{day}.matches(".*[\\u1780-\\u17FF]+.*")? "KhmerStyle": "EnglishStyle"]]></styleExpression>-->
-<!--                <expression><![CDATA[$P{day}]]></expression>-->
-<!--                <property name="com.jaspersoft.studio.unit.height" value="px"/>-->
-<!--                <property name="com.jaspersoft.studio.unit.x" value="px"/>-->
-<!--                <property name="com.jaspersoft.studio.unit.y" value="px"/>-->
-<!--            </element>-->
-<!--            <element kind="textField" uuid="bc426cd8-1c68-473b-a561-54af85d74b37" x="462" y="292" width="35" height="20" hTextAlign="Center" vTextAlign="Middle">-->
-<!--                <styleExpression><![CDATA[$P{month} != null && $P{month}.matches(".*[\\u1780-\\u17FF]+.*")? "KhmerStyle": "EnglishStyle"]]></styleExpression>-->
-<!--                <expression><![CDATA[$P{month}]]></expression>-->
-<!--                <property name="com.jaspersoft.studio.unit.height" value="px"/>-->
-<!--                <property name="com.jaspersoft.studio.unit.x" value="px"/>-->
-<!--                <property name="com.jaspersoft.studio.unit.width" value="px"/>-->
-<!--                <property name="com.jaspersoft.studio.unit.y" value="px"/>-->
-<!--            </element>-->
-<!--            <element kind="textField" uuid="acc406d2-25f0-4735-9d42-648ea4b1516d" x="508" y="292" width="37" height="20" hTextAlign="Center" vTextAlign="Middle">-->
-<!--                <styleExpression><![CDATA[$P{years} != null && $P{years}.matches(".*[\\u1780-\\u17FF]+.*")? "KhmerStyle": "EnglishStyle"]]></styleExpression>-->
-<!--                <expression><![CDATA[$P{years}]]></expression>-->
-<!--                <property name="com.jaspersoft.studio.unit.height" value="px"/>-->
-<!--                <property name="com.jaspersoft.studio.unit.x" value="px"/>-->
-<!--                <property name="com.jaspersoft.studio.unit.width" value="px"/>-->
-<!--                <property name="com.jaspersoft.studio.unit.y" value="px"/>-->
-<!--            </element>-->
-<!--            <element kind="textField" uuid="17fdc537-740c-43b3-9348-38d9c45ea4a6" x="84" y="86" width="80" height="20" hTextAlign="Left" vTextAlign="Middle">-->
-<!--                <styleExpression><![CDATA[$P{number} != null && $P{number}.matches(".*[\\u1780-\\u17FF]+.*")? "KhmerStyle": "EnglishStyle"]]></styleExpression>-->
-<!--                <expression><![CDATA[$P{number}]]></expression>-->
-<!--                <property name="com.jaspersoft.studio.unit.height" value="px"/>-->
-<!--                <property name="com.jaspersoft.studio.unit.x" value="px"/>-->
-<!--                <property name="com.jaspersoft.studio.unit.width" value="px"/>-->
-<!--                <property name="com.jaspersoft.studio.unit.y" value="px"/>-->
-<!--            </element>-->
-<!--            <element kind="textField" uuid="c347cf5b-a483-41a6-95b0-3639d1392781" x="519" y="38" width="80" height="20" hTextAlign="Left" vTextAlign="Middle">-->
-<!--                <styleExpression><![CDATA[$P{tableNumber} != null && $P{tableNumber}.matches(".*[\\u1780-\\u17FF]+.*")? "KhmerStyle": "EnglishStyle"]]></styleExpression>-->
-<!--                <expression><![CDATA[$P{tableNumber}]]></expression>-->
-<!--                <property name="com.jaspersoft.studio.unit.height" value="px"/>-->
-<!--                <property name="com.jaspersoft.studio.unit.x" value="px"/>-->
-<!--                <property name="com.jaspersoft.studio.unit.width" value="px"/>-->
-<!--                <property name="com.jaspersoft.studio.unit.y" value="px"/>-->
-<!--            </element>-->
-<!--            <element kind="image" uuid="68c585f1-fe7f-4654-8755-1d9315fc5992" x="470" y="60" width="100" height="130">-->
-<!--                <styleExpression><![CDATA[$P{avatar} != null && $P{avatar}.matches(".*[\\u1780-\\u17FF]+.*")? "KhmerStyle": "EnglishStyle"]]></styleExpression>-->
-<!--                <expression><![CDATA[$P{avatar}]]></expression>-->
-<!--                <property name="com.jaspersoft.studio.unit.width" value="px"/>-->
-<!--                <property name="com.jaspersoft.studio.unit.height" value="px"/>-->
-<!--            </element>-->
-<!--            <property name="com.jaspersoft.studio.unit.height" value="px"/>-->
-<!--        </band>-->
-<!--    </detail>-->
-<!--</jasperReport>-->
+<!-- Created with Jaspersoft Studio version 7.0.3.final using JasperReports Library version 7.0.3-41034ca841d452f3305ba55b9042260aaa1ab5dd  -->
+<jasperReport name="Certificate" language="java" columnCount="1" pageWidth="595" pageHeight="420" orientation="Landscape" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="8ba2ebe5-71dd-403b-a7aa-141a826357f0">
+    <property name="com.jaspersoft.studio.unit." value="pixel"/>
+    <property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+    <property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+    <property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+    <property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+    <property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+    <property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+    <property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+    <property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+    <style name="KhmerStyle" fontName="Khmer OS Siemreap Regular" pdfFontName="Khmer OS Siemreap Regular" pdfEncoding="Identity-H" pdfEmbedded="true"/>
+    <style name="EnglishStyle" fontName="Inter" pdfFontName="Inter" pdfEncoding="Cp1252" pdfEmbedded="true"/>
+    <parameter name="khmerName" class="java.lang.String"/>
+    <parameter name="englishName" class="java.lang.String"/>
+    <parameter name="avatar" class="java.lang.String"/>
+    <parameter name="gender" class="java.lang.String"/>
+    <parameter name="national" class="java.lang.String"/>
+    <parameter name="dob" class="java.lang.String"/>
+    <parameter name="placeOfBirth" class="java.lang.String"/>
+    <parameter name="university" class="java.lang.String"/>
+    <parameter name="year" class="java.lang.String"/>
+    <parameter name="major" class="java.lang.String"/>
+    <parameter name="educationQualification" class="java.lang.String"/>
+    <parameter name="currentAddress" class="java.lang.String"/>
+    <parameter name="tableNumber" class="java.lang.String"/>
+    <parameter name="number" class="java.lang.String"/>
+    <parameter name="day" class="java.lang.String"/>
+    <parameter name="month" class="java.lang.String"/>
+    <parameter name="years" class="java.lang.String"/>
+    <query language="sql"><![CDATA[]]></query>
+    <detail>
+        <band height="420" splitType="Stretch">
+            <element kind="image" uuid="15cd0bdc-f81e-4f28-818f-a91b753cf28c" x="0" y="0" width="595" height="420">
+                <expression><![CDATA["templetes/Applicant Letter Master Sample.png"]]></expression>
+                <property name="com.jaspersoft.studio.unit.height" value="px"/>
+                <property name="com.jaspersoft.studio.unit.width" value="px"/>
+            </element>
+            <element kind="textField" uuid="ff94c534-9142-4421-a0ff-3b5d49445046" x="125" y="116" width="120" height="20" hTextAlign="Center" vTextAlign="Middle">
+                <styleExpression><![CDATA[$P{khmerName} != null && $P{khmerName}.matches(".*[\\u1780-\\u17FF]+.*")? "KhmerStyle": "EnglishStyle"]]></styleExpression>
+                <expression><![CDATA[$P{khmerName}]]></expression>
+                <property name="com.jaspersoft.studio.unit.height" value="px"/>
+                <property name="com.jaspersoft.studio.unit.x" value="px"/>
+                <property name="com.jaspersoft.studio.unit.y" value="px"/>
+            </element>
+            <element kind="textField" uuid="217f91d0-4434-4562-8682-3f3aa06a8f3f" x="340" y="116" width="120" height="20" fontName="Inter" hTextAlign="Center" vTextAlign="Middle">
+                <expression><![CDATA[$P{englishName}]]></expression>
+                <property name="com.jaspersoft.studio.unit.height" value="px"/>
+                <property name="com.jaspersoft.studio.unit.x" value="px"/>
+                <property name="com.jaspersoft.studio.unit.y" value="px"/>
+            </element>
+            <element kind="textField" uuid="32517449-bd8c-4b4e-8cd2-fc12f11fb771" x="55" y="144" width="50" height="20" hTextAlign="Center" vTextAlign="Middle">
+                <styleExpression><![CDATA[$P{gender} != null && $P{gender}.matches(".*[\\u1780-\\u17FF]+.*")? "KhmerStyle": "EnglishStyle"]]></styleExpression>
+                <expression><![CDATA[$P{gender}]]></expression>
+                <property name="com.jaspersoft.studio.unit.height" value="px"/>
+                <property name="com.jaspersoft.studio.unit.x" value="px"/>
+                <property name="com.jaspersoft.studio.unit.y" value="px"/>
+            </element>
+            <element kind="textField" uuid="6734a483-3f47-4e4c-8f27-f56bb55a005f" x="145" y="144" width="50" height="20" hTextAlign="Center" vTextAlign="Middle">
+                <styleExpression><![CDATA[$P{national} != null && $P{national}.matches(".*[\\u1780-\\u17FF]+.*")? "KhmerStyle": "EnglishStyle"]]></styleExpression>
+                <expression><![CDATA[$P{national}]]></expression>
+                <property name="com.jaspersoft.studio.unit.height" value="px"/>
+                <property name="com.jaspersoft.studio.unit.x" value="px"/>
+                <property name="com.jaspersoft.studio.unit.y" value="px"/>
+            </element>
+            <element kind="textField" uuid="6d3b706a-98dc-4883-b0d3-89b4568d4bfb" x="230" y="144" width="50" height="20" hTextAlign="Center" vTextAlign="Middle">
+                <styleExpression><![CDATA[$P{national} != null && $P{national}.matches(".*[\\u1780-\\u17FF]+.*")? "KhmerStyle": "EnglishStyle"]]></styleExpression>
+                <expression><![CDATA[$P{national}]]></expression>
+                <property name="com.jaspersoft.studio.unit.height" value="px"/>
+                <property name="com.jaspersoft.studio.unit.x" value="px"/>
+                <property name="com.jaspersoft.studio.unit.y" value="px"/>
+            </element>
+            <element kind="textField" uuid="e1f68c42-638d-49a9-8e63-35d3423cade0" x="350" y="144" width="110" height="20" hTextAlign="Center" vTextAlign="Middle">
+                <styleExpression><![CDATA[$P{dob} != null && $P{dob}.matches(".*[\\u1780-\\u17FF]+.*")? "KhmerStyle": "EnglishStyle"]]></styleExpression>
+                <expression><![CDATA[$P{dob}]]></expression>
+                <property name="com.jaspersoft.studio.unit.height" value="px"/>
+                <property name="com.jaspersoft.studio.unit.x" value="px"/>
+                <property name="com.jaspersoft.studio.unit.y" value="px"/>
+            </element>
+            <element kind="textField" uuid="ff94c534-9142-4421-a0ff-3b5d49445046" x="105" y="174" width="354" height="20" hTextAlign="Center" vTextAlign="Middle">
+                <styleExpression><![CDATA[$P{placeOfBirth} != null && $P{placeOfBirth}.matches(".*[\\u1780-\\u17FF]+.*")? "KhmerStyle": "EnglishStyle"]]></styleExpression>
+                <expression><![CDATA[$P{placeOfBirth}]]></expression>
+                <property name="com.jaspersoft.studio.unit.height" value="px"/>
+                <property name="com.jaspersoft.studio.unit.x" value="px"/>
+                <property name="com.jaspersoft.studio.unit.y" value="px"/>
+            </element>
+            <element kind="textField" uuid="86b9c2cd-732b-4f3f-aef7-d03f3fd909dc" x="145" y="201" width="155" height="20" hTextAlign="Center" vTextAlign="Middle">
+                <styleExpression><![CDATA[$P{university} != null && $P{university}.matches(".*[\\u1780-\\u17FF]+.*")? "KhmerStyle": "EnglishStyle"]]></styleExpression>
+                <expression><![CDATA[$P{university}]]></expression>
+                <property name="com.jaspersoft.studio.unit.height" value="px"/>
+                <property name="com.jaspersoft.studio.unit.x" value="px"/>
+                <property name="com.jaspersoft.studio.unit.y" value="px"/>
+            </element>
+            <element kind="textField" uuid="812201fd-c840-4935-8dde-bf7c8ade749d" x="400" y="201" width="145" height="20" hTextAlign="Center" vTextAlign="Middle">
+                <styleExpression><![CDATA[$P{year} != null && $P{year}.matches(".*[\\u1780-\\u17FF]+.*")? "KhmerStyle": "EnglishStyle"]]></styleExpression>
+                <expression><![CDATA[$P{year}]]></expression>
+                <property name="com.jaspersoft.studio.unit.height" value="px"/>
+                <property name="com.jaspersoft.studio.unit.x" value="px"/>
+                <property name="com.jaspersoft.studio.unit.y" value="px"/>
+            </element>
+            <element kind="textField" uuid="738f0809-e3e8-47c6-a7e7-dee089de200c" x="90" y="228" width="210" height="20" hTextAlign="Center" vTextAlign="Middle">
+                <styleExpression><![CDATA[$P{major} != null && $P{major}.matches(".*[\\u1780-\\u17FF]+.*")? "KhmerStyle": "EnglishStyle"]]></styleExpression>
+                <expression><![CDATA[$P{major}]]></expression>
+                <property name="com.jaspersoft.studio.unit.height" value="px"/>
+                <property name="com.jaspersoft.studio.unit.x" value="px"/>
+                <property name="com.jaspersoft.studio.unit.y" value="px"/>
+            </element>
+            <element kind="textField" uuid="deab799c-4919-4e40-9b79-1cac2ac6a584" x="400" y="228" width="145" height="20" hTextAlign="Center" vTextAlign="Middle">
+                <styleExpression><![CDATA[$P{educationQualification} != null && $P{educationQualification}.matches(".*[\\u1780-\\u17FF]+.*")? "KhmerStyle": "EnglishStyle"]]></styleExpression>
+                <expression><![CDATA[$P{educationQualification}]]></expression>
+                <property name="com.jaspersoft.studio.unit.height" value="px"/>
+                <property name="com.jaspersoft.studio.unit.x" value="px"/>
+                <property name="com.jaspersoft.studio.unit.y" value="px"/>
+            </element>
+            <element kind="textField" uuid="08b1b259-da21-4380-b834-1b971bfdca58" x="180" y="249" width="350" height="20" hTextAlign="Center" vTextAlign="Bottom">
+                <styleExpression><![CDATA[$P{currentAddress} != null && $P{currentAddress}.matches(".*[\\u1780-\\u17FF]+.*")? "KhmerStyle": "EnglishStyle"]]></styleExpression>
+                <expression><![CDATA[$P{currentAddress}]]></expression>
+            </element>
+            <element kind="textField" uuid="7aaf063f-8323-4d57-9437-bbdc295a5208" x="120" y="304" width="30" height="20" hTextAlign="Center" vTextAlign="Middle">
+                <styleExpression><![CDATA[$P{day} != null && $P{day}.matches(".*[\\u1780-\\u17FF]+.*")? "KhmerStyle": "EnglishStyle"]]></styleExpression>
+                <expression><![CDATA[$P{day}]]></expression>
+                <property name="com.jaspersoft.studio.unit.height" value="px"/>
+                <property name="com.jaspersoft.studio.unit.x" value="px"/>
+                <property name="com.jaspersoft.studio.unit.y" value="px"/>
+            </element>
+            <element kind="textField" uuid="af388af2-fbb0-46df-8d56-6bfe5a575cb3" x="162" y="304" width="35" height="20" hTextAlign="Center" vTextAlign="Middle">
+                <styleExpression><![CDATA[$P{month} != null && $P{month}.matches(".*[\\u1780-\\u17FF]+.*")? "KhmerStyle": "EnglishStyle"]]></styleExpression>
+                <expression><![CDATA[$P{month}]]></expression>
+                <property name="com.jaspersoft.studio.unit.height" value="px"/>
+                <property name="com.jaspersoft.studio.unit.x" value="px"/>
+                <property name="com.jaspersoft.studio.unit.width" value="px"/>
+                <property name="com.jaspersoft.studio.unit.y" value="px"/>
+            </element>
+            <element kind="textField" uuid="17d8d062-def3-4beb-bc74-5d62f8661851" x="208" y="304" width="37" height="20" hTextAlign="Center" vTextAlign="Middle">
+                <styleExpression><![CDATA[$P{years} != null && $P{year}.matches(".*[\\u1780-\\u17FF]+.*")? "KhmerStyle": "EnglishStyle"]]></styleExpression>
+                <expression><![CDATA[$P{years}]]></expression>
+                <property name="com.jaspersoft.studio.unit.height" value="px"/>
+                <property name="com.jaspersoft.studio.unit.width" value="px"/>
+                <property name="com.jaspersoft.studio.unit.x" value="px"/>
+                <property name="com.jaspersoft.studio.unit.y" value="px"/>
+            </element>
+            <element kind="textField" uuid="3c4d76e6-35b9-4333-a84b-72396fd419b6" x="420" y="292" width="30" height="20" hTextAlign="Center" vTextAlign="Middle">
+                <styleExpression><![CDATA[$P{day} != null && $P{day}.matches(".*[\\u1780-\\u17FF]+.*")? "KhmerStyle": "EnglishStyle"]]></styleExpression>
+                <expression><![CDATA[$P{day}]]></expression>
+                <property name="com.jaspersoft.studio.unit.height" value="px"/>
+                <property name="com.jaspersoft.studio.unit.x" value="px"/>
+                <property name="com.jaspersoft.studio.unit.y" value="px"/>
+            </element>
+            <element kind="textField" uuid="bc426cd8-1c68-473b-a561-54af85d74b37" x="462" y="292" width="35" height="20" hTextAlign="Center" vTextAlign="Middle">
+                <styleExpression><![CDATA[$P{month} != null && $P{month}.matches(".*[\\u1780-\\u17FF]+.*")? "KhmerStyle": "EnglishStyle"]]></styleExpression>
+                <expression><![CDATA[$P{month}]]></expression>
+                <property name="com.jaspersoft.studio.unit.height" value="px"/>
+                <property name="com.jaspersoft.studio.unit.x" value="px"/>
+                <property name="com.jaspersoft.studio.unit.width" value="px"/>
+                <property name="com.jaspersoft.studio.unit.y" value="px"/>
+            </element>
+            <element kind="textField" uuid="acc406d2-25f0-4735-9d42-648ea4b1516d" x="508" y="292" width="37" height="20" hTextAlign="Center" vTextAlign="Middle">
+                <styleExpression><![CDATA[$P{years} != null && $P{years}.matches(".*[\\u1780-\\u17FF]+.*")? "KhmerStyle": "EnglishStyle"]]></styleExpression>
+                <expression><![CDATA[$P{years}]]></expression>
+                <property name="com.jaspersoft.studio.unit.height" value="px"/>
+                <property name="com.jaspersoft.studio.unit.x" value="px"/>
+                <property name="com.jaspersoft.studio.unit.width" value="px"/>
+                <property name="com.jaspersoft.studio.unit.y" value="px"/>
+            </element>
+            <element kind="textField" uuid="17fdc537-740c-43b3-9348-38d9c45ea4a6" x="84" y="86" width="80" height="20" hTextAlign="Left" vTextAlign="Middle">
+                <styleExpression><![CDATA[$P{number} != null && $P{number}.matches(".*[\\u1780-\\u17FF]+.*")? "KhmerStyle": "EnglishStyle"]]></styleExpression>
+                <expression><![CDATA[$P{number}]]></expression>
+                <property name="com.jaspersoft.studio.unit.height" value="px"/>
+                <property name="com.jaspersoft.studio.unit.x" value="px"/>
+                <property name="com.jaspersoft.studio.unit.width" value="px"/>
+                <property name="com.jaspersoft.studio.unit.y" value="px"/>
+            </element>
+            <element kind="textField" uuid="c347cf5b-a483-41a6-95b0-3639d1392781" x="519" y="38" width="80" height="20" hTextAlign="Left" vTextAlign="Middle">
+                <styleExpression><![CDATA[$P{tableNumber} != null && $P{tableNumber}.matches(".*[\\u1780-\\u17FF]+.*")? "KhmerStyle": "EnglishStyle"]]></styleExpression>
+                <expression><![CDATA[$P{tableNumber}]]></expression>
+                <property name="com.jaspersoft.studio.unit.height" value="px"/>
+                <property name="com.jaspersoft.studio.unit.x" value="px"/>
+                <property name="com.jaspersoft.studio.unit.width" value="px"/>
+                <property name="com.jaspersoft.studio.unit.y" value="px"/>
+            </element>
+            <element kind="image" uuid="68c585f1-fe7f-4654-8755-1d9315fc5992" x="470" y="60" width="100" height="130">
+                <styleExpression><![CDATA[$P{avatar} != null && $P{avatar}.matches(".*[\\u1780-\\u17FF]+.*")? "KhmerStyle": "EnglishStyle"]]></styleExpression>
+                <expression><![CDATA[$P{avatar}]]></expression>
+                <property name="com.jaspersoft.studio.unit.width" value="px"/>
+                <property name="com.jaspersoft.studio.unit.height" value="px"/>
+            </element>
+            <property name="com.jaspersoft.studio.unit.height" value="px"/>
+        </band>
+    </detail>
+</jasperReport>
