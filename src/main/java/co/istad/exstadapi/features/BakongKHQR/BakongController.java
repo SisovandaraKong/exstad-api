@@ -31,4 +31,9 @@ public class BakongController {
         String md5 = body.get("md5");
         return service.checkTransactionByMD5(md5);
     }
+
+//    @PostMapping("/generate-deeplink")
+//    public ResponseEntity<?> generateDeeplink(@RequestBody KHQRData qr) {
+//        return service.generateDeeplink(qr);
+//    }
 }
