@@ -18,6 +18,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.io.File;
 import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -64,7 +66,11 @@ public class CertificateServiceImpl implements CertificateService {
             else if(scholar.getUser().getGender().equals("Female")){
                 parameters.put("studentName", "Ms. "+scholar.getUser().getEnglishName().toUpperCase());
             }
-            parameters.put("bgImage", request.bgImage());
+            File bgFile = new File(request.bgImage());
+            if (bgFile.getName().toLowerCase().endsWith(".pdf")) {
+                bgFile = PdfToImageUtil.convertPdfToPng(bgFile); // convert PDF to PNG
+            }
+            parameters.put("bgImage", bgFile.getAbsolutePath());
 
             JasperPrint jasperPrint = JasperFillManager.fillReport(
                     jasperReport,

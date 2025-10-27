@@ -10,10 +10,7 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import kh.gov.nbc.bakong_khqr.BakongKHQR;
-import kh.gov.nbc.bakong_khqr.model.KHQRCurrency;
-import kh.gov.nbc.bakong_khqr.model.KHQRData;
-import kh.gov.nbc.bakong_khqr.model.KHQRResponse;
-import kh.gov.nbc.bakong_khqr.model.MerchantInfo;
+import kh.gov.nbc.bakong_khqr.model.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
@@ -35,6 +32,8 @@ import static org.keycloak.util.JsonSerialization.mapper;
 @RequiredArgsConstructor
 public class BakongServiceImpl implements BakongService{
 
+    private final RestTemplate restTemplate;
+
     @Value("${bakong.account-id}")
     private String bakongAccountId;
     @Value("${bakong.acquiring-bank}")
@@ -49,8 +48,12 @@ public class BakongServiceImpl implements BakongService{
     private String baseUrl;
     @Value("${bakong.bearer-token}")
     private String bearerToken;
-
-    private final RestTemplate restTemplate;
+//    @Value("${bakong.appIconUrl}")
+//    private String appIconUrl;
+//    @Value("${bakong.appName}")
+//    private String appName;
+//    @Value("${bakong.appDeepLinkCallback}")
+//    private String appDeepLinkCallback;
 
     // Generate QR for Merchant
     @Override
@@ -172,7 +175,8 @@ public class BakongServiceImpl implements BakongService{
             System.out.println("Bakong returned 403 Forbidden: " + e.getMessage());
             System.out.println("Bakong returned 403 Forbidden: " + e.getResponseBodyAsString());
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                    .body(Map.of("message", "Bakong returned 403 Forbidden"));
+                    .body(Map.of("message", "Bakong returned 403 Forbidden",
+                            "details", e.getResponseBodyAsString()));
         } catch (ResourceAccessException e) {
             return ResponseEntity.status(HttpStatus.GATEWAY_TIMEOUT)
                     .body(Map.of("message", "Upstream timeout"));
@@ -181,4 +185,30 @@ public class BakongServiceImpl implements BakongService{
                     .body(Map.of("message", "Upstream error: " + e.getMessage()));
         }
     }
+
+//    @Override
+//    public ResponseEntity<?> generateDeeplink(KHQRData qr) {
+//
+//        String url = baseUrl + "/v1/generate_deeplink_by_qr";
+//
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setContentType(MediaType.APPLICATION_JSON);
+//        GenerateDeeplinkRequest request = new GenerateDeeplinkRequest();
+//        request.setQr(qr.getQr());
+//        SourceInfo sourceInfo = new SourceInfo();
+//        sourceInfo.setAppIconUrl(appIconUrl);
+//        sourceInfo.setAppName(appName);
+//        sourceInfo.setAppDeepLinkCallback(appDeepLinkCallback);
+//        request.setSourceInfo(sourceInfo);
+//
+//        HttpEntity<GenerateDeeplinkRequest> entity = new HttpEntity<>(request, headers);
+//
+//        ResponseEntity<BakongResponse> response = restTemplate.exchange(
+//                url,
+//                HttpMethod.POST,
+//                entity,
+//                BakongResponse.class
+//        );
+//        return response;
+//    }
 }

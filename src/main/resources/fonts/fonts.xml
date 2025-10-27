@@ -17,4 +17,23 @@
         <pdfEncoding><![CDATA[Identity-H]]></pdfEncoding>
         <pdfEmbedded><![CDATA[true]]></pdfEmbedded>
     </fontFamily>
+
+    <fontFamily name="Inter">
+
+        <normal>fonts/Inter.ttf</normal>
+        <bold>fonts/Inter.ttf</bold>
+
+        <pdfEncoding><![CDATA[Identity-H]]></pdfEncoding>
+        <pdfEmbedded><![CDATA[true]]></pdfEmbedded>
+    </fontFamily>
+
+
+    <fontFamily name="Khmer OS Siemreap Regular">
+
+        <normal>fonts/Khmer OS Siemreap Regular.ttf</normal>
+        <bold>fonts/Khmer OS Siemreap Regular.ttf</bold>
+
+        <pdfEncoding><![CDATA[Identity-H]]></pdfEncoding>
+        <pdfEmbedded><![CDATA[true]]></pdfEmbedded>
+    </fontFamily>
 </fontFamilies>
