@@ -46,10 +46,10 @@ public class Enrollment extends Auditable {
     @Column(nullable = false)
     private LocalDate dob;
 
-    @Column(nullable = false, length = 100, unique = true)
+    @Column(nullable = false, length = 100)
     private String phoneNumber;
 
-    @Column(nullable = false, length = 100, unique = true)
+    @Column(nullable = false, length = 100)
     private String email;
 
     @Column(length = 500)
