@@ -1,11 +1,19 @@
 package co.istad.exstadapi.features.applicantLetter;
 
+import co.istad.exstadapi.domain.Enrollment;
+import co.istad.exstadapi.enums.DocumentType;
 import co.istad.exstadapi.features.applicantLetter.dto.ApplicantLetterRequest;
 import co.istad.exstadapi.features.applicantLetter.dto.KhmerDate;
+import co.istad.exstadapi.features.certificate.InMemoryMultipartFile;
+import co.istad.exstadapi.features.document.DocumentService;
+import co.istad.exstadapi.features.document.dto.DocumentResponse;
+import co.istad.exstadapi.features.enrollment.EnrollmentRepository;
+import lombok.RequiredArgsConstructor;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.util.JRLoader;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -17,7 +25,11 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 @Service
+@RequiredArgsConstructor
 public class ApplicantLetterServiceImpl implements ApplicantLetterService {
+
+    private final DocumentService documentService;
+    private final EnrollmentRepository enrollmentRepository;
 
     @Override
     public byte[] generateApplicantLetter(ApplicantLetterRequest applicantLetterRequest) {
@@ -71,6 +83,26 @@ public class ApplicantLetterServiceImpl implements ApplicantLetterService {
                         ? request.englishName().replaceAll("\\s+", "_") + "_" + "applicant_" + (i + 1) + ".pdf"
                         : "applicant_" + (i + 1) + ".pdf";
 
+                MultipartFile file = new InMemoryMultipartFile(
+                        "file",
+                        "applicant_letter.pdf",
+                        "text/plain",
+                        pdfBytes
+                );
+
+                DocumentResponse document = documentService.uploadDocument(
+                        request.programSlug() == null ? "null" : request.programSlug(),
+                        request.generation() == null ? 0 : request.generation(),
+                        "applicant_letter",
+                        fileName,
+                        file
+                );
+
+                Enrollment enrollment = enrollmentRepository.findByUuid(request.enrollmentUuid()).orElse(null);
+                if(enrollment != null){
+                    enrollment.setApplicantLetter(document.uri());
+                    enrollmentRepository.save(enrollment);
+                }
                 ZipEntry entry = new ZipEntry(fileName);
                 zos.putNextEntry(entry);
                 zos.write(pdfBytes);
