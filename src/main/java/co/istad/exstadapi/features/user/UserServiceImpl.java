@@ -3,8 +3,8 @@ package co.istad.exstadapi.features.user;
 import co.istad.exstadapi.domain.User;
 import co.istad.exstadapi.enums.Role;
 import co.istad.exstadapi.features.auth.AuthService;
-import co.istad.exstadapi.features.auth.dto.RegisterRequest;
 import co.istad.exstadapi.features.auth.dto.KeycloakUserResponse;
+import co.istad.exstadapi.features.auth.dto.RegisterRequest;
 import co.istad.exstadapi.features.user.dto.UserRequest;
 import co.istad.exstadapi.features.user.dto.UserResponse;
 import co.istad.exstadapi.mapper.UserMapper;
@@ -33,14 +33,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponse createUser(UserRequest userRequest) {
 
-        if(userRepository.existsByUsername(userRequest.username())){
+        if (userRepository.existsByUsername(userRequest.username())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Username already exists");
         }
-        if(userRepository.existsByEmail(userRequest.email())){
+        if (userRepository.existsByEmail(userRequest.email())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already exists");
         }
 
-        if(!userRequest.password().equals(userRequest.cfPassword())){
+        if (!userRequest.password().equals(userRequest.cfPassword())) {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Passwords do not match");
         }
         RegisterRequest register = new RegisterRequest(
@@ -113,7 +113,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String getUsernameFromAccessToken(){
+    public String getUsernameFromAccessToken() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username;
         if (principal instanceof org.springframework.security.oauth2.jwt.Jwt jwt) {
@@ -129,4 +129,10 @@ public class UserServiceImpl implements UserService {
         return username;
     }
 
+    @Override
+    public void disableUser(String username) {
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+        authService.disable(user.getUuid());
+        user.setIsDeleted(true);
+    }
 }

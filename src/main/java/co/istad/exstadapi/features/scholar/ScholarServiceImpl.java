@@ -45,16 +45,16 @@ public class ScholarServiceImpl implements ScholarService {
 
     @Override
     public ScholarResponse createScholar(ScholarRequest scholarRequest) {
-        if (scholarRepository.existsByPhoneNumber(scholarRequest.phoneNumber())){
+        if (scholarRepository.existsByPhoneNumber(scholarRequest.phoneNumber())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Phone number already exists");
         }
-        if (userRepository.existsByUsername(scholarRequest.username())){
+        if (userRepository.existsByUsername(scholarRequest.username())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Username already exists");
         }
-        if (userRepository.existsByEmail(scholarRequest.email())){
+        if (userRepository.existsByEmail(scholarRequest.email())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already exists");
         }
-        if (!scholarRequest.password().equals(scholarRequest.cfPassword())){
+        if (!scholarRequest.password().equals(scholarRequest.cfPassword())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Password does not match");
         }
         UserRequest userRequest = new UserRequest(
@@ -153,21 +153,22 @@ public class ScholarServiceImpl implements ScholarService {
     @Transactional
     @Override
     public BasedMessage softDeleteScholarByUuid(String uuid) {
-       if (!scholarRepository.existsByUuid(uuid)) {
-              throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Scholar not found");
-         }
-              scholarRepository.softDeleteByUuid(uuid);
-              return new BasedMessage("Scholar deleted successfully");
+        Scholar scholar = scholarRepository.findByUuid(uuid).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Scholar not found")
+        );
+        scholarRepository.softDeleteByUuid(uuid);
+        userService.disableUser(scholar.getUser().getUsername());
+        return new BasedMessage("Scholar deleted successfully");
     }
 
     @Transactional
     @Override
     public BasedMessage restoreScholarByUuid(String uuid) {
-       if (!scholarRepository.existsByUuid(uuid)) {
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Scholar not found");
-             }
-                scholarRepository.restoreByUuid(uuid);
-                return new BasedMessage("Scholar restored successfully");
+        if (!scholarRepository.existsByUuid(uuid)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Scholar not found");
+        }
+        scholarRepository.restoreByUuid(uuid);
+        return new BasedMessage("Scholar restored successfully");
     }
 
     @Transactional
@@ -176,8 +177,8 @@ public class ScholarServiceImpl implements ScholarService {
         if (!scholarRepository.existsByUuid(uuid)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Scholar not found");
         }
-            scholarRepository.deleteByUuid(uuid);
-            return new BasedMessage("Scholar hard deleted successfully");
+        scholarRepository.deleteByUuid(uuid);
+        return new BasedMessage("Scholar hard deleted successfully");
     }
 
     @Override
@@ -239,7 +240,7 @@ public class ScholarServiceImpl implements ScholarService {
         User user = userRepository.findByUsername(username).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found")
         );
-        if(!user.getRole().equals(Role.SCHOLAR)) {
+        if (!user.getRole().equals(Role.SCHOLAR)) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to update this role");
         }
         return scholarMapper.fromScholar(user.getScholar());
@@ -251,7 +252,7 @@ public class ScholarServiceImpl implements ScholarService {
         User user = userRepository.findByUsername(username).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found")
         );
-        if(!user.getRole().equals(Role.SCHOLAR)) {
+        if (!user.getRole().equals(Role.SCHOLAR)) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to update this role");
         }
         return updateScholar(user.getUuid(), scholarRequestUpdate);
@@ -467,11 +468,11 @@ public class ScholarServiceImpl implements ScholarService {
 
     @Override
     public List<ScholarResponse> getAllScholarsByStatus(ScholarStatus scholarStatus) {
-        return scholarRepository.findAllByStatusAndIsDeletedFalse(scholarStatus).stream().map(scholarMapper::fromScholar).toList() ;
+        return scholarRepository.findAllByStatusAndIsDeletedFalse(scholarStatus).stream().map(scholarMapper::fromScholar).toList();
     }
 
     @Override
     public List<ScholarResponse> getAllAbroadScholars() {
-        return scholarRepository.findAllByIsAbroadTrueAndIsDeletedFalse().stream().map(scholarMapper::fromScholar).toList() ;
+        return scholarRepository.findAllByIsAbroadTrueAndIsDeletedFalse().stream().map(scholarMapper::fromScholar).toList();
     }
 }

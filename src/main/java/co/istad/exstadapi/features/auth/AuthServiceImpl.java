@@ -11,9 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.resource.UserResource;
-import org.keycloak.representations.idm.CredentialRepresentation;
-import org.keycloak.representations.idm.RoleRepresentation;
-import org.keycloak.representations.idm.UserRepresentation;
+import org.keycloak.representations.idm.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -186,6 +184,14 @@ public class AuthServiceImpl implements AuthService {
             }
             throw new ResponseStatusException(HttpStatus.valueOf(response.getStatus()), response.getEntity().toString());
         }
+    }
+
+    @Override
+    public void disable(String uuid) {
+        UserResource userResource = keycloak.realm(realm).users().get(uuid);
+        UserRepresentation user = userResource.toRepresentation();
+        user.setEnabled(false);
+        userResource.update(user);
     }
 
     public boolean assignRole(String uuid, Role role){
