@@ -86,14 +86,14 @@ public class ApplicantLetterServiceImpl implements ApplicantLetterService {
                 MultipartFile file = new InMemoryMultipartFile(
                         "file",
                         "applicant_letter.pdf",
-                        "text/plain",
+                        "application/pdf",
                         pdfBytes
                 );
 
                 DocumentResponse document = documentService.uploadDocument(
                         request.programSlug() == null ? "null" : request.programSlug(),
                         request.generation() == null ? 0 : request.generation(),
-                        "applicant_letter",
+                        "transcript",
                         fileName,
                         file
                 );
