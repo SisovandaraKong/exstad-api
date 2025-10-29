@@ -13,6 +13,7 @@ public interface UserService {
     UserResponse getCurrentUser();
     String getUsernameFromAccessToken();
     UserResponse createUser(UserRequest userRequest);
+    void disableUser(String username);
 
     UserResponse getUserByUuid(String uuid);
     UserResponse getUserByEmail(String email);

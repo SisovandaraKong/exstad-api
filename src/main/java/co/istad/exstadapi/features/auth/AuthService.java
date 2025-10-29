@@ -11,6 +11,7 @@ public interface AuthService {
 
     KeycloakUserResponse register(RegisterRequest registerRequest);
     boolean delete(String uuid);
+    void disable(String uuid);
     TokenResponse login(LoginRequest loginRequest);
     TokenResponse refreshToken(String refreshToken);
     void logout(String refreshToken);

@@ -54,4 +54,9 @@ public class UserController {
         );
     }
 
+    @PutMapping("/{username}/disable")
+    public void disableUser(@PathVariable String username) {
+        userService.disableUser(username);
+    }
+
 }
