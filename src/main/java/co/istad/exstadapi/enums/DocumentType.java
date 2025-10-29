@@ -18,6 +18,7 @@ public enum DocumentType {
     LOGO("logo", "images/logo", List.of("jpeg", "jpg", "png", "webp")),
     BADGE("badge", "images/badge", List.of("jpeg", "jpg", "png", "webp")),
     CURRICULUM("curriculum", "images/curriculum", List.of("jpeg", "jpg", "png", "webp", "pdf")),
+    APPLICANT_LETTER("applicant_letter", "images/applicant_letter", List.of("jpeg", "jpg", "png", "webp", "pdf")),
     ACHIEVEMENT("achievement", "images/achievements", List.of("jpeg", "jpg", "png", "webp"));
 
     private final String key;

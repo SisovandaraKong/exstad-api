@@ -55,6 +55,8 @@ public class Enrollment extends Auditable {
     @Column(length = 500)
     private String avatar;
 
+    private String applicantLetter;
+
     @ManyToOne
     private Province province;
 
