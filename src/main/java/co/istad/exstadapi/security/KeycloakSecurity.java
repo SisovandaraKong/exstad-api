@@ -207,8 +207,6 @@ public class KeycloakSecurity {
                 // Application letter endpoints
                 .requestMatchers("/api/v1/generate-applicant-letter").hasAnyRole("ADMIN","INSTRUCTOR1", "INSTRUCTOR2")
                 .requestMatchers("/api/v1/letters/download-zip").permitAll()
-
-
                 .anyRequest().authenticated()
         );
 

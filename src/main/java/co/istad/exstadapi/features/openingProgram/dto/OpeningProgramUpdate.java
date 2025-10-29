@@ -21,7 +21,6 @@ public record OpeningProgramUpdate(
         @Size(max = 255, message = "Poster URL must not exceed 255 characters")
         String posterUrl,
 
-        @Min(value = 1, message = "Total slot must be at least 1")
         Integer totalSlot,
 
         @NotBlank(message = "Deadline is required")
