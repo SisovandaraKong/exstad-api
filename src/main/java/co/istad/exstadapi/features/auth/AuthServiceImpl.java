@@ -188,6 +188,14 @@ public class AuthServiceImpl implements AuthService {
         }
     }
 
+    @Override
+    public void disable(String uuid) {
+        UserResource userResource = keycloak.realm(realm).users().get(uuid);
+        UserRepresentation user = userResource.toRepresentation();
+        user.setEnabled(false);
+        userResource.update(user);
+    }
+
     public boolean assignRole(String uuid, Role role){
         UserResource user = keycloak.realm(realm).users().get(uuid);
         if(user == null){
