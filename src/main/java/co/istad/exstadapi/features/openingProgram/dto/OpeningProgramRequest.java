@@ -34,7 +34,6 @@ public record OpeningProgramRequest(
         String deadline,
 
         @NotNull(message = "Total slot is required")
-        @Min(value = 1, message = "Total slot must be at least 1")
         @Max(value = 1000, message = "Total slot must not exceed 1000")
         Integer totalSlot,
 
