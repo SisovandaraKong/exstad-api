@@ -17,7 +17,10 @@ public record ApplicantLetterRequest(
         String currentAddress,
         Date issueDate,
         String number,
-        String tableNumber
+        String tableNumber,
+        String enrollmentUuid,
+        String programSlug,
+        Integer generation
 ) {
 }
 

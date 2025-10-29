@@ -83,7 +83,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserResponse> getNotScholarUsers() {
-        return userRepository.findAllByRoleNotIn(Set.of(Role.SCHOLAR)).stream().map(
+        return userRepository.findAllByRoleNotInAndIsDeletedFalse(Set.of(Role.SCHOLAR)).stream().map(
                 userMapper::fromUser
         ).toList();
     }
