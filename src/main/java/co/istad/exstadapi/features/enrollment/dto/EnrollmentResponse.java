@@ -31,6 +31,7 @@ public record EnrollmentResponse(
         Boolean isPassed,
         Boolean isScholar,
         BigDecimal score,
-        AuditableDto audit
+        AuditableDto audit,
+        String applicantLetter
 ) {
 }
