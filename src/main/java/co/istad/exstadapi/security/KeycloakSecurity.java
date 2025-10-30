@@ -112,7 +112,7 @@ public class KeycloakSecurity {
                 .requestMatchers(HttpMethod.DELETE,"/api/v1/current-addresses/**").hasAnyRole("ADMIN")
 
                 // Scholar endpoints
-                // Viewing scholars requires any instructor or admin role
+                // Viewing scholars
                 .requestMatchers("/api/v1/scholars/**").permitAll()
 
                 // Scholar Badge endpoints (Note: Same path as scholars - might need review)
