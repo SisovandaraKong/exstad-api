@@ -115,7 +115,7 @@ public class KeycloakSecurity {
                 // Viewing scholars requires any instructor or admin role
                 .requestMatchers(HttpMethod.GET,"/api/v1/scholars/**").permitAll()
                 // Creating scholars requires any instructor or admin role
-                .requestMatchers(HttpMethod.POST,"/api/v1/scholars/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
+                .requestMatchers(HttpMethod.POST,"/api/v1/scholars/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2","SCHOLAR")
                 // Updating scholars requires ADMIN or INSTRUCTOR1
                 .requestMatchers(HttpMethod.PUT,"/api/v1/scholars/**").hasAnyRole("ADMIN","INSTRUCTOR1","SCHOLAR")
                 // Partially updating scholars requires ADMIN or INSTRUCTOR1
