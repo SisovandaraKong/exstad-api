@@ -199,8 +199,12 @@ public class KeycloakSecurity {
                 .requestMatchers("/api/v1/bakong/**").permitAll()
 
                 // Certificate endpoints
-                .requestMatchers("/api/v1/certificates").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
-                .requestMatchers("/api/v1/certificates/**").hasAnyRole("ADMIN","INSTRUCTOR1", "INSTRUCTOR2")
+                .requestMatchers(HttpMethod.GET,"/api/v1/certificates").permitAll()
+                .requestMatchers(HttpMethod.GET,"/api/v1/certificates/**").permitAll()
+                .requestMatchers(HttpMethod.POST,"/api/v1/certificates/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2")
+                .requestMatchers(HttpMethod.DELETE,"/api/v1/certificates/**").hasAnyRole("ADMIN")
+                .requestMatchers(HttpMethod.PUT,"/api/v1/certificates/**").hasAnyRole("ADMIN","INSTRUCTOR1")
+                .requestMatchers(HttpMethod.PATCH,"/api/v1/certificates/**").hasAnyRole("ADMIN","INSTRUCTOR1")
                 .requestMatchers("/api/v1/generate-certificates/**").hasAnyRole("ADMIN","INSTRUCTOR1", "INSTRUCTOR2")
                 .requestMatchers("/api/v1/verify-certificates/**").hasAnyRole("ADMIN","INSTRUCTOR1", "INSTRUCTOR2")
 
