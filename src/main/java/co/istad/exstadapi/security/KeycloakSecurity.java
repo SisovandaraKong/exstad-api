@@ -113,15 +113,7 @@ public class KeycloakSecurity {
 
                 // Scholar endpoints
                 // Viewing scholars requires any instructor or admin role
-                .requestMatchers(HttpMethod.GET,"/api/v1/scholars/**").permitAll()
-                // Creating scholars requires any instructor or admin role
-                .requestMatchers(HttpMethod.POST,"/api/v1/scholars/**").hasAnyRole("ADMIN","INSTRUCTOR1","INSTRUCTOR2","SCHOLAR")
-                // Updating scholars requires ADMIN or INSTRUCTOR1
-                .requestMatchers(HttpMethod.PUT,"/api/v1/scholars/**").hasAnyRole("ADMIN","INSTRUCTOR1","SCHOLAR")
-                // Partially updating scholars requires ADMIN or INSTRUCTOR1
-                .requestMatchers(HttpMethod.PATCH,"/api/v1/scholars/**").hasAnyRole("ADMIN","INSTRUCTOR1","SCHOLAR")
-                // Deleting scholars requires ADMIN only
-                .requestMatchers(HttpMethod.DELETE,"/api/v1/scholars/**").hasAnyRole("ADMIN")
+                .requestMatchers("/api/v1/scholars/**").permitAll()
 
                 // Scholar Badge endpoints (Note: Same path as scholars - might need review)
                 // Viewing scholar badges requires any instructor or admin role
@@ -182,7 +174,6 @@ public class KeycloakSecurity {
                 .requestMatchers(HttpMethod.PUT,"/api/v1/scholars-classes/**").hasAnyRole("ADMIN","INSTRUCTOR1")
                 // Deleting scholar classes requires ADMIN only
                 .requestMatchers(HttpMethod.DELETE,"/api/v1/scholars-classes/**").hasAnyRole("ADMIN")
-                .requestMatchers("/api/v1/scholars/me").hasAnyRole("SCHOLAR","ADMIN","INSTRUCTOR1","INSTRUCTOR2")
 
                 // Instructor Class endpoints
                 // Viewing instructor classes requires any instructor or admin role
