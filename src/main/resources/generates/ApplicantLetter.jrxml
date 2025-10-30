@@ -132,7 +132,7 @@
                 <property name="com.jaspersoft.studio.unit.y" value="px"/>
             </element>
             <element kind="textField" uuid="17d8d062-def3-4beb-bc74-5d62f8661851" x="208" y="304" width="37" height="20" hTextAlign="Center" vTextAlign="Middle">
-                <styleExpression><![CDATA[$P{years} != null && $P{year}.matches(".*[\\u1780-\\u17FF]+.*")? "KhmerStyle": "EnglishStyle"]]></styleExpression>
+                <styleExpression><![CDATA[$P{years} != null && $P{years}.matches(".*[\\u1780-\\u17FF]+.*")? "KhmerStyle": "EnglishStyle"]]></styleExpression>
                 <expression><![CDATA[$P{years}]]></expression>
                 <property name="com.jaspersoft.studio.unit.height" value="px"/>
                 <property name="com.jaspersoft.studio.unit.width" value="px"/>
@@ -155,8 +155,8 @@
                 <property name="com.jaspersoft.studio.unit.y" value="px"/>
             </element>
             <element kind="textField" uuid="acc406d2-25f0-4735-9d42-648ea4b1516d" x="508" y="292" width="37" height="20" hTextAlign="Center" vTextAlign="Middle">
-                <styleExpression><![CDATA[$P{year} != null && $P{year}.matches(".*[\\u1780-\\u17FF]+.*")? "KhmerStyle": "EnglishStyle"]]></styleExpression>
-                <expression><![CDATA[$P{year}]]></expression>
+                <styleExpression><![CDATA[$P{years} != null && $P{years}.matches(".*[\\u1780-\\u17FF]+.*")? "KhmerStyle": "EnglishStyle"]]></styleExpression>
+                <expression><![CDATA[$P{years}]]></expression>
                 <property name="com.jaspersoft.studio.unit.height" value="px"/>
                 <property name="com.jaspersoft.studio.unit.x" value="px"/>
                 <property name="com.jaspersoft.studio.unit.width" value="px"/>
