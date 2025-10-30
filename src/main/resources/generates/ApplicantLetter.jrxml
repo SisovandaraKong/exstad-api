@@ -155,8 +155,8 @@
                 <property name="com.jaspersoft.studio.unit.y" value="px"/>
             </element>
             <element kind="textField" uuid="acc406d2-25f0-4735-9d42-648ea4b1516d" x="508" y="292" width="37" height="20" hTextAlign="Center" vTextAlign="Middle">
-                <styleExpression><![CDATA[$P{years} != null && $P{years}.matches(".*[\\u1780-\\u17FF]+.*")? "KhmerStyle": "EnglishStyle"]]></styleExpression>
-                <expression><![CDATA[$P{years}]]></expression>
+                <styleExpression><![CDATA[$P{year} != null && $P{year}.matches(".*[\\u1780-\\u17FF]+.*")? "KhmerStyle": "EnglishStyle"]]></styleExpression>
+                <expression><![CDATA[$P{year}]]></expression>
                 <property name="com.jaspersoft.studio.unit.height" value="px"/>
                 <property name="com.jaspersoft.studio.unit.x" value="px"/>
                 <property name="com.jaspersoft.studio.unit.width" value="px"/>
